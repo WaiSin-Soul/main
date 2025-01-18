@@ -8,9 +8,12 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        kalam: ['Kalam', 'sans-serif'],
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: '#130615',
+        accent: '#DCD7E7',
       },
     },
   },
