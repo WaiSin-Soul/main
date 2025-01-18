@@ -70,25 +70,22 @@ export default function Home() {
           link={largeCard.link}
         />
 
-        <FeaturedCollection items={featuredItems} />
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {cards.map((card, index) => (
             <Card
-              key={index}
-              title={card.title}
-              description={card.description}
-              imageSrc={card.imageSrc}
-              link={card.link}
+            key={index}
+            title={card.title}
+            description={card.description}
+            imageSrc={card.imageSrc}
+            link={card.link}
             />
           ))}
         </div>
+        <FeaturedCollection items={featuredItems} />
 
       
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        {/* ... footer content ... */}
-      </footer>
     </div>
   );
 }
