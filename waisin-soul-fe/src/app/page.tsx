@@ -8,7 +8,7 @@ export default function Home() {
   const largeCard = {
     title: "Love Relationship Coaching",
     description: "If you are currently in a relationship or seeking for one, and if you are not experiencing the deep soulmate love that you are desiring, it is not your fault. Do you want to be absolutely clear about what is blocking you? Let's go ahead and do a quick 30-minute call.",
-    imageSrc: "/image2.jpg",
+    imageSrc: "/images/red-bird.webp",
     link: "/coaching",
   };
 
@@ -59,7 +59,7 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <div className="w-full lg:w-3/4">
+        <div className="w-full lg:w-full">
           <Carousel />
         </div>
         
