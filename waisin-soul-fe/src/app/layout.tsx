@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased font-kalam bg-130615 text-accent`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased font-kalam bg-background text-accent`}>
         <Header />
         {children}
         <Footer />

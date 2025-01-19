@@ -11,7 +11,7 @@ const Header = () => {
     };
 
     return (
-        <header className="flex justify-between items-center p-4 bg-red-600 text-white relative">
+        <header className="flex justify-between items-center p-4 bg-header text-white relative">
             <div className="flex items-center space-x-8 mx-auto">
                 <h1 className="text-xl font-bold">
                     <Link href="/">
