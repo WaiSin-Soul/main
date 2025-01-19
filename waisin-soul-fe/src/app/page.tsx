@@ -1,5 +1,4 @@
 "use client"
-import Image from "next/image";
 import Carousel from './components/Carousel';
 import Card from './components/Card';
 import FeaturedCollection from './components/FeaturedCollection';
@@ -31,6 +30,13 @@ export default function Home() {
       imageSrc: "/images/neck-shirt.webp",
       link: "/products",
     },
+  ];
+
+  const carouselItems = [
+    { src: "/images/Ocean_Spirit.webp", alt: "Ocean spirit" },
+    { src: "/images/Great_Taos_Way.webp", alt: "Great Taos Way" },
+    { src: "/images/Celebration_of_Surrender.webp", alt: "Celebration of surrender" },
+    { src: "/images/Joy_of_Aboundance.webp", alt: "Joy of aboundance" },
   ];
 
   const featuredItems = [
@@ -83,8 +89,8 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <div className="w-full lg:w-3/4">
-          <Carousel />
+        <div className="w-full lg:w-full">
+          <Carousel items={carouselItems} />
         </div>
 
         <Card

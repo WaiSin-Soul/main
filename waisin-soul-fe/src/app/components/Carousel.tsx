@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 
-const Carousel = () => {
+interface CarouselItem {
+    src: string;
+    alt: string;
+}
+
+interface CarouselProps {
+    items: CarouselItem[];
+}
+
+const Carousel: React.FC<CarouselProps> = ({ items }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const items = [
-        { src: '/image1.jpg', alt: 'Image 1' },
-        { src: '/image2.jpg', alt: 'Image 2' },
-        { src: '/image3.jpg', alt: 'Image 3' },
-    ];
 
     const nextSlide = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
