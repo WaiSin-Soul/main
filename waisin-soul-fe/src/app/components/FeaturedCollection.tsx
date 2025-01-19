@@ -11,7 +11,7 @@ const FeaturedCollection: React.FC<{ items: FeaturedItem[] }> = ({ items }) => {
     return (
         <div className="text-center">
             <h2 className="text-2xl font-bold mb-4">Featured Collection</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto max-w-6xl">
                 {items.map((item, index) => (
                     <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden">
                         <Image
