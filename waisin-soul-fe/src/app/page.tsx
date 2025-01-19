@@ -16,19 +16,19 @@ export default function Home() {
     {
       title: "Art Collection",
       description: "Explore a collection that speaks the universal language of love, connecting souls through vibrant colors and passionate strokes.",
-      imageSrc: "/image1.jpg",
+      imageSrc: "/images/Conversation_between_Sun_Moon._jpg.webp",
       link: "/art-collection",
     },
     {
-      title: "Product Catalog",
-      description: "Express your artistic style with our collection of products featuring unique artwork. Wear your creativity with pride.",
-      imageSrc: "/image3.jpg",
-      link: "/products",
+      title: "Love Relationship Coaching",
+      description: "Follow my Unique Artist's Path Method to unlock your potential and become a dynamic magnet for an extraordinary life of happiness, passionate and steady love.",
+      imageSrc: "/images/Love_at_first_sight.webp",
+      link: "/coaching",
     },
     {
       title: "Product Catalog",
       description: "Express your artistic style with our collection of products featuring unique artwork. Wear your creativity with pride.",
-      imageSrc: "/image3.jpg",
+      imageSrc: "/images/neck-shirt.webp",
       link: "/products",
     },
   ];
