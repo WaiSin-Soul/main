@@ -13,15 +13,17 @@ const Header = () => {
     return (
         <header className="flex justify-between items-center p-4 bg-red-600 text-white relative">
             <div className="flex items-center space-x-8 mx-auto">
-                <h1 className="text-xl font-bold"><Link href="/">
-                <Image
-                    className="w-1/2 h-auto object-cover"
-                    src="/images/waisin_soul_logo.png"
-                    alt="logo"
-                    width={600}
-                    height={300}
-                />
-        </Link></h1>
+                <h1 className="text-xl font-bold">
+                    <Link href="/">
+                        <Image
+                            className="w-1/2 h-auto object-cover"
+                            src="/images/waisin_soul_logo.png"
+                            alt="logo"
+                            width={600}
+                            height={300}
+                        />
+                    </Link>
+                </h1>
                 <nav>
                     <ul className="flex space-x-6">
                         <li className="relative">
