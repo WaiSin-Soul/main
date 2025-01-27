@@ -10,7 +10,7 @@ const CardContent: React.FC<CardContentProps> = ({ title, description, link }) =
     return (
         <div className="p-4 flex flex-col justify-between">
             <div>
-                <h2 className="text-lg font-bold mb-2">{title}</h2>
+                <h2 className="text-lg font-bold mb-2 text-black">{title}</h2>
                 <p className="text-gray-700 mb-4">{description}</p>
             </div>
             <a

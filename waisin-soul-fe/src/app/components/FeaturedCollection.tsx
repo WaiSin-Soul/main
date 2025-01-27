@@ -22,7 +22,7 @@ const FeaturedCollection: React.FC<{ items: FeaturedItem[] }> = ({ items }) => {
                             height={200}
                         />
                         <div className="p-4">
-                            <h3 className="text-lg font-semibold">{item.title}</h3>
+                            <h3 className="text-lg font-semibold text-black">{item.title}</h3>
                             <p className="text-gray-700">{item.price}</p>
                         </div>
                     </div>

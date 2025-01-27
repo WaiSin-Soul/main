@@ -22,20 +22,29 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
     };
 
     return (
-        <div className="relative w-full max-w-3xl mx-auto h-3/4">
+        // <div className="relative w-full max-w-3xl mx-auto h-3/4">
+        <div className="relative w-full h-64">
             <div className="overflow-hidden rounded-lg h-full">
                 <Image
                     className="w-full h-full object-cover"
                     src={items[currentIndex].src}
                     alt={items[currentIndex].alt}
-                    width={600}
-                    height={400}
+                    width={1920}
+                    height={1080}
                 />
             </div>
-            <button onClick={prevSlide} className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+            <button 
+                onClick={prevSlide} 
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+                aria-label="Previous Slide"
+            >
                 &#10094; {/* Left Arrow */}
             </button>
-            <button onClick={nextSlide} className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+            <button 
+                onClick={nextSlide} 
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+                aria-label="Next Slide"
+            >
                 &#10095; {/* Right Arrow */}
             </button>
         </div>

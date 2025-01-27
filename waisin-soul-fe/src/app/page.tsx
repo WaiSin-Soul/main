@@ -43,46 +43,62 @@ export default function Home() {
     {
       title: "SEEKING KNOWLEDGE Laptop Sleeve",
       price: "$45.00 CAD",
-      imageSrc: "/featured1.jpg",
+      imageSrc: "/images/feature1.webp",
     },
     {
       title: "SERENITY Laptop Sleeve",
       price: "$45.00 CAD",
-      imageSrc: "/featured2.jpg",
+      imageSrc: "/images/feature2.webp",
     },
     {
       title: "OCEAN SPIRIT Laptop Sleeve",
       price: "$45.00 CAD",
-      imageSrc: "/featured3.jpg",
+      imageSrc: "/images/feature3.webp",
     },
     {
       title: "EXPERIENCING GREATNESS Laptop Sleeve",
       price: "$45.00 CAD",
-      imageSrc: "/featured4.jpg",
+      imageSrc: "/images/feature4.webp",
+    },
+    {
+      title: "SEEKING KNOWLEDGE Laptop Sleeve",
+      price: "$45.00 CAD",
+      imageSrc: "/images/feature1.webp",
+    },
+    {
+      title: "SERENITY Laptop Sleeve",
+      price: "$45.00 CAD",
+      imageSrc: "/images/feature2.webp",
+    },
+    {
+      title: "OCEAN SPIRIT Laptop Sleeve",
+      price: "$45.00 CAD",
+      imageSrc: "/images/feature3.webp",
     },
     {
       title: "EXPERIENCING GREATNESS Laptop Sleeve",
       price: "$45.00 CAD",
-      imageSrc: "/featured4.jpg",
+      imageSrc: "/images/feature4.webp",
+    },
+    {
+      title: "SEEKING KNOWLEDGE Laptop Sleeve",
+      price: "$45.00 CAD",
+      imageSrc: "/images/feature1.webp",
+    },
+    {
+      title: "SERENITY Laptop Sleeve",
+      price: "$45.00 CAD",
+      imageSrc: "/images/feature2.webp",
+    },
+    {
+      title: "OCEAN SPIRIT Laptop Sleeve",
+      price: "$45.00 CAD",
+      imageSrc: "/images/feature3.webp",
     },
     {
       title: "EXPERIENCING GREATNESS Laptop Sleeve",
       price: "$45.00 CAD",
-      imageSrc: "/featured4.jpg",
-    },
-    {
-      title: "EXPERIENCING GREATNESS Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/featured4.jpg",
-    },
-    {
-      title: "EXPERIENCING GREATNESS Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/featured4.jpg",
-    },{
-      title: "EXPERIENCING GREATNESS Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/featured4.jpg",
+      imageSrc: "/images/feature4.webp",
     },
   ];
 
