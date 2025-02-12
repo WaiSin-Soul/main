@@ -30,8 +30,8 @@ const Header = () => {
                             className="w-3/4 h-auto object-cover"
                             src="/images/waisin_soul_logo.png"
                             alt="logo"
-                            width={600}
-                            height={300}
+                            width={300}
+                            height={100}
                         />
                     </Link>
                 </h1>
