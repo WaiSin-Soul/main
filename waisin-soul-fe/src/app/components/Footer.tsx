@@ -1,40 +1,69 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer = () => {
     return (
-        <footer className="flex flex-col items-center p-8 bg-background text-accent">
-            <div className="text-center mb-4">
-                <h2 className="text-lg font-bold">Subscribe to our emails</h2>
-                <div className="flex items-center justify-center mt-2">
+        <footer className="bg-black text-white p-8">
+            <div className="max-w-6xl mx-auto grid grid-cols-5 gap-8">
+                {/* Info Column */}
+                <div className='space-y-2'>
+                    <Link href="/">
+                        <Image
+                            className="w-3/4 h-auto object-cover"
+                            src="/images/waisin_soul_logo.png"
+                            alt="logo"
+                            width={300}
+                            height={100}
+                        />
+                    </Link>
+                    <div className="text-sm space-y-2">
+                        <p>Waisin Tong-Darbonne</p>
+                        <p>Artist</p>
+                        <p>© 2025 All Rights Reserved</p>
+                    </div>
+                </div>
+
+                {/* Contact Column */}
+                <div>
+                    <h3 className="font-semibold mb-4">Contact</h3>
+                    <div className="text-sm">
+                        <Link href='/contact'>Contact Us</Link>
+                    </div>
+                </div>
+
+                {/* Resources Column */}
+                <div>
+                    <h3 className="font-semibold mb-4">Resources</h3>
+                    <div className="text-sm space-y-2 flex flex-col">
+                        <Link href="/about">About the artist</Link>
+                        <Link href="/coaching">Coaching</Link>
+                    </div>
+                </div>
+
+                {/* Stay Updated Column */}
+                <div>
+                    <h3 className="font-semibold mb-4">Stay Updated</h3>
+                    <div className="text-sm space-y-2 flex flex-col">
+                        <a href='https://www.facebook.com/'>Facebook</a>
+                        <a href='https://www.instagram.com/'>Instagram</a>
+                    </div>
+                </div>
+
+                {/* Email Sub Column */}
+                <div>
+                    <h3 className="font-semibold mb-4">Subscribe</h3>
                     <input
                         type="email"
                         placeholder="Email"
-                        className="p-2 border border-gray-300 rounded-l-md"
+                        className="w-full p-2 bg-transparent border border-white rounded mb-2 text-sm"
                     />
-                    <button className="bg-blue-500 text-white p-2 rounded-r-md">→</button>
-                </div>
-            </div>
-            <div className="text-center mb-4 text-black">
-                <p>Country/region</p>
-                <select className="mt-2 p-2 border border-gray-300 rounded-md">
-                    <option value="CAD">CAD $ | Canada</option>
-                    {/* Hook up to db to render these and set automatically*/}
-                </select>
-            </div>
-            <div className="flex justify-center mb-4">
-                <a href="#" className="mx-2">Follow on shop</a>
-                <Image width={100} height={100} src="/images/footer/facebook.png" alt="facebook" className="h-6 w-6" />
-                <Image width={100} height={100} src="/images/footer/instagram.png" alt="instagram" className="h-6 w-6" />
-            </div>
-            <div className="text-center">
-                <p className="mb-2">© {new Date().getFullYear()} WaiSin Soul. All rights reserved.</p>
-                <div className="flex justify-center space-x-2">
-                    <Image width={100} height={100} src="/images/footer/amex.png" alt="Amex" className="h-6 w-6" />
-                    <Image width={100} height={100} src="/images/footer/visa.png" alt="Visa" className="h-6 w-6" />
-                    <Image width={100} height={100} src="/images/footer/mastercard.png" alt="MasterCard" className="h-6 w-6" />
-                    <Image width={100} height={100} src="/images/footer/paypal.png" alt="PayPal" className="h-6 w-6" />
-                    {/* Add the other payment icons */}
+                    <button className="w-full bg-white text-black py-2 px-4 rounded text-sm">
+                        SIGN UP
+                    </button>
+                    <p className="text-xs mt-2">
+                        I&apos;d like to receive exclusive discounts and the latest information.
+                    </p>
                 </div>
             </div>
         </footer>
