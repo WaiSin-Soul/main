@@ -103,20 +103,22 @@ export default function Home() {
   ];
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    // <div className="grid grid-rows-[5px_1fr_5px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="h-full grid grid-rows items-center justify-items-center font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <div className="w-full lg:w-full">
+        <div className="w-full lg:w-full h-full">
           <Carousel items={carouselItems} />
         </div>
+        <div className="mx-40">
+          <Card
+            title={largeCard.title}
+            description={largeCard.description}
+            imageSrc={largeCard.imageSrc}
+            link={largeCard.link}
+          />
+        </div>
 
-        <Card
-          title={largeCard.title}
-          description={largeCard.description}
-          imageSrc={largeCard.imageSrc}
-          link={largeCard.link}
-        />
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mx-40">
           {cards.map((card, index) => (
             <Card
             key={index}
