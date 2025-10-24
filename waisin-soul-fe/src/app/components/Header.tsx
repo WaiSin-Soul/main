@@ -70,6 +70,7 @@ const Header = () => {
                                 <li><Link href="/art/calligraphy-contemporary" className="block px-4 py-2 hover:bg-gray-200">Calligraphy & Contemporary</Link></li>
                                 <li><Link href="/art/flora-fauna" className="block px-4 py-2 hover:bg-gray-200">Flora & Fauna</Link></li>
                                 <li><Link href="/art/women-series" className="block px-4 py-2 hover:bg-gray-200">Women Series</Link></li>
+                                <li><Link href="/art/collection" className="block px-4 py-2 hover:bg-gray-200">View All</Link></li>
                             </ul>
                         )}
                     </li>
