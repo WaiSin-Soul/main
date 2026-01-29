@@ -18,7 +18,7 @@ export default function Home() {
       description:
         "Explore a collection that speaks the universal language of love, connecting souls through vibrant colors and passionate strokes.",
       imageSrc: "/images/Conversation_between_Sun_Moon._jpg.webp",
-      link: "/art-collection",
+      link: "/art/collection",
     },
     {
       title: "Love Relationship Coaching",
