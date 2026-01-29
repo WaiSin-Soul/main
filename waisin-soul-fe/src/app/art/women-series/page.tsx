@@ -2,33 +2,48 @@
 import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import Image from 'next/image';
+import ProductModal from '../../components/ProductModal';
 
-const womenSeriesData = [
+interface Product {
+    id: number;
+    name: string;
+    description: string;
+    price: string;
+    image: string;
+    details: string;
+}
+
+const womenSeriesData: Product[] = [
     { 
         id: 1, 
         name: 'Women Series 1', 
         description: 'Description for women series artwork 1',
         price: '$329.99',
-        image: '/product1.jpg'
+        image: '/images/feature1.webp',
+        details: 'Empowering artwork celebrating the strength and beauty of women.'
     },
     { 
         id: 2, 
         name: 'Women Series 2', 
         description: 'Description for women series artwork 2',
         price: '$379.99',
-        image: '/product2.jpg'
+        image: '/images/feature2.webp',
+        details: 'Elegant portrayal of feminine grace and cultural heritage.'
     },
     { 
         id: 3, 
         name: 'Women Series 3', 
         description: 'Description for women series artwork 3',
         price: '$429.99',
-        image: '/product3.jpg'
+        image: '/images/feature3.webp',
+        details: 'Powerful artwork depicting women across different cultures and time periods.'
     },
 ];
 
 const Women_Series = () => {
-    const [filteredArtworks, setFilteredArtworks] = useState(womenSeriesData);
+    const [filteredArtworks, setFilteredArtworks] = useState<Product[]>(womenSeriesData);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleSearch = (query: string) => {
         const lowercasedQuery = query.toLowerCase();
@@ -37,6 +52,11 @@ const Women_Series = () => {
             artwork.description.toLowerCase().includes(lowercasedQuery)
         );
         setFilteredArtworks(filtered);
+    };
+
+    const handleViewDetails = (product: Product) => {
+        setSelectedProduct(product);
+        setIsModalOpen(true);
     };
 
     return (
@@ -64,7 +84,10 @@ const Women_Series = () => {
                                 <span className="text-blue-500 font-bold">{artwork.price}</span>
                             </div>
                             <p className="text-gray-300 mb-4">{artwork.description}</p>
-                            <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">
+                            <button 
+                                onClick={() => handleViewDetails(artwork)}
+                                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                            >
                                 View Details
                             </button>
                         </div>
@@ -76,6 +99,15 @@ const Women_Series = () => {
                     No artworks found matching your search.
                 </div>
             )}
+
+            <ProductModal
+                product={selectedProduct}
+                isOpen={isModalOpen}
+                onClose={() => {
+                    setIsModalOpen(false);
+                    setSelectedProduct(null);
+                }}
+            />
         </div>
     );
 };

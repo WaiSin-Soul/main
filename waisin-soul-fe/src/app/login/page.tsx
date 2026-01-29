@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -11,6 +13,9 @@ const Login = () => {
         confirmPassword: '',
         name: ''
     });
+    const [error, setError] = useState('');
+    const router = useRouter();
+    const { login, signup } = useAuth();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -18,12 +23,52 @@ const Login = () => {
             ...prev,
             [name]: value
         }));
+        setError('');
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission
-        console.log('Form submitted:', formData);
+        setError('');
+
+        if (isLogin) {
+            // Login validation
+            if (!formData.email || !formData.password) {
+                setError('Please fill in all fields');
+                return;
+            }
+            login(formData.email, formData.password);
+            // Reset form and redirect
+            setFormData({
+                email: '',
+                password: '',
+                confirmPassword: '',
+                name: ''
+            });
+            router.push('/user/profile');
+        } else {
+            // Signup validation
+            if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+                setError('Please fill in all fields');
+                return;
+            }
+            if (formData.password !== formData.confirmPassword) {
+                setError('Passwords do not match');
+                return;
+            }
+            if (formData.password.length < 6) {
+                setError('Password must be at least 6 characters');
+                return;
+            }
+            signup(formData.name, formData.email, formData.password);
+            // Reset form and redirect
+            setFormData({
+                email: '',
+                password: '',
+                confirmPassword: '',
+                name: ''
+            });
+            router.push('/user/profile');
+        }
     };
 
     return (
@@ -47,7 +92,10 @@ const Login = () => {
                             <>
                                 Or{' '}
                                 <button
-                                    onClick={() => setIsLogin(false)}
+                                    onClick={() => {
+                                        setIsLogin(false);
+                                        setError('');
+                                    }}
                                     className="font-medium text-blue-500 hover:text-blue-400"
                                 >
                                     create a new account
@@ -57,7 +105,10 @@ const Login = () => {
                             <>
                                 Already have an account?{' '}
                                 <button
-                                    onClick={() => setIsLogin(true)}
+                                    onClick={() => {
+                                        setIsLogin(true);
+                                        setError('');
+                                    }}
                                     className="font-medium text-blue-500 hover:text-blue-400"
                                 >
                                     Sign in
@@ -66,6 +117,12 @@ const Login = () => {
                         )}
                     </p>
                 </div>
+
+                {error && (
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                        {error}
+                    </div>
+                )}
 
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="rounded-md shadow-sm space-y-4">
@@ -165,4 +222,4 @@ const Login = () => {
     );
 };
 
-export default Login; 
+export default Login;

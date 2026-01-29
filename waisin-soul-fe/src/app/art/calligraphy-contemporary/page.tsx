@@ -2,33 +2,48 @@
 import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import Image from 'next/image';
+import ProductModal from '../../components/ProductModal';
 
-const calligraphyData = [
+interface Product {
+    id: number;
+    name: string;
+    description: string;
+    price: string;
+    image: string;
+    details: string;
+}
+
+const calligraphyData: Product[] = [
     { 
         id: 1, 
         name: 'Calligraphy 1', 
         description: 'Description for calligraphy artwork 1',
         price: '$199.99',
-        image: '/product1.jpg'
+        image: '/images/feature1.webp',
+        details: 'Elegant calligraphy with traditional techniques. Each piece is unique and hand-crafted.'
     },
     { 
         id: 2, 
         name: 'Contemporary 1', 
         description: 'Description for contemporary artwork 1',
         price: '$249.99',
-        image: '/product2.jpg'
+        image: '/images/feature2.webp',
+        details: 'Modern contemporary piece blending traditional and modern art styles.'
     },
     { 
         id: 3, 
         name: 'Calligraphy 2', 
         description: 'Description for calligraphy artwork 2',
         price: '$299.99',
-        image: '/product3.jpg'
+        image: '/images/feature3.webp',
+        details: 'Intricate calligraphy work with stunning detail and precision.'
     },
 ];
 
 const Calligraphy_Contemporary = () => {
-    const [filteredArtworks, setFilteredArtworks] = useState(calligraphyData);
+    const [filteredArtworks, setFilteredArtworks] = useState<Product[]>(calligraphyData);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleSearch = (query: string) => {
         const lowercasedQuery = query.toLowerCase();
@@ -37,6 +52,11 @@ const Calligraphy_Contemporary = () => {
             artwork.description.toLowerCase().includes(lowercasedQuery)
         );
         setFilteredArtworks(filtered);
+    };
+
+    const handleViewDetails = (product: Product) => {
+        setSelectedProduct(product);
+        setIsModalOpen(true);
     };
 
     return (
@@ -64,7 +84,10 @@ const Calligraphy_Contemporary = () => {
                                 <span className="text-blue-500 font-bold">{artwork.price}</span>
                             </div>
                             <p className="text-gray-300 mb-4">{artwork.description}</p>
-                            <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">
+                            <button 
+                                onClick={() => handleViewDetails(artwork)}
+                                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                            >
                                 View Details
                             </button>
                         </div>
@@ -76,6 +99,15 @@ const Calligraphy_Contemporary = () => {
                     No artworks found matching your search.
                 </div>
             )}
+
+            <ProductModal
+                product={selectedProduct}
+                isOpen={isModalOpen}
+                onClose={() => {
+                    setIsModalOpen(false);
+                    setSelectedProduct(null);
+                }}
+            />
         </div>
     );
 };

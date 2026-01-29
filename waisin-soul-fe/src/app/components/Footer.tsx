@@ -28,7 +28,7 @@ const Footer = () => {
                 <div>
                     <h3 className="font-semibold mb-4">Contact</h3>
                     <div className="text-sm">
-                        <Link href='/contact'>Contact Us</Link>
+                        <Link href='/contact'>Contact Me</Link>
                     </div>
                 </div>
 

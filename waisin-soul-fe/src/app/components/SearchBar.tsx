@@ -7,9 +7,14 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     const [query, setQuery] = useState('');
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setQuery(value);
+        onSearch(value);
+    };
+
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        onSearch(query);
     };
 
     return (
@@ -19,7 +24,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                     type="text"
                     placeholder="Search products..."
                     value={query}
-                    onChange={(e) => setQuery(e.target.value)}
+                    onChange={handleInputChange}
                     className="w-full p-3 bg-[#1a1a1a] border border-gray-700 rounded-l-md text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
                 />
                 <button 

@@ -1,6 +1,57 @@
-import React from 'react';
+"use client"
+import React, { useState } from 'react';
+import { useCart } from '../context/CartContext';
+import CoachingModal from '../components/CoachingModal';
+
+interface CoachingService {
+    id: number;
+    name: string;
+    price: number;
+    description: string;
+    duration: string;
+}
+
+const coachingServices: CoachingService[] = [
+    {
+        id: 1,
+        name: 'Free Consultation',
+        price: 0,
+        description: '30-minute initial consultation',
+        duration: '/session'
+    },
+    {
+        id: 2,
+        name: 'Premium Session',
+        price: 120,
+        description: '120-minute comprehensive session',
+        duration: '/session'
+    }
+];
 
 const Coaching = () => {
+    const { addItem } = useCart();
+    const [addedItems, setAddedItems] = useState<number[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenFreeBooking = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleAddToCart = (service: CoachingService) => {
+        if (service.price > 0) {
+            addItem({
+                id: `coaching-${service.id}`,
+                name: service.name,
+                price: service.price,
+                quantity: 1,
+                image: '/images/coaching.jpg'
+            });
+            setAddedItems([...addedItems, service.id]);
+            setTimeout(() => {
+                setAddedItems(addedItems.filter(id => id !== service.id));
+            }, 2000);
+        }
+    };
     return (
         <div className="container mx-auto px-4 py-12">
             <h1 className="text-4xl font-bold mb-8 text-center text-white">Coaching Services</h1>
@@ -33,8 +84,11 @@ const Coaching = () => {
                                 General guidance
                             </li>
                         </ul>
-                        <button className="w-full bg-[#2a2a2a] text-white py-3 px-6 rounded-md hover:bg-[#3a3a3a] transition-colors duration-200">
-                            Book Free Session
+                        <button 
+                            onClick={handleOpenFreeBooking}
+                            className="w-full bg-[#2a2a2a] text-white py-3 px-6 rounded-md hover:bg-[#3a3a3a] transition-colors duration-200"
+                        >
+                            Schedule Free Session
                         </button>
                     </div>
                 </div>
@@ -76,13 +130,21 @@ const Coaching = () => {
                                 Resource materials
                             </li>
                         </ul>
-                        <button className="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors duration-200">
-                            Book Premium Session
+                        <button 
+                            onClick={() => handleAddToCart(coachingServices[1])}
+                            className="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                        >
+                            {addedItems.includes(2) ? '✓ Schedule Premium Session' : 'Schedule Premium Session'}
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <CoachingModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                serviceType="Free Consultation"
+            />        </div>
     );
 };
 

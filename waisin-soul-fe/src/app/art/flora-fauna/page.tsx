@@ -2,33 +2,48 @@
 import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import Image from 'next/image';
+import ProductModal from '../../components/ProductModal';
 
-const floraFaunaData = [
+interface Product {
+    id: number;
+    name: string;
+    description: string;
+    price: string;
+    image: string;
+    details: string;
+}
+
+const floraFaunaData: Product[] = [
     { 
         id: 1, 
         name: 'Flora 1', 
         description: 'Description for flora artwork 1',
         price: '$179.99',
-        image: '/product1.jpg'
+        image: '/images/feature1.webp',
+        details: 'Beautiful botanical art featuring delicate flora specimens with intricate details.'
     },
     { 
         id: 2, 
         name: 'Fauna 1', 
         description: 'Description for fauna artwork 1',
         price: '$229.99',
-        image: '/product2.jpg'
+        image: '/images/feature2.webp',
+        details: 'Wildlife artwork capturing the essence and beauty of natural fauna.'
     },
     { 
         id: 3, 
         name: 'Flora 2', 
         description: 'Description for flora artwork 2',
         price: '$279.99',
-        image: '/product3.jpg'
+        image: '/images/feature3.webp',
+        details: 'Exquisite flora composition with vibrant colors and botanical precision.'
     },
 ];
 
 const Flora_Fauna = () => {
-    const [filteredArtworks, setFilteredArtworks] = useState(floraFaunaData);
+    const [filteredArtworks, setFilteredArtworks] = useState<Product[]>(floraFaunaData);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleSearch = (query: string) => {
         const lowercasedQuery = query.toLowerCase();
@@ -37,6 +52,11 @@ const Flora_Fauna = () => {
             artwork.description.toLowerCase().includes(lowercasedQuery)
         );
         setFilteredArtworks(filtered);
+    };
+
+    const handleViewDetails = (product: Product) => {
+        setSelectedProduct(product);
+        setIsModalOpen(true);
     };
 
     return (
@@ -64,7 +84,10 @@ const Flora_Fauna = () => {
                                 <span className="text-blue-500 font-bold">{artwork.price}</span>
                             </div>
                             <p className="text-gray-300 mb-4">{artwork.description}</p>
-                            <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">
+                            <button 
+                                onClick={() => handleViewDetails(artwork)}
+                                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                            >
                                 View Details
                             </button>
                         </div>
@@ -76,6 +99,15 @@ const Flora_Fauna = () => {
                     No artworks found matching your search.
                 </div>
             )}
+
+            <ProductModal
+                product={selectedProduct}
+                isOpen={isModalOpen}
+                onClose={() => {
+                    setIsModalOpen(false);
+                    setSelectedProduct(null);
+                }}
+            />
         </div>
     );
 };

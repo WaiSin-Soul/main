@@ -99,13 +99,10 @@ const Contact = () => {
                             <h3 className="text-lg font-medium text-white mb-2">Social Media</h3>
                             <div className="flex space-x-4">
                                 <a href="#" className="text-gray-300 hover:text-blue-400">
-                                    LinkedIn
+                                    Facebook
                                 </a>
                                 <a href="#" className="text-gray-300 hover:text-blue-400">
-                                    Twitter
-                                </a>
-                                <a href="#" className="text-gray-300 hover:text-blue-400">
-                                    GitHub
+                                    Instagram
                                 </a>
                             </div>
                         </div>

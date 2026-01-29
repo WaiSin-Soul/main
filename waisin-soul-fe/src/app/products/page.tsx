@@ -2,34 +2,49 @@
 import React, { useState } from 'react';
 import SearchBar from '../components/SearchBar';
 import Image from 'next/image';
+import ProductModal from '../components/ProductModal';
 
-const productsData = [
+interface Product {
+    id: number;
+    name: string;
+    description: string;
+    price: string;
+    image: string;
+    details?: string;
+}
+
+const productsData: Product[] = [
     { 
         id: 1, 
         name: 'Product 1', 
         description: 'Description for product 1',
         price: '$99.99',
-        image: '/product1.jpg'
+        image: '/images/feature1.webp',
+        details: 'High-quality product with premium features and exceptional design.'
     },
     { 
         id: 2, 
         name: 'Product 2', 
         description: 'Description for product 2',
         price: '$149.99',
-        image: '/product2.jpg'
+        image: '/images/feature2.webp',
+        details: 'Professional-grade product designed for discerning customers.'
     },
     { 
         id: 3, 
         name: 'Product 3', 
         description: 'Description for product 3',
         price: '$199.99',
-        image: '/product3.jpg'
+        image: '/images/feature3.webp',
+        details: 'Premium collection item with exceptional craftsmanship.'
     },
     // Add more products as needed
 ];
 
 const Products = () => {
-    const [filteredProducts, setFilteredProducts] = useState(productsData);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>(productsData);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleSearch = (query: string) => {
         const lowercasedQuery = query.toLowerCase();
@@ -38,6 +53,11 @@ const Products = () => {
             product.description.toLowerCase().includes(lowercasedQuery)
         );
         setFilteredProducts(filtered);
+    };
+
+    const handleViewDetails = (product: Product) => {
+        setSelectedProduct(product);
+        setIsModalOpen(true);
     };
 
     return (
@@ -65,8 +85,11 @@ const Products = () => {
                                 <span className="text-blue-500 font-bold">{product.price}</span>
                             </div>
                             <p className="text-gray-300 mb-4">{product.description}</p>
-                            <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">
-                                Learn More
+                            <button 
+                                onClick={() => handleViewDetails(product)}
+                                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                            >
+                                View Details
                             </button>
                         </div>
                     </div>
@@ -77,6 +100,15 @@ const Products = () => {
                     No products found matching your search.
                 </div>
             )}
+
+            <ProductModal
+                product={selectedProduct}
+                isOpen={isModalOpen}
+                onClose={() => {
+                    setIsModalOpen(false);
+                    setSelectedProduct(null);
+                }}
+            />
         </div>
     );
 };

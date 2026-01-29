@@ -4,13 +4,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import SearchBar from './SearchBar';
+import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isMenuOpen, setMenuOpen] = useState(false);
     const [isSearchOpen, setSearchOpen] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(true);
     const router = useRouter();
+
+    const { getTotalItems } = useCart();
+    const { isAuthenticated } = useAuth();
 
     const toggleDropdown = () => {
         setDropdownOpen(!isDropdownOpen);
@@ -24,6 +28,13 @@ const Header = () => {
         setSearchOpen(!isSearchOpen);
     };
 
+    const handleNavigate = (href: string) => {
+        // Close dropdown when navigating
+        setDropdownOpen(false);
+        setMenuOpen(false);
+        router.push(href);
+    };
+
     const handleUserClick = () => {
         if (!isAuthenticated) {
             router.push('/login');
@@ -32,11 +43,13 @@ const Header = () => {
         }
     };
 
+    const cartCount = getTotalItems();
+
     return (
         <header className="flex justify-between items-center p-5 bg-header text-white relative">
             <div className="flex items-center gap-x-8 mx-32">
                 <h1 className="text-xl font-bold">
-                    <Link href="/">
+                    <Link href="/" onClick={() => { setDropdownOpen(false); setMenuOpen(false); }}>
                         <Image
                             className="w-3/4 h-auto object-cover"
                             src="/images/waisin_soul_logo.png"
@@ -65,19 +78,19 @@ const Header = () => {
                         </button>
                         {isDropdownOpen && (
                             <ul className="absolute left-0 mt-2 bg-white text-black shadow-lg rounded-md z-10">
-                                <li><Link href="/art/best-sellers" className="block px-4 py-2 hover:bg-gray-200">Best Sellers</Link></li>
-                                <li><Link href="/art/landscapes" className="block px-4 py-2 hover:bg-gray-200">Landscapes</Link></li>
-                                <li><Link href="/art/calligraphy-contemporary" className="block px-4 py-2 hover:bg-gray-200">Calligraphy & Contemporary</Link></li>
-                                <li><Link href="/art/flora-fauna" className="block px-4 py-2 hover:bg-gray-200">Flora & Fauna</Link></li>
-                                <li><Link href="/art/women-series" className="block px-4 py-2 hover:bg-gray-200">Women Series</Link></li>
-                                <li><Link href="/art/collection" className="block px-4 py-2 hover:bg-gray-200">View All</Link></li>
+                                <li><button onClick={() => handleNavigate('/art/best-sellers')} className="block px-4 py-2 hover:bg-gray-200 w-full text-left">Best Sellers</button></li>
+                                <li><button onClick={() => handleNavigate('/art/landscapes')} className="block px-4 py-2 hover:bg-gray-200 w-full text-left">Landscapes</button></li>
+                                <li><button onClick={() => handleNavigate('/art/calligraphy-contemporary')} className="block px-4 py-2 hover:bg-gray-200 w-full text-left">Calligraphy & Contemporary</button></li>
+                                <li><button onClick={() => handleNavigate('/art/flora-fauna')} className="block px-4 py-2 hover:bg-gray-200 w-full text-left">Flora & Fauna</button></li>
+                                <li><button onClick={() => handleNavigate('/art/women-series')} className="block px-4 py-2 hover:bg-gray-200 w-full text-left">Women Series</button></li>
+                                <li><button onClick={() => handleNavigate('/art/collection')} className="block px-4 py-2 hover:bg-gray-200 w-full text-left">View All</button></li>
                             </ul>
                         )}
                     </li>
-                    <li><Link href="/coaching" className="hover:underline"><span className="text-lg">Coaching</span></Link></li>
-                    <li><Link href="/products" className="hover:underline"><span className="text-lg">Products</span></Link></li>
-                    <li><Link href="/contact" className="hover:underline"><span className="text-lg">Contact Me</span></Link></li>
-                    <li><Link href="/about" className="hover:underline"><span className="text-lg">About Me</span></Link></li>
+                    <li><button onClick={() => handleNavigate('/coaching')} className="hover:underline"><span className="text-lg">Coaching</span></button></li>
+                    <li><button onClick={() => handleNavigate('/products')} className="hover:underline"><span className="text-lg">Products</span></button></li>
+                    <li><button onClick={() => handleNavigate('/contact')} className="hover:underline"><span className="text-lg">Contact Me</span></button></li>
+                    <li><button onClick={() => handleNavigate('/about')} className="hover:underline"><span className="text-lg">About Me</span></button></li>
                 </ul>
             </nav>
             <div className="flex space-x-6 pr-5">
@@ -91,10 +104,15 @@ const Header = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
                     </svg>
                 </button>
-                <Link href="/cart" className="hover:underline">
+                <Link href="/cart" className="hover:underline relative" onClick={() => { setDropdownOpen(false); setMenuOpen(false); }}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/>
                     </svg>
+                    {cartCount > 0 && (
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                            {cartCount}
+                        </span>
+                    )}
                 </Link>
             </div>
             {isSearchOpen && (
