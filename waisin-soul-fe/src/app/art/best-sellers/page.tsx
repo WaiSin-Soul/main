@@ -2,61 +2,20 @@
 import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import Image from 'next/image';
-import ProductModal from '../../components/ProductModal';
-
-interface Product {
-    id: number;
-    name: string;
-    description: string;
-    price: string;
-    image: string;
-    details: string;
-}
-
-const bestSellersData: Product[] = [
-    { 
-        id: 1, 
-        name: 'Best Seller 1', 
-        description: 'Description for best seller 1',
-        price: '$299.99',
-        image: '/images/feature1.webp',
-        details: 'Premium quality artwork. High-resolution print on archival canvas. Perfect for any room.'
-    },
-    { 
-        id: 2, 
-        name: 'Best Seller 2', 
-        description: 'Description for best seller 2',
-        price: '$349.99',
-        image: '/images/feature2.webp',
-        details: 'Exquisite design with vibrant colors. Limited edition. Hand-finished details.'
-    },
-    { 
-        id: 3, 
-        name: 'Best Seller 3', 
-        description: 'Description for best seller 3',
-        price: '$399.99',
-        image: '/images/feature3.webp',
-        details: 'Professional grade print. Sustainable materials. Frame included.'
-    },
-];
+import Link from 'next/link';
+import { getArtPiecesByCollection } from '../../data/products';
 
 const BestSellers = () => {
-    const [filteredArtworks, setFilteredArtworks] = useState<Product[]>(bestSellersData);
-    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const allArtworks = getArtPiecesByCollection('best-sellers');
+    const [filteredArtworks, setFilteredArtworks] = useState(allArtworks);
 
     const handleSearch = (query: string) => {
         const lowercasedQuery = query.toLowerCase();
-        const filtered = bestSellersData.filter(artwork =>
+        const filtered = allArtworks.filter(artwork =>
             artwork.name.toLowerCase().includes(lowercasedQuery) ||
             artwork.description.toLowerCase().includes(lowercasedQuery)
         );
         setFilteredArtworks(filtered);
-    };
-
-    const handleViewDetails = (product: Product) => {
-        setSelectedProduct(product);
-        setIsModalOpen(true);
     };
 
     return (
@@ -69,29 +28,30 @@ const BestSellers = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredArtworks.map(artwork => (
-                    <div key={artwork.id} className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <Link
+                        key={artwork.id}
+                        href={`/art/best-sellers/${artwork.id}`}
+                        className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                    >
                         <div className="relative h-48 w-full">
                             <Image
                                 src={artwork.image}
                                 alt={artwork.name}
                                 fill
-                                className="object-cover"
+                                className="object-cover hover:scale-105 transition-transform duration-300"
                             />
                         </div>
                         <div className="p-6">
                             <div className="flex justify-between items-start mb-2">
                                 <h2 className="text-xl font-semibold text-white">{artwork.name}</h2>
-                                <span className="text-blue-500 font-bold">{artwork.price}</span>
+                                <span className="text-blue-500 font-bold">${artwork.basePrice.toFixed(2)}</span>
                             </div>
                             <p className="text-gray-300 mb-4">{artwork.description}</p>
-                            <button 
-                                onClick={() => handleViewDetails(artwork)}
-                                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
-                            >
+                            <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200 text-center">
                                 View Details
-                            </button>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
             {filteredArtworks.length === 0 && (
@@ -99,15 +59,6 @@ const BestSellers = () => {
                     No artworks found matching your search.
                 </div>
             )}
-
-            <ProductModal
-                product={selectedProduct}
-                isOpen={isModalOpen}
-                onClose={() => {
-                    setIsModalOpen(false);
-                    setSelectedProduct(null);
-                }}
-            />
         </div>
     );
 };

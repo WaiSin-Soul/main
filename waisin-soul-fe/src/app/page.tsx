@@ -48,51 +48,61 @@ export default function Home() {
 
   const featuredItems = [
     {
+      id: 'seeking-knowledge-laptop',
       title: "SEEKING KNOWLEDGE Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature1.webp",
     },
     {
+      id: 'serenity-laptop',
       title: "SERENITY Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature2.webp",
     },
     {
+      id: 'ocean-spirit-laptop',
       title: "OCEAN SPIRIT Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature3.webp",
     },
     {
+      id: 'seeking-knowledge-laptop',
       title: "EXPERIENCING GREATNESS Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature4.webp",
     },
     {
+      id: 'seeking-knowledge-laptop',
       title: "SEEKING KNOWLEDGE Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature1.webp",
     },
     {
+      id: 'serenity-laptop',
       title: "SERENITY Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature2.webp",
     },
     {
+      id: 'ocean-spirit-laptop',
       title: "OCEAN SPIRIT Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature3.webp",
     },
     {
+      id: 'seeking-knowledge-laptop',
       title: "EXPERIENCING GREATNESS Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature4.webp",
     },
     {
+      id: 'seeking-knowledge-laptop',
       title: "SEEKING KNOWLEDGE Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature1.webp",
     },
     {
+      id: 'serenity-laptop',
       title: "SERENITY Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature2.webp",
@@ -123,17 +133,19 @@ export default function Home() {
             link={largeCard.link}
           />
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mx-40">
-          {cards.map((card, index) => (
-            <Card
-              key={index}
-              title={card.title}
-              description={card.description}
-              imageSrc={card.imageSrc}
-              link={card.link}
-            />
-          ))}
+        <div className="my-8 w-full">
+          <h1 className="font-kalam text-4xl font-bold mb-4 mx-40">Services</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mx-40">
+            {cards.map((card, index) => (
+              <Card
+                key={index}
+                title={card.title}
+                description={card.description}
+                imageSrc={card.imageSrc}
+                link={card.link}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Centering the Featured Collection */}
