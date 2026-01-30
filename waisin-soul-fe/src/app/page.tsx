@@ -108,11 +108,13 @@ export default function Home() {
       imageSrc: "/images/feature2.webp",
     },
     {
+      id: 'ocean-spirit-laptop',
       title: "OCEAN SPIRIT Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature3.webp",
     },
     {
+      id: 'seeking-knowledge-laptop',
       title: "EXPERIENCING GREATNESS Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature4.webp",

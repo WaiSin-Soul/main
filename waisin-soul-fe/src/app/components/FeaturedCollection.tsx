@@ -20,7 +20,7 @@ const FeaturedCollection: React.FC<{ items: FeaturedItem[] }> = ({ items }) => {
                     return (
                         <Link 
                             key={index} 
-                            href={`/art/best-sellers/${item.id}`}
+                            href={`/products/${item.id}`}
                             className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
                         >
                             <Image
