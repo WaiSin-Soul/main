@@ -1,20 +1,26 @@
-import { NextResponse } from "next/server"
-import { supabaseAdmin } from "@/lib/supabase-server"
+import { NextResponse } from "next/server";
+import { supabaseAdmin } from "../../../lib/supabase-admin";
+import { z } from "zod";
+
+const schema = z.object({
+  name: z.string(),
+  price: z.number(),
+  image_url: z.string(),
+});
 
 export async function POST(req: Request) {
-  const body = await req.json()
+  const body = await req.json();
+  const parsed = schema.safeParse(body);
 
-  const { name, price, image_url } = body
-
-  const { error } = await supabaseAdmin.from("products").insert({
-    name,
-    price,
-    image_url,
-  })
-
-  if (error) {
-    return NextResponse.json({ error }, { status: 400 })
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Invalid input" }, { status: 400 });
   }
 
-  return NextResponse.json({ success: true })
+  const { error } = await supabaseAdmin.from("products").insert(parsed.data);
+
+  if (error) {
+    return NextResponse.json({ error }, { status: 400 });
+  }
+
+  return NextResponse.json({ success: true });
 }

@@ -1,47 +1,96 @@
-"use client"
+import { createClient } from "../../lib/supabase-server";
+import Image from "next/image";
 
-import { useState } from "react"
-import { supabase } from "@/lib/supabase-browser"
+type Product = {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  image_url: string | null;
+  stock: number;
+  created_at: string;
+};
 
-export default function AdminProducts() {
-  const [name, setName] = useState("")
-  const [price, setPrice] = useState("")
-  const [file, setFile] = useState<File | null>(null)
+export default async function AdminProductsPage() {
+  const supabase = await createClient();
 
-  const handleUpload = async () => {
-    if (!file) return
+  const { data: products, error } = await supabase
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-    const fileName = `${Date.now()}-${file.name}`
-
-    const { data, error } = await supabase.storage
-      .from("product-images")
-      .upload(fileName, file)
-
-    if (error) {
-      console.error(error)
-      return
-    }
-
-    const imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/product-images/${fileName}`
-
-    await fetch("/api/admin/products", {
-      method: "POST",
-      body: JSON.stringify({
-        name,
-        price: parseFloat(price),
-        image_url: imageUrl,
-      }),
-    })
-
-    alert("Product created")
+  if (error) {
+    console.error(error);
+    return <div className="p-6">Failed to load products.</div>;
   }
 
   return (
-    <div>
-      <input placeholder="Name" onChange={e => setName(e.target.value)} />
-      <input placeholder="Price" onChange={e => setPrice(e.target.value)} />
-      <input type="file" onChange={e => setFile(e.target.files?.[0] || null)} />
-      <button onClick={handleUpload}>Create Product</button>
+    <div className="p-8 space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold">Products</h1>
+
+        <a
+          href="/admin/products/new"
+          className="px-4 py-2 bg-black text-white rounded-lg hover:opacity-80"
+        >
+          Add Product
+        </a>
+      </div>
+
+      {products?.length === 0 && (
+        <p className="text-gray-500">No products created yet.</p>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {products?.map((product: Product) => (
+          <div
+            key={product.id}
+            className="border rounded-xl p-4 bg-white shadow-sm space-y-3"
+          >
+            {product.image_url && (
+              <div className="relative w-full h-48">
+                <Image
+                  src={product.image_url}
+                  alt={product.name}
+                  fill
+                  className="object-cover rounded-lg"
+                />
+              </div>
+            )}
+
+            <div>
+              <h2 className="font-semibold text-lg">{product.name}</h2>
+              <p className="text-sm text-gray-500 line-clamp-2">
+                {product.description}
+              </p>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <span className="font-bold">${product.price.toFixed(2)}</span>
+
+              <span className="text-sm text-gray-600">
+                Stock: {product.stock}
+              </span>
+            </div>
+
+            <div className="flex justify-between text-sm pt-2">
+              <a
+                href={`/admin/products/${product.id}`}
+                className="text-blue-600 hover:underline"
+              >
+                Edit
+              </a>
+
+              <a
+                href={`/admin/products/${product.id}/delete`}
+                className="text-red-600 hover:underline"
+              >
+                Delete
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
-  )
+  );
 }

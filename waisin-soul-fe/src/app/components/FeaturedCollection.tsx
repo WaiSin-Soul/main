@@ -38,9 +38,9 @@ const FeaturedCollection: React.FC<{ items: FeaturedItem[] }> = ({ items }) => {
                     );
                 })}
             </div>
-            <a href="/art/collection" className="mt-4 inline-block bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+            <Link href="/art/collection" className="mt-4 inline-block bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
                 View all
-            </a>
+            </Link>
         </div>
     );
 };
