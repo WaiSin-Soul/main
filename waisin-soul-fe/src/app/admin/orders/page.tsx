@@ -15,7 +15,7 @@ type Order = {
   created_at: string;
   email: string;
   status: string;
-  total_price: number;
+  total_amount: number;
   order_items: OrderItem[];
 };
 
@@ -24,24 +24,7 @@ export default async function AdminOrdersPage() {
 
   const { data: ordersData, error } = await supabase
     .from("orders")
-    .select(
-      `
-      id,
-      created_at,
-      email,
-      status,
-      total_price,
-      order_items (
-        id,
-        quantity,
-        price_at_purchase,
-        products (
-          name,
-          image_url
-        )
-      )
-    `,
-    )
+    .select(`*`)
     .order("created_at", { ascending: false });
 
   const orders = ordersData as Order[] | null;
@@ -60,7 +43,7 @@ export default async function AdminOrdersPage() {
       {orders?.map((order: Order) => (
         <div
           key={order.id}
-          className="border rounded-xl p-6 bg-white shadow-sm space-y-4"
+          className="border rounded-xl p-6 bg-[#1a1a1a] shadow-sm space-y-4"
         >
           <div className="flex justify-between items-center">
             <div>
@@ -71,20 +54,25 @@ export default async function AdminOrdersPage() {
             </div>
 
             <div className="text-right">
-              <p className="font-bold">${order.total_price.toFixed(2)}</p>
+              <p className="font-bold">${order.total_amount.toFixed(2)}</p>
               <p className="text-sm capitalize text-gray-600">{order.status}</p>
             </div>
           </div>
 
           <div className="space-y-2">
-            {order.order_items.map((item) => (
+            {(order.order_items ?? []).map((item) => (
               <div key={item.id} className="flex justify-between text-sm">
                 <span>
                   {item.products?.name} × {item.quantity}
                 </span>
-
                 <span>
-                  ${(item.price_at_purchase * item.quantity).toFixed(2)}
+                  $
+                  {(
+                    (item.price_at_purchase ??
+                      item.unit_price ??
+                      item.price ??
+                      0) * item.quantity
+                  ).toFixed(2)}
                 </span>
               </div>
             ))}

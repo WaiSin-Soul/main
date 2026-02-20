@@ -1,9 +1,35 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { getProduct, ProductOption, Product } from "@/app/data/products";
+import { ProductOption, Product } from "@/app/data/products";
 import ProductDetails from "@/app/components/ProductDetails";
 import { useCart } from "@/app/context/CartContext";
+
+type BackendProduct = {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  image_url: string | null;
+  category: Product["collection"];
+};
+
+const defaultMaterials: ProductOption[] = [
+  {
+    id: "mat-default",
+    name: "Standard Print",
+    type: "material",
+    value: "standard-print",
+  },
+];
+
+const defaultSizes: ProductOption[] = [
+  { id: "size-default", name: "Default Size", type: "size", value: "default" },
+];
+
+const defaultStyles: ProductOption[] = [
+  { id: "style-default", name: "Standard", type: "style", value: "standard" },
+];
 
 const ProductPage = () => {
   const params = useParams();
@@ -13,11 +39,44 @@ const ProductPage = () => {
   const { addItem } = useCart();
 
   useEffect(() => {
-    // Decode URL-encoded product ID
-    const decodedId = decodeURIComponent(productId);
-    const foundProduct = getProduct(decodedId);
-    setProduct(foundProduct);
-    setLoading(false);
+    const fetchProduct = async () => {
+      try {
+        const decodedId = decodeURIComponent(productId);
+        const response = await fetch(
+          `/api/admin/products?collection=products&id=${encodeURIComponent(decodedId)}`,
+        );
+
+        if (!response.ok) {
+          setProduct(undefined);
+          return;
+        }
+
+        const data = (await response.json()) as BackendProduct[];
+        const item = data[0];
+
+        if (!item) {
+          setProduct(undefined);
+          return;
+        }
+
+        setProduct({
+          id: item.id,
+          name: item.name,
+          description: item.description ?? "",
+          basePrice: item.price,
+          image: item.image_url ?? "/images/feature1.webp",
+          details: item.description ?? "",
+          materials: defaultMaterials,
+          sizes: defaultSizes,
+          styles: defaultStyles,
+          collection: "products",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
   }, [productId]);
 
   const handleAddToCart = (

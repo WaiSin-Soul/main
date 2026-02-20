@@ -1,24 +1,85 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { getArtPiece, ProductOption } from "@/app/data/products";
+import { Product, ProductOption } from "@/app/data/products";
 import ProductDetails from "@/app/components/ProductDetails";
 import { useCart } from "@/app/context/CartContext";
+
+type BackendProduct = {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  image_url: string | null;
+  category: Product["collection"];
+};
+
+const defaultMaterials: ProductOption[] = [
+  {
+    id: "mat-default",
+    name: "Standard Print",
+    type: "material",
+    value: "standard-print",
+  },
+];
+
+const defaultSizes: ProductOption[] = [
+  { id: "size-default", name: "Default Size", type: "size", value: "default" },
+];
+
+const defaultStyles: ProductOption[] = [
+  { id: "style-default", name: "Standard", type: "style", value: "standard" },
+];
 
 const ArtProductPage = () => {
   const params = useParams();
   const artId = params.id as string;
-  const [product, setProduct] = useState<any>(null);
+  const collection = params.collection as string;
+  const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const { addItem } = useCart();
 
   useEffect(() => {
-    // Decode URL-encoded product ID
-    const decodedId = decodeURIComponent(artId);
-    const foundProduct = getArtPiece(decodedId);
-    setProduct(foundProduct);
-    setLoading(false);
-  }, [artId]);
+    const fetchProduct = async () => {
+      try {
+        const decodedId = decodeURIComponent(artId);
+        const decodedCollection = decodeURIComponent(collection);
+        const response = await fetch(
+          `/api/admin/products?collection=${encodeURIComponent(decodedCollection)}&id=${encodeURIComponent(decodedId)}`,
+        );
+
+        if (!response.ok) {
+          setProduct(null);
+          return;
+        }
+
+        const data = (await response.json()) as BackendProduct[];
+        const item = data[0];
+
+        if (!item) {
+          setProduct(null);
+          return;
+        }
+
+        setProduct({
+          id: item.id,
+          name: item.name,
+          description: item.description ?? "",
+          basePrice: item.price,
+          image: item.image_url ?? "/images/feature1.webp",
+          details: item.description ?? "",
+          materials: defaultMaterials,
+          sizes: defaultSizes,
+          styles: defaultStyles,
+          collection: item.category,
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [artId, collection]);
 
   const handleAddToCart = (
     productId: string,

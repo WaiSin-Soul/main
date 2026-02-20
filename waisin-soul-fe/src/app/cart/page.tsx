@@ -23,6 +23,8 @@ const Cart = () => {
   });
 
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,8 +34,8 @@ const Cart = () => {
     }));
   };
 
-  const handlePlaceOrder = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handlePlaceOrder = async () => {
+    setSubmitError(null);
 
     // Validate form
     if (
@@ -59,31 +61,55 @@ const Cart = () => {
       return;
     }
 
-    // Place order
-    console.log("Order placed:", { formData, items, total: getTotalPrice() });
-    setOrderPlaced(true);
-    clearCart();
+    try {
+      setIsSubmitting(true);
 
-    // Reset form
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      address: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      country: "",
-      cardNumber: "",
-      cardName: "",
-      expiryDate: "",
-      cvv: "",
-    });
+      const response = await fetch("/api/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          items,
+        }),
+      });
 
-    // Show success message for 3 seconds then redirect
-    setTimeout(() => {
-      setOrderPlaced(false);
-    }, 3000);
+      if (!response.ok) {
+        const payload = (await response.json()) as { error?: string };
+        throw new Error(payload.error || "Failed to place order");
+      }
+
+      setOrderPlaced(true);
+      clearCart();
+
+      // Reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        address: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        country: "",
+        cardNumber: "",
+        cardName: "",
+        expiryDate: "",
+        cvv: "",
+      });
+
+      // Show success message for 3 seconds then redirect
+      setTimeout(() => {
+        setOrderPlaced(false);
+      }, 3000);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Failed to place order",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (orderPlaced) {
@@ -375,11 +401,15 @@ const Cart = () => {
             </div>
 
             {/* Place Order Button */}
+            {submitError && (
+              <p className="text-red-400 text-sm mt-4">{submitError}</p>
+            )}
             <button
               onClick={handlePlaceOrder}
+              disabled={isSubmitting}
               className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200 mt-6"
             >
-              Place Order
+              {isSubmitting ? "Placing Order..." : "Place Order"}
             </button>
           </div>
         </div>

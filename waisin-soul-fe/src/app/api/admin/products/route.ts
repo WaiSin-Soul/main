@@ -6,7 +6,47 @@ const schema = z.object({
   name: z.string(),
   price: z.number(),
   image_url: z.string(),
+  description: z.string().optional(),
+  stock: z.number().int().nonnegative().optional(),
+  collection: z.string().optional(),
 });
+
+export async function GET(request: Request) {
+  try {
+    const url = new URL(request.url);
+    const collection = url.searchParams.get("collection");
+    const id = url.searchParams.get("id");
+
+    const filters: Record<string, string> = {};
+    if (collection) filters.category = collection;
+    if (id) filters.id = id;
+
+    const { data, error } = await supabaseAdmin
+      .from("products")
+      .select("*")
+      .match(filters)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Products fetch error:", error);
+      return NextResponse.json(
+        { 
+          error: error.message,
+          details: error.details || error.hint || null
+        }, 
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json(data ?? []);
+  } catch (err) {
+    console.error("Products API exception:", err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Unknown error" },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -19,7 +59,7 @@ export async function POST(req: Request) {
   const { error } = await supabaseAdmin.from("products").insert(parsed.data);
 
   if (error) {
-    return NextResponse.json({ error }, { status: 400 });
+    return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
   return NextResponse.json({ success: true });
