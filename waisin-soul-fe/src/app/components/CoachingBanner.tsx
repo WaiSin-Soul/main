@@ -31,7 +31,7 @@ const CoachingBanner = () => {
             </p>
             <p className="mb-8 text-lg">
               Do you want to be absolutely clear about what is
-              blocking you? Let's go ahead and do a quick 30-minute call.
+              blocking you? Let's go ahead and do a quick 45-minute call.
             </p>
             <Link 
               href="/coaching/clarity-session"
@@ -42,7 +42,7 @@ const CoachingBanner = () => {
               </button>
             </Link>
             <p className="mt-4 text-sm font-light">
-              FOR 30-MIN CLARITY SESSION
+              FOR 45-MIN CLARITY SESSION
             </p>
           </div>
         </div>

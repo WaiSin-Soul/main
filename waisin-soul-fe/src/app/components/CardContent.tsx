@@ -19,7 +19,7 @@ const CardContent: React.FC<CardContentProps> = ({ title, description, link }) =
             >
                 Click Here
             </a>
-            {link.includes("/coaching") && <p className="text-xs text-gray-500 mt-2">FOR 30-MINS CLARITY SESSION</p>}
+            {link.includes("/coaching") && <p className="text-xs text-gray-500 mt-2">FOR 45-MINS CLARITY SESSION</p>}
         </div>
     );
 };

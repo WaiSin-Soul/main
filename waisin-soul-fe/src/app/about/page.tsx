@@ -79,9 +79,8 @@ const About = () => {
                                 <div>
                                     <h3 className="text-lg font-medium text-white mb-2">Education</h3>
                                     <p className="text-gray-300">
-                                        Bachelor of Science in Computer Science<br />
-                                        University Name<br />
-                                        2014 - 2018
+                                        Bachelor of Arts<br />
+                                        Hong Kong College of Education in Arts
                                     </p>
                                 </div>
                                 <div>
