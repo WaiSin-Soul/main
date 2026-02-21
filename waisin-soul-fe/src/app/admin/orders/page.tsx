@@ -35,7 +35,7 @@ export default async function AdminOrdersPage() {
   }
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       <h1 className="text-3xl font-bold">Orders</h1>
 
       {orders?.length === 0 && <p className="text-gray-500">No orders yet.</p>}
@@ -45,7 +45,7 @@ export default async function AdminOrdersPage() {
           key={order.id}
           className="border rounded-xl p-6 bg-[#1a1a1a] shadow-sm space-y-4"
         >
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <div>
               <p className="font-semibold">{order.email}</p>
               <p className="text-sm text-gray-500">

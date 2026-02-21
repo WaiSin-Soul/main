@@ -9,7 +9,7 @@ interface CardImageProps {
 const CardImage: React.FC<CardImageProps> = ({ src, alt }) => {
     return (
         <Image
-            className="w-1/2 h-auto object-cover"
+            className="w-full sm:w-1/2 h-56 sm:h-auto object-cover"
             src={src}
             alt={alt}
             width={600}

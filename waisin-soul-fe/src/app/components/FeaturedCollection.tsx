@@ -12,8 +12,8 @@ interface FeaturedItem {
 
 const FeaturedCollection: React.FC<{ items: FeaturedItem[] }> = ({ items }) => {
     return (
-        <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4 font-kalam">Featured Collection</h2>
+        <div className="text-center w-full px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4 font-kalam">Featured Collection</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto max-w-6xl">
                 {items.map((item, index) => {
                     // const productId = item.id || `product-${index}`;
@@ -38,7 +38,7 @@ const FeaturedCollection: React.FC<{ items: FeaturedItem[] }> = ({ items }) => {
                     );
                 })}
             </div>
-            <Link href="/art/collection" className="mt-4 inline-block bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+            <Link href="/art/collection" className="mt-6 inline-block bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
                 View all
             </Link>
         </div>

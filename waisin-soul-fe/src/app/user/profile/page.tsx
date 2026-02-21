@@ -210,9 +210,9 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-white p-8">
+    <div className="min-h-screen bg-background text-white px-4 sm:px-6 lg:px-8 py-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <h1 className="text-3xl font-bold">My Account</h1>
           <button
             onClick={handleLogout}
@@ -224,7 +224,7 @@ const UserProfile = () => {
 
         {/* Profile Header */}
         <div className="bg-[#2a2a2a] rounded-lg p-6 mb-8">
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
             <div className="w-24 h-24 rounded-full bg-gray-700 flex items-center justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -249,7 +249,7 @@ const UserProfile = () => {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex gap-4 mb-8">
+        <div className="flex flex-wrap gap-4 mb-8">
           <button
             onClick={() => setActiveTab("orders")}
             className={`px-6 py-3 rounded-lg ${
@@ -288,7 +288,7 @@ const UserProfile = () => {
                       key={order.id}
                       className="border border-gray-700 rounded-lg p-6"
                     >
-                      <div className="flex justify-between items-center mb-4">
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
                         <div>
                           <p className="text-gray-400">Order #{order.id}</p>
                           <p className="text-gray-400">
@@ -315,7 +315,7 @@ const UserProfile = () => {
                         {(order.order_items ?? []).map((item) => (
                           <div
                             key={item.id}
-                            className="flex justify-between items-center"
+                            className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
                           >
                             <div>
                               <p className="font-medium">
@@ -341,7 +341,7 @@ const UserProfile = () => {
             </div>
           ) : (
             <div>
-              <div className="flex justify-between items-center mb-6">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                 <h3 className="text-xl font-semibold">Account Settings</h3>
                 <button
                   onClick={() => {

@@ -4,10 +4,10 @@ import Image from 'next/image';
 const About = () => {
     return (
         <div className="container mx-auto px-4 py-12">
-            <h1 className="text-4xl font-bold mb-8 text-center text-white">About Me</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">About Me</h1>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Main Content */}
-                <div className="md:col-span-2 bg-[#1a1a1a] rounded-lg shadow-lg p-6">
+                <div className="md:col-span-2 bg-[#1a1a1a] rounded-lg shadow-lg p-6 order-2 md:order-1">
                     <div className="space-y-6">
                         <div>
                             <h2 className='text-3xl font-normal tracking-widest mb-8 mt-4 text-white'>WAISIN TONG-DARBONNE</h2>
@@ -61,7 +61,7 @@ const About = () => {
                 </div>
 
                 {/* Aside */}
-                <div className="bg-[#1a1a1a] rounded-lg shadow-lg p-6">
+                <div className="bg-[#1a1a1a] rounded-lg shadow-lg p-6 order-1 md:order-2">
                     <div className="space-y-6">
                         <div className="flex justify-center">
                             <div className="relative w-48 h-48 rounded-full overflow-hidden">

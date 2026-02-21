@@ -8,10 +8,10 @@ interface CardContentProps {
 
 const CardContent: React.FC<CardContentProps> = ({ title, description, link }) => {
     return (
-        <div className="p-4 flex flex-col justify-between">
+        <div className="p-4 flex flex-col justify-between flex-1">
             <div>
                 <h2 className="text-lg font-bold mb-2 text-black font-kalam">{title}</h2>
-                <p className="text-gray-700 mb-4">{description}</p>
+                <p className="text-gray-700 mb-4 text-sm sm:text-base">{description}</p>
             </div>
             <a
                 href={link}

@@ -147,7 +147,7 @@ const Cart = () => {
               <h2 className="text-2xl font-semibold mb-6 text-white">
                 Shipping Information
               </h2>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     First Name
@@ -197,7 +197,7 @@ const Cart = () => {
                   className="w-full p-3 bg-[#2a2a2a] border border-gray-700 rounded-md text-white focus:outline-none focus:border-blue-500"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     City
@@ -223,7 +223,7 @@ const Cart = () => {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     ZIP Code
@@ -281,7 +281,7 @@ const Cart = () => {
                   className="w-full p-3 bg-[#2a2a2a] border border-gray-700 rounded-md text-white focus:outline-none focus:border-blue-500"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Expiry Date

@@ -4,13 +4,13 @@ import Link from 'next/link';
 
 const Footer = () => {
     return (
-        <footer className="bg-black text-white p-8">
-            <div className="max-w-6xl mx-auto grid grid-cols-5 gap-8">
+        <footer className="bg-black text-white py-10">
+            <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 px-4 sm:px-6 lg:px-8">
                 {/* Info Column */}
                 <div className='space-y-2'>
                     <Link href="/">
                         <Image
-                            className="w-3/4 h-auto object-cover"
+                            className="w-40 sm:w-48 h-auto object-contain"
                             src="/images/waisin_soul_logo.png"
                             alt="logo"
                             width={300}
@@ -84,7 +84,7 @@ const Footer = () => {
             </div>
 
             {/* Payment Icons */}
-            <div className="max-w-6xl mx-auto mt-8 pt-8 border-t border-gray-800">
+            <div className="max-w-6xl mx-auto mt-8 pt-8 border-t border-gray-800 px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-center items-center gap-4">
                     <Image
                         src="/images/footer/visa.png"

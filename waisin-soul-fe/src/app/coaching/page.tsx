@@ -54,7 +54,7 @@ const Coaching = () => {
     };
     return (
         <div className="container mx-auto px-4 py-12">
-            <h1 className="text-4xl font-bold mb-8 text-center text-white">Coaching Services</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">Coaching Services</h1>
             <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Free Tier Card */}
                 <div className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden">

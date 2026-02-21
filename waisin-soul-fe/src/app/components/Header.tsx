@@ -47,12 +47,12 @@ const Header = () => {
     const cartCount = getTotalItems();
 
     return (
-        <header className="flex justify-between items-center p-5 bg-header text-white relative">
-            <div className="flex items-center gap-x-8 mx-32">
+        <header className="flex justify-between items-center px-4 sm:px-6 lg:px-12 py-4 bg-header text-white relative">
+            <div className="flex items-center gap-x-4 sm:gap-x-8">
                 <h1 className="text-xl font-bold">
                     <Link href="/" onClick={() => { setDropdownOpen(false); setMenuOpen(false); }}>
                         <Image
-                            className="w-3/4 h-auto object-cover"
+                            className="w-40 sm:w-56 h-auto object-contain"
                             src="/images/waisin_soul_logo.png"
                             alt="logo"
                             width={300}
@@ -66,7 +66,7 @@ const Header = () => {
                     </svg>
                 </button>
             </div>
-            <nav className={`md:flex ${isMenuOpen ? 'block' : 'hidden'} absolute md:static bg-header w-full md:w-auto top-16 left-0`}>
+            <nav className={`md:flex ${isMenuOpen ? 'block' : 'hidden'} absolute md:static bg-header w-full md:w-auto top-16 left-0 z-20`}>
                 <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 p-4 md:p-0">
                     <li className="relative">
                         <button onClick={toggleDropdown} className="hover:underline focus:outline-none">
@@ -94,7 +94,7 @@ const Header = () => {
                     <li><button onClick={() => handleNavigate('/about')} className="hover:underline"><span className="text-lg">About Me</span></button></li>
                 </ul>
             </nav>
-            <div className="flex space-x-6 pr-5">
+            <div className="flex space-x-4 sm:space-x-6">
                 <button className="hover:underline" onClick={toggleSearch}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>

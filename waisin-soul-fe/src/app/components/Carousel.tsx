@@ -39,10 +39,10 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
     }, [currentIndex, nextSlide]);
 
     return (
-        <div className="relative w-full h-[600px] bg-gray-100">
+        <div className="relative w-full h-[280px] sm:h-[420px] lg:h-[600px] bg-gray-100">
             <div className="overflow-hidden h-full relative flex items-center justify-center">
                 <Image
-                    className="max-h-full max-w-full object-cover"
+                    className="h-full w-full object-cover"
                     src={items[currentIndex].src}
                     alt={items[currentIndex].alt}
                     width={1920}

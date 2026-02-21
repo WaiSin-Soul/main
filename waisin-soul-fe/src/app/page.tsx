@@ -123,11 +123,11 @@ export default function Home() {
 
   return (
     <div className="h-full mb-4 grid grid-rows items-center justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <div className="w-full lg:w-full h-full">
+      <main className="flex flex-col gap-8 row-start-2 items-center justify-center sm:items-start w-full">
+        <div className="w-full h-full">
           <Carousel items={carouselItems} />
         </div>
-        <div className="mx-40">
+        <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto">
           <Card
             title={largeCard.title}
             description={largeCard.description}
@@ -136,8 +136,9 @@ export default function Home() {
           />
         </div>
         <div className="my-8 w-full">
-          <h1 className="font-kalam text-4xl font-bold mb-4 mx-40">Services</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mx-40">
+          <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto">
+            <h1 className="font-kalam text-3xl sm:text-4xl font-bold mb-4">Services</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {cards.map((card, index) => (
               <Card
                 key={index}
@@ -147,6 +148,7 @@ export default function Home() {
                 link={card.link}
               />
             ))}
+            </div>
           </div>
         </div>
 

@@ -157,8 +157,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
           </div>
 
           {/* Quantity and Add to Cart */}
-          <div className="flex gap-4 items-center mb-12">
-            <div className="flex items-center border border-gray-600">
+          <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center mb-12">
+            <div className="flex items-center border border-gray-600 w-full sm:w-auto justify-between">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
                 className="px-4 py-2 text-white hover:bg-gray-700 text-lg"
@@ -177,7 +177,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             </div>
             <button
               onClick={handleAddToCart}
-              className="flex-1 bg-black hover:bg-gray-900 text-white font-bold py-3 px-6 transition-colors"
+              className="w-full sm:flex-1 bg-black hover:bg-gray-900 text-white font-bold py-3 px-6 transition-colors"
             >
               ADD TO CART
             </button>
@@ -196,7 +196,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
               <h4 className="text-lg font-semibold text-white mb-4">
                 {selectedMaterial.name}
               </h4>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {product.materials.map((material) => (
                   <button
                     key={material.id}
