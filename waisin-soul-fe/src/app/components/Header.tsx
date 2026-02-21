@@ -67,11 +67,11 @@ const Header = () => {
                 </button>
             </div>
             <nav className={`md:flex ${isMenuOpen ? 'block' : 'hidden'} absolute md:static bg-header w-full md:w-auto top-16 left-0 z-20`}>
-                <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 p-4 md:p-0">
+                <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-12 p-4 md:p-0">
                     <li className="relative">
                         <button onClick={toggleDropdown} className="hover:underline focus:outline-none">
                             <div className="flex flex-row">
-                                <span className="text-lg">Art Collection</span>
+                                <span className="text-2xl">Art Collection</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                                 </svg>
@@ -88,10 +88,10 @@ const Header = () => {
                             </ul>
                         )}
                     </li>
-                    <li><button onClick={() => handleNavigate('/coaching')} className="hover:underline"><span className="text-lg">Coaching</span></button></li>
-                    <li><button onClick={() => handleNavigate('/products')} className="hover:underline"><span className="text-lg">Products</span></button></li>
-                    <li><button onClick={() => handleNavigate('/contact')} className="hover:underline"><span className="text-lg">Contact Me</span></button></li>
-                    <li><button onClick={() => handleNavigate('/about')} className="hover:underline"><span className="text-lg">About Me</span></button></li>
+                    <li><button onClick={() => handleNavigate('/coaching')} className="hover:underline"><span className="text-2xl">Coaching</span></button></li>
+                    <li><button onClick={() => handleNavigate('/products')} className="hover:underline"><span className="text-2xl">Products</span></button></li>
+                    <li><button onClick={() => handleNavigate('/contact')} className="hover:underline"><span className="text-2xl">Contact Me</span></button></li>
+                    <li><button onClick={() => handleNavigate('/about')} className="hover:underline"><span className="text-2xl">About Me</span></button></li>
                 </ul>
             </nav>
             <div className="flex space-x-4 sm:space-x-6">
