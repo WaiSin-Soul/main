@@ -1,8 +1,47 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!email) {
+      setMessage("Please enter your email");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setMessage("");
+
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage(data.message || "Successfully subscribed!");
+        setEmail("");
+      } else {
+        setMessage(data.error || "Failed to subscribe");
+      }
+    } catch (error) {
+      setMessage("An error occurred. Please try again.");
+      console.error("Subscribe error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <footer className="bg-black text-white py-10">
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 px-4 sm:px-6 lg:px-8">
@@ -47,6 +86,8 @@ const Footer = () => {
           <div className="text-sm space-y-2 flex flex-col">
             <a
               href="https://www.facebook.com/waisinsoulart"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2"
             >
               <Image
@@ -59,6 +100,8 @@ const Footer = () => {
             </a>
             <a
               href="https://www.facebook.com/waisinlovelifechanger"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2"
             >
               <Image
@@ -71,6 +114,8 @@ const Footer = () => {
             </a>
             <a
               href="https://www.instagram.com/waisinsoul"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2"
             >
               <Image
@@ -87,18 +132,37 @@ const Footer = () => {
         {/* Email Sub Column */}
         <div>
           <h3 className="font-semibold mb-4">Subscribe</h3>
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full p-2 bg-transparent border border-white rounded mb-2 text-sm"
-          />
-          <button className="w-full bg-white text-black py-2 px-4 rounded text-sm">
-            SIGN UP
-          </button>
-          <p className="text-xs mt-2">
-            I&apos;d like to receive exclusive discounts and the latest
-            information.
-          </p>
+          <form onSubmit={handleSubscribe}>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isSubmitting}
+              className="w-full p-2 bg-transparent border border-white rounded mb-2 text-sm disabled:opacity-50"
+              required
+            />
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-white text-black py-2 px-4 rounded text-sm hover:bg-gray-200 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? "SUBSCRIBING..." : "SIGN UP"}
+            </button>
+          </form>
+          {message && (
+            <p
+              className={`text-xs mt-2 ${message.includes("success") || message.includes("already") ? "text-green-400" : "text-red-400"}`}
+            >
+              {message}
+            </p>
+          )}
+          {!message && (
+            <p className="text-xs mt-2">
+              I&apos;d like to receive exclusive discounts and the latest
+              information.
+            </p>
+          )}
         </div>
       </div>
 

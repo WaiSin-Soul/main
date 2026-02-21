@@ -83,42 +83,6 @@ export default function Home() {
       price: "$45.00 CAD",
       imageSrc: "/images/feature2.webp",
     },
-    {
-      id: 'ocean-spirit-laptop',
-      title: "OCEAN SPIRIT Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature3.webp",
-    },
-    {
-      id: 'seeking-knowledge-laptop',
-      title: "EXPERIENCING GREATNESS Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature4.webp",
-    },
-    {
-      id: 'seeking-knowledge-laptop',
-      title: "SEEKING KNOWLEDGE Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature1.webp",
-    },
-    {
-      id: 'serenity-laptop',
-      title: "SERENITY Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature2.webp",
-    },
-    {
-      id: 'ocean-spirit-laptop',
-      title: "OCEAN SPIRIT Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature3.webp",
-    },
-    {
-      id: 'seeking-knowledge-laptop',
-      title: "EXPERIENCING GREATNESS Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature4.webp",
-    },
   ];
 
   return (
@@ -136,7 +100,7 @@ export default function Home() {
           />
         </div>
         <div className="my-8 w-full">
-          <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto">
+          <div className="w-full px-4 sm:px-6 lg:px-8 mx-auto">
             <h1 className="font-kalam text-3xl sm:text-4xl font-bold mb-4">Services</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {cards.map((card, index) => (

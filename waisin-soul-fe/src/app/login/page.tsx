@@ -67,7 +67,7 @@ const Login = () => {
       setError(err instanceof Error ? err.message : "Authentication failed");
     }
   };
-  
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -211,6 +211,8 @@ const Login = () => {
               <div className="text-sm">
                 <a
                   href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="font-medium text-blue-500 hover:text-blue-400"
                 >
                   Forgot your password?

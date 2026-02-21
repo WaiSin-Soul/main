@@ -1,3 +1,4 @@
+// CHANGE BACK TO best-sellers WHEN READY TO SELL STUFF ON WEBSITE
 "use client"
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
@@ -14,7 +15,8 @@ type Artwork = {
     basePrice?: number;
 };
 
-const BestSellers = () => {
+// const BestSellers = () => {
+export default function Featured() {
     const [allArtworks, setAllArtworks] = useState<Artwork[]>([]);
     const [filteredArtworks, setFilteredArtworks] = useState<Artwork[]>([]);
     const [loading, setLoading] = useState(true);
@@ -23,7 +25,8 @@ const BestSellers = () => {
     useEffect(() => {
         const fetchArtworks = async () => {
             try {
-                const response = await fetch('/api/admin/products?collection=best-sellers');
+                // const response = await fetch('/api/admin/products?collection=best-sellers');
+                const response = await fetch('/api/admin/products?collection=featured');
                 if (!response.ok) {
                     throw new Error('Failed to load artworks');
                 }
@@ -67,7 +70,8 @@ const BestSellers = () => {
     return (
         <div className="container mx-auto px-4 py-12">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">Best Sellers</h1>
+                {/* <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">Best Sellers</h1> */}
+                <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">Featured Artworks</h1>
                 <div className="mb-12">
                     <SearchBar onSearch={handleSearch} />
                 </div>
@@ -76,7 +80,8 @@ const BestSellers = () => {
                 {filteredArtworks.map(artwork => (
                     <Link
                         key={artwork.id}
-                        href={`/art/best-sellers/${artwork.id}`}
+                        // href={`/art/best-sellers/${artwork.id}`}
+                        href={`/art/featured/${artwork.id}`}
                         className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                     >
                         <div className="relative h-48 w-full">
@@ -108,5 +113,3 @@ const BestSellers = () => {
         </div>
     );
 };
-
-export default BestSellers; 

@@ -15,12 +15,21 @@ interface Product {
 }
 
 const collectionData: Product[] = [
+  // {
+  //   id: 1,
+  //   name: "Best Sellers",
+  //   description: "Description for collection 1",
+  //   image: "/images/feature1.webp",
+  //   url: "/art/best-sellers",
+  //   details:
+  //     "Premium collection piece showcasing exceptional artistry and craftsmanship.",
+  // },
   {
     id: 1,
-    name: "Best Sellers",
+    name: "Featured",
     description: "Description for collection 1",
     image: "/images/feature1.webp",
-    url: "/art/best-sellers",
+    url: "/art/featured",
     details:
       "Premium collection piece showcasing exceptional artistry and craftsmanship.",
   },
@@ -65,8 +74,8 @@ const collectionData: Product[] = [
 const Collection = () => {
   const [filteredCollection, setFilteredCollection] =
     useState<Product[]>(collectionData);
-//   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-//   const [isModalOpen, setIsModalOpen] = useState(false);
+  //   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  //   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSearch = (query: string) => {
     const lowercasedQuery = query.toLowerCase();

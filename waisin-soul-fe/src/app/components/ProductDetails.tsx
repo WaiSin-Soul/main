@@ -95,6 +95,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             <div className="flex justify-center gap-6">
               <a
                 href="#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
               >
                 <svg
@@ -110,6 +112,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
               </a>
               <a
                 href="#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
               >
                 <svg
@@ -125,6 +129,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
               </a>
               <a
                 href="#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
               >
                 <svg

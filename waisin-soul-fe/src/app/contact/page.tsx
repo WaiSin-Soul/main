@@ -232,12 +232,16 @@ const Contact = () => {
               <p className="text-gray-300 flex flex-col space-y-1">
                 <a
                   href="mailto:waisinsoulart@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-blue-400"
                 >
                   Art: waisinsoulart@gmail.com
                 </a>
                 <a
                   href="mailto:waisin.lovelifechanger@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-blue-400"
                 >
                   Coaching: waisin.lovelifechanger@gmail.com
@@ -251,18 +255,24 @@ const Contact = () => {
               <div className="space-y-1">
                 <a
                   href="https://www.facebook.com/waisinsoulart"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-2"
                 >
                   Facebook - Art
                 </a>
                 <a
                   href="https://www.facebook.com/waisinlovelifechanger"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-2"
                 >
                   Facebook - Coaching
                 </a>
                 <a
                   href="https://www.instagram.com/waisinsoul"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-2"
                 >
                   Instagram
