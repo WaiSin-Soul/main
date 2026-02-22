@@ -1,8 +1,10 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import SearchBar from '../../components/SearchBar';
+import ArtworkModal from '../../components/ArtworkModal';
 import Image from 'next/image';
-import Link from 'next/link';
+// import Link from 'next/link';
 
 type Artwork = {
     id: string;
@@ -19,6 +21,10 @@ const Flora_Fauna = () => {
     const [filteredArtworks, setFilteredArtworks] = useState<Artwork[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [highlightedId, setHighlightedId] = useState<string | null>(null);
+    const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
+    const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         const fetchArtworks = async () => {
@@ -38,6 +44,23 @@ const Flora_Fauna = () => {
         };
         fetchArtworks();
     }, []);
+
+    // Handle highlighting from search
+    useEffect(() => {
+        const highlight = searchParams.get('highlight');
+        if (highlight && !loading) {
+            setHighlightedId(highlight);
+            setTimeout(() => {
+                const element = itemRefs.current[highlight];
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+            setTimeout(() => {
+                setHighlightedId(null);
+            }, 3000);
+        }
+    }, [searchParams, loading]);
 
     const handleSearch = (query: string) => {
         const lowercasedQuery = query.toLowerCase();
@@ -74,11 +97,23 @@ const Flora_Fauna = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredArtworks.map(artwork => (
-                    <Link
+                    <div
                         key={artwork.id}
-                        href={`/art/flora-fauna/${artwork.id}`}
-                        className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                        ref={(el) => { itemRefs.current[artwork.id] = el; }}
+                        className={`transition-all duration-1000 ${
+                            highlightedId === artwork.id
+                                ? 'animate-glow ring-4 ring-blue-500 ring-opacity-75'
+                                : ''
+                        }`}
                     >
+                        {/* <Link
+                            href={`/art/flora-fauna/${artwork.id}`}
+                            className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 block"
+                    > */}
+                        <div
+                            onClick={() => setSelectedArtwork(artwork)}
+                            className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+                        >
                         <div className="relative h-48 w-full">
                             <Image
                                 src={artwork.image_url || '/images/feature1.webp'}
@@ -90,14 +125,16 @@ const Flora_Fauna = () => {
                         <div className="p-6">
                             <div className="flex justify-between items-start mb-2">
                                 <h2 className="text-xl font-semibold text-white">{artwork.name}</h2>
-                                <span className="text-blue-500 font-bold">${(artwork.price || artwork.basePrice || 0).toFixed(2)}</span>
+                                {/* <span className="text-blue-500 font-bold">${(artwork.price || artwork.basePrice || 0).toFixed(2)}</span> */}
                             </div>
                             <p className="text-gray-300 mb-4">{artwork.description}</p>
-                            <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200 text-center">
-                                View Details
+                                {/* <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200 text-center">
+                                    View Details
+                                </div> */}
                             </div>
                         </div>
-                    </Link>
+                        {/* </Link> */}
+                    </div>
                 ))}
             </div>
             {filteredArtworks.length === 0 && (
@@ -105,6 +142,11 @@ const Flora_Fauna = () => {
                     No artworks found matching your search.
                 </div>
             )}
+
+            <ArtworkModal 
+                artwork={selectedArtwork} 
+                onClose={() => setSelectedArtwork(null)} 
+            />
         </div>
     );
 };

@@ -117,9 +117,9 @@ export default function Home() {
         </div>
 
         {/* Centering the Featured Collection */}
-        <div className="flex justify-center w-full">
+        {/* <div className="flex justify-center w-full">
           <FeaturedCollection items={featuredItems} />
-        </div>
+        </div> */}
 
         {/* Other content... */}
       </main>

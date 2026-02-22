@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Image from "next/image";
 
 type ContactType = "art" | "coaching";
 
@@ -259,7 +260,13 @@ const Contact = () => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"
                 >
-                  Facebook - Art
+                  <Image
+                    src="/images/footer/facebook.png"
+                    alt="Facebook Art"
+                    width={20}
+                    height={20}
+                  />
+                  Art
                 </a>
                 <a
                   href="https://www.facebook.com/waisinlovelifechanger"
@@ -267,7 +274,13 @@ const Contact = () => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"
                 >
-                  Facebook - Coaching
+                  <Image
+                    src="/images/footer/facebook.png"
+                    alt="Facebook Coaching"
+                    width={20}
+                    height={20}
+                  />
+                  Coaching
                 </a>
                 <a
                   href="https://www.instagram.com/waisinsoul"
@@ -275,6 +288,12 @@ const Contact = () => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"
                 >
+                  <Image
+                    src="/images/footer/instagram.png"
+                    alt="Instagram"
+                    width={20}
+                    height={20}
+                  />
                   Instagram
                 </a>
               </div>

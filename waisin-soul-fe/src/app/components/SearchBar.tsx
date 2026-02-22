@@ -103,8 +103,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
       products: "/products",
     };
     const basePath = collections[collection] || "/art/featured";
-    // const url = `${basePath}/${id}`;
-    const url = `${basePath}`;
+    // Navigate to category page with highlight query param
+    const url = `${basePath}?highlight=${id}`;
 
     setQuery("");
     setShowResults(false);

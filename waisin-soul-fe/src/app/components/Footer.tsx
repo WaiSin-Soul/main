@@ -166,7 +166,7 @@ const Footer = () => {
       </div>
 
       {/* Payment Icons */}
-      <div className="max-w-6xl mx-auto mt-8 pt-8 border-t border-gray-800 px-4 sm:px-6 lg:px-8">
+      {/* <div className="max-w-6xl mx-auto mt-8 pt-8 border-t border-gray-800 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center items-center gap-4">
           <Image
             src="/images/footer/visa.png"
@@ -193,7 +193,7 @@ const Footer = () => {
             height={25}
           />
         </div>
-      </div>
+      </div> */}
     </footer>
   );
 };
