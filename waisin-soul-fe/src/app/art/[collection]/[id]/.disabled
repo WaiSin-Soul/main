@@ -1,0 +1,135 @@
+// RENAME TO page.tsx when using
+"use client";
+import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { Product, ProductOption } from "@/app/data/products";
+import ProductDetails from "@/app/components/ProductDetails";
+import { useCart } from "@/app/context/CartContext";
+
+type BackendProduct = {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  image_url: string | null;
+  category: Product["collection"];
+};
+
+const defaultMaterials: ProductOption[] = [
+  {
+    id: "mat-default",
+    name: "Standard Print",
+    type: "material",
+    value: "standard-print",
+  },
+];
+
+const defaultSizes: ProductOption[] = [
+  { id: "size-default", name: "Default Size", type: "size", value: "default" },
+];
+
+const defaultStyles: ProductOption[] = [
+  { id: "style-default", name: "Standard", type: "style", value: "standard" },
+];
+
+const ArtProductPage = () => {
+  const params = useParams();
+  const artId = params.id as string;
+  const collection = params.collection as string;
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const { addItem } = useCart();
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const decodedId = decodeURIComponent(artId);
+        const decodedCollection = decodeURIComponent(collection);
+        const response = await fetch(
+          `/api/admin/products?collection=${encodeURIComponent(decodedCollection)}&id=${encodeURIComponent(decodedId)}`,
+        );
+
+        if (!response.ok) {
+          setProduct(null);
+          return;
+        }
+
+        const data = (await response.json()) as BackendProduct[];
+        const item = data[0];
+
+        if (!item) {
+          setProduct(null);
+          return;
+        }
+
+        setProduct({
+          id: item.id,
+          name: item.name,
+          description: item.description ?? "",
+          basePrice: item.price,
+          image: item.image_url ?? "/images/feature1.webp",
+          details: item.description ?? "",
+          materials: defaultMaterials,
+          sizes: defaultSizes,
+          styles: defaultStyles,
+          collection: item.category,
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [artId, collection]);
+
+  const handleAddToCart = (
+    productId: string,
+    material: ProductOption,
+    size: ProductOption,
+    style: ProductOption,
+    quantity: number
+  ) => {
+    if (!product) return;
+
+    let price = product.basePrice;
+    if (size.price) price += size.price;
+    if (style.price) price += style.price;
+
+    const cartItemName = `${product.name} (${material.name}, ${size.name}, ${style.name})`;
+
+    addItem({
+      id: `${productId}-${material.id}-${size.id}-${style.id}`,
+      name: cartItemName,
+      price: price,
+      quantity: quantity,
+      image: product.image,
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Product not found</h1>
+          <p className="text-gray-400">The artwork you're looking for doesn't exist.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <ProductDetails product={product} onAddToCart={handleAddToCart} />
+    </div>
+  );
+};
+
+export default ArtProductPage;

@@ -1,97 +1,103 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import Image from 'next/image';
-import ProductModal from '../../components/ProductModal';
+import Link from 'next/link';
 
-interface Product {
-    id: number;
+type Artwork = {
+    id: string;
     name: string;
-    description: string;
-    price: string;
-    image: string;
-    details: string;
-}
-
-const landscapesData: Product[] = [
-    { 
-        id: 1, 
-        name: 'Landscape 1', 
-        description: 'Description for landscape 1',
-        price: '$249.99',
-        image: '/images/feature1.webp',
-        details: 'Beautiful landscape artwork with vibrant colors. Perfect for nature lovers.'
-    },
-    { 
-        id: 2, 
-        name: 'Landscape 2', 
-        description: 'Description for landscape 2',
-        price: '$299.99',
-        image: '/images/feature2.webp',
-        details: 'Serene mountain scenery with exceptional detail and depth.'
-    },
-    { 
-        id: 3, 
-        name: 'Landscape 3', 
-        description: 'Description for landscape 3',
-        price: '$349.99',
-        image: '/images/feature3.webp',
-        details: 'Stunning sunset landscape capturing nature\'s beauty.'
-    },
-];
+    description: string | null;
+    price?: number;
+    image_url: string | null;
+    collection: string;
+    basePrice?: number;
+};
 
 const Landscapes = () => {
-    const [filteredArtworks, setFilteredArtworks] = useState<Product[]>(landscapesData);
-    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [allArtworks, setAllArtworks] = useState<Artwork[]>([]);
+    const [filteredArtworks, setFilteredArtworks] = useState<Artwork[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchArtworks = async () => {
+            try {
+                const response = await fetch('/api/admin/products?collection=landscapes');
+                if (!response.ok) {
+                    throw new Error('Failed to load artworks');
+                }
+                const data: Artwork[] = await response.json();
+                setAllArtworks(data);
+                setFilteredArtworks(data);
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'Failed to load artworks');
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchArtworks();
+    }, []);
 
     const handleSearch = (query: string) => {
         const lowercasedQuery = query.toLowerCase();
-        const filtered = landscapesData.filter(artwork =>
+        const filtered = allArtworks.filter(artwork =>
             artwork.name.toLowerCase().includes(lowercasedQuery) ||
-            artwork.description.toLowerCase().includes(lowercasedQuery)
+            (artwork.description ?? '').toLowerCase().includes(lowercasedQuery)
         );
         setFilteredArtworks(filtered);
     };
 
-    const handleViewDetails = (product: Product) => {
-        setSelectedProduct(product);
-        setIsModalOpen(true);
-    };
+    if (loading) {
+        return (
+            <div className="container mx-auto px-4 py-12 text-center text-white">
+                Loading artworks...
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="container mx-auto px-4 py-12 text-center text-red-400">
+                {error}
+            </div>
+        );
+    }
 
     return (
         <div className="container mx-auto px-4 py-12">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-4xl font-bold mb-8 text-center text-white">Landscapes</h1>
+                <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">Landscapes</h1>
                 <div className="mb-12">
                     <SearchBar onSearch={handleSearch} />
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredArtworks.map(artwork => (
-                    <div key={artwork.id} className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <Link
+                        key={artwork.id}
+                        href={`/art/landscapes/${artwork.id}`}
+                        className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                    >
                         <div className="relative h-48 w-full">
                             <Image
-                                src={artwork.image}
+                                src={artwork.image_url || '/images/feature1.webp'}
                                 alt={artwork.name}
                                 fill
-                                className="object-cover"
+                                className="object-cover hover:scale-105 transition-transform duration-300"
                             />
                         </div>
                         <div className="p-6">
                             <div className="flex justify-between items-start mb-2">
                                 <h2 className="text-xl font-semibold text-white">{artwork.name}</h2>
-                                <span className="text-blue-500 font-bold">{artwork.price}</span>
+                                <span className="text-blue-500 font-bold">${(artwork.price || artwork.basePrice || 0).toFixed(2)}</span>
                             </div>
                             <p className="text-gray-300 mb-4">{artwork.description}</p>
-                            <button 
-                                onClick={() => handleViewDetails(artwork)}
-                                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
-                            >
+                            <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200 text-center">
                                 View Details
-                            </button>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
             {filteredArtworks.length === 0 && (
@@ -99,15 +105,6 @@ const Landscapes = () => {
                     No artworks found matching your search.
                 </div>
             )}
-
-            <ProductModal
-                product={selectedProduct}
-                isOpen={isModalOpen}
-                onClose={() => {
-                    setIsModalOpen(false);
-                    setSelectedProduct(null);
-                }}
-            />
         </div>
     );
 };

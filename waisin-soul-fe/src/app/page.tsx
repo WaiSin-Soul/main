@@ -7,7 +7,7 @@ export default function Home() {
   const largeCard = {
     title: "Love Relationship Coaching",
     description:
-      "If you are currently in a relationship or seeking for one, and if you are not experiencing the deep soulmate love that you are desiring, it is not your fault. Do you want to be absolutely clear about what is blocking you? Let's go ahead and do a quick 30-minute call.",
+      "If you are currently in a relationship or seeking for one, and if you are not experiencing the deep soulmate love that you are desiring, it is not your fault. Do you want to be absolutely clear about what is blocking you? Let's go ahead and do a quick 45-minute call.",
     imageSrc: "/images/red-bird.webp",
     link: "/coaching",
   };
@@ -48,74 +48,50 @@ export default function Home() {
 
   const featuredItems = [
     {
+      id: 'seeking-knowledge-laptop',
       title: "SEEKING KNOWLEDGE Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature1.webp",
     },
     {
+      id: 'serenity-laptop',
       title: "SERENITY Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature2.webp",
     },
     {
+      id: 'ocean-spirit-laptop',
       title: "OCEAN SPIRIT Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature3.webp",
     },
     {
+      id: 'seeking-knowledge-laptop',
       title: "EXPERIENCING GREATNESS Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature4.webp",
     },
     {
+      id: 'seeking-knowledge-laptop',
       title: "SEEKING KNOWLEDGE Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature1.webp",
     },
     {
+      id: 'serenity-laptop',
       title: "SERENITY Laptop Sleeve",
       price: "$45.00 CAD",
       imageSrc: "/images/feature2.webp",
-    },
-    {
-      title: "OCEAN SPIRIT Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature3.webp",
-    },
-    {
-      title: "EXPERIENCING GREATNESS Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature4.webp",
-    },
-    {
-      title: "SEEKING KNOWLEDGE Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature1.webp",
-    },
-    {
-      title: "SERENITY Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature2.webp",
-    },
-    {
-      title: "OCEAN SPIRIT Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature3.webp",
-    },
-    {
-      title: "EXPERIENCING GREATNESS Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature4.webp",
     },
   ];
 
   return (
     <div className="h-full mb-4 grid grid-rows items-center justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <div className="w-full lg:w-full h-full">
+      <main className="flex flex-col gap-8 row-start-2 items-center justify-center sm:items-start w-full">
+        <div className="w-full h-full">
           <Carousel items={carouselItems} />
         </div>
-        <div className="mx-40">
+        <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto">
           <Card
             title={largeCard.title}
             description={largeCard.description}
@@ -123,17 +99,21 @@ export default function Home() {
             link={largeCard.link}
           />
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mx-40">
-          {cards.map((card, index) => (
-            <Card
-              key={index}
-              title={card.title}
-              description={card.description}
-              imageSrc={card.imageSrc}
-              link={card.link}
-            />
-          ))}
+        <div className="my-8 w-full">
+          <div className="w-full px-4 sm:px-6 lg:px-8 mx-auto">
+            <h1 className="font-kalam text-3xl sm:text-4xl font-bold mb-4">Services</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {cards.map((card, index) => (
+              <Card
+                key={index}
+                title={card.title}
+                description={card.description}
+                imageSrc={card.imageSrc}
+                link={card.link}
+              />
+            ))}
+            </div>
+          </div>
         </div>
 
         {/* Centering the Featured Collection */}

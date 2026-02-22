@@ -1,113 +1,150 @@
-"use client"
-import React, { createContext, useContext, useState, useEffect } from 'react';
+"use client";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
+import { createClient } from "../lib/supabase-browser";
 
 export interface User {
-    id: string;
-    name: string;
-    email: string;
-    address?: string;
-    city?: string;
-    state?: string;
-    zipCode?: string;
-    country?: string;
-    phone?: string;
+  id: string;
+  name: string;
+  email: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  country?: string;
+  phone?: string;
 }
 
 interface AuthContextType {
-    user: User | null;
-    isAuthenticated: boolean;
-    login: (email: string, password: string) => void;
-    signup: (name: string, email: string, password: string) => void;
-    logout: () => void;
-    updateUserInfo: (userInfo: Partial<User>) => void;
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  signup: (name: string, email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  updateUserInfo: (userInfo: Partial<User>) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
-    const [isHydrated, setIsHydrated] = useState(false);
+const mapSupabaseUser = (authUser: SupabaseUser): User => ({
+  id: authUser.id,
+  name:
+    (authUser.user_metadata?.name as string) ||
+    authUser.email?.split("@")[0] ||
+    "User",
+  email: authUser.email ?? "",
+  address: authUser.user_metadata?.address as string | undefined,
+  city: authUser.user_metadata?.city as string | undefined,
+  state: authUser.user_metadata?.state as string | undefined,
+  zipCode: authUser.user_metadata?.zipCode as string | undefined,
+  country: authUser.user_metadata?.country as string | undefined,
+  phone: authUser.user_metadata?.phone as string | undefined,
+});
 
-    // Load user from localStorage on mount
-    useEffect(() => {
-        const savedUser = localStorage.getItem('user');
-        if (savedUser) {
-            try {
-                setUser(JSON.parse(savedUser));
-            } catch (error) {
-                console.error('Failed to load user:', error);
-            }
-        }
-        setIsHydrated(true);
-    }, []);
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const supabase = useMemo(() => createClient(), []);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-    // Save user to localStorage whenever it changes
-    useEffect(() => {
-        if (isHydrated) {
-            if (user) {
-                localStorage.setItem('user', JSON.stringify(user));
-            } else {
-                localStorage.removeItem('user');
-            }
-        }
-    }, [user, isHydrated]);
+  useEffect(() => {
+    let mounted = true;
 
-    const login = (email: string, password: string) => {
-        // In a real app, this would call an API
-        // For now, just create a user object
-        if (email && password) {
-            const newUser: User = {
-                id: Date.now().toString(),
-                name: email.split('@')[0],
-                email,
-            };
-            setUser(newUser);
-        }
-    };
+    const init = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (!mounted) return;
 
-    const signup = (name: string, email: string, password: string) => {
-        // In a real app, this would call an API
-        if (name && email && password) {
-            const newUser: User = {
-                id: Date.now().toString(),
-                name,
-                email,
-            };
-            setUser(newUser);
-        }
-    };
-
-    const logout = () => {
+      if (error) {
         setUser(null);
+      } else {
+        setUser(data.session?.user ? mapSupabaseUser(data.session.user) : null);
+      }
+      setIsLoading(false);
     };
 
-    const updateUserInfo = (userInfo: Partial<User>) => {
-        if (user) {
-            const updatedUser = { ...user, ...userInfo };
-            setUser(updatedUser);
-        }
-    };
+    init();
 
-    return (
-        <AuthContext.Provider
-            value={{
-                user,
-                isAuthenticated: user !== null,
-                login,
-                signup,
-                logout,
-                updateUserInfo,
-            }}
-        >
-            {children}
-        </AuthContext.Provider>
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (!mounted) return;
+        setUser(session?.user ? mapSupabaseUser(session.user) : null);
+        setIsLoading(false);
+      },
     );
+
+    return () => {
+      mounted = false;
+      listener.subscription.unsubscribe();
+    };
+  }, [supabase]);
+
+  const login = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) throw new Error(error.message);
+  };
+
+  const signup = async (name: string, email: string, password: string) => {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { name } },
+    });
+    if (error) throw new Error(error.message);
+  };
+
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw new Error(error.message);
+    setUser(null);
+  };
+
+  const updateUserInfo = async (userInfo: Partial<User>) => {
+    const { name, email, ...rest } = userInfo;
+
+    const { data, error } = await supabase.auth.updateUser({
+      ...(email ? { email } : {}),
+      data: {
+        ...(name ? { name } : {}),
+        ...rest,
+      },
+    });
+
+    if (error) throw new Error(error.message);
+    if (data.user) setUser(mapSupabaseUser(data.user));
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated: user !== null,
+        isLoading,
+        login,
+        signup,
+        logout,
+        updateUserInfo,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (context === undefined) {
-        throw new Error('useAuth must be used within an AuthProvider');
-    }
-    return context;
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };

@@ -1,0 +1,7 @@
+// Only for server-side operations, such as in API routes or getServerSideProps
+import { createClient } from "@supabase/supabase-js"
+
+export const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)

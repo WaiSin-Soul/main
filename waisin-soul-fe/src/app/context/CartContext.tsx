@@ -17,6 +17,9 @@ interface CartContextType {
     clearCart: () => void;
     getTotalItems: () => number;
     getTotalPrice: () => number;
+    isCartOpen: boolean;
+    openCart: () => void;
+    closeCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -24,6 +27,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [items, setItems] = useState<CartItem[]>([]);
     const [isHydrated, setIsHydrated] = useState(false);
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
     // Load cart from localStorage on mount
     useEffect(() => {
@@ -57,6 +61,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
             return [...prevItems, newItem];
         });
+        setIsCartOpen(true);
     };
 
     const removeItem = (id: string) => {
@@ -83,6 +88,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return items.reduce((total, item) => total + item.price * item.quantity, 0);
     };
 
+    const openCart = () => {
+        setIsCartOpen(true);
+    };
+
+    const closeCart = () => {
+        setIsCartOpen(false);
+    };
+
     return (
         <CartContext.Provider
             value={{
@@ -93,6 +106,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 clearCart,
                 getTotalItems,
                 getTotalPrice,
+                isCartOpen,
+                openCart,
+                closeCart,
             }}
         >
             {children}

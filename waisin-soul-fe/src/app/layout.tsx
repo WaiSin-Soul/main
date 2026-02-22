@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import CartDrawer from "./components/CartDrawer";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -35,6 +36,7 @@ export default function RootLayout({
           <CartProvider>
             <Header />
             <main className="flex-1">{children}</main>
+            <CartDrawer />
             <Footer />
           </CartProvider>
         </AuthProvider>
