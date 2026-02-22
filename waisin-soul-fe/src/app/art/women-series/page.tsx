@@ -1,8 +1,10 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, Suspense } from 'react';
 import SearchBar from '../../components/SearchBar';
+import ArtworkModal from '../../components/ArtworkModal';
 import Image from 'next/image';
-import Link from 'next/link';
+// import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 type Artwork = {
     id: string;
@@ -14,16 +16,35 @@ type Artwork = {
     basePrice?: number;
 };
 
-const Women_Series = () => {
+function WomenSeriesContent() {
+    const searchParams = useSearchParams();
+    const category = searchParams.get('category');
     const [allArtworks, setAllArtworks] = useState<Artwork[]>([]);
     const [filteredArtworks, setFilteredArtworks] = useState<Artwork[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [highlightedId, setHighlightedId] = useState<string | null>(null);
+    const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
+    const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+    const getCategoryTitle = () => {
+        const categoryMap: Record<string, string> = {
+            inspiration: "Women of Inspiration Series",
+            passion: "Women of Passion",
+            seasons: "Women of Seasons",
+            tao: "Women of Tao Series",
+        };
+        return category && categoryMap[category] ? categoryMap[category] : "Women Series";
+    };
 
     useEffect(() => {
         const fetchArtworks = async () => {
             try {
-                const response = await fetch('/api/admin/products?collection=women-series');
+                let url = '/api/admin/products?collection=women-series';
+                if (category) {
+                    url += `&subcategory=${category}`;
+                }
+                const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error('Failed to load artworks');
                 }
@@ -37,7 +58,24 @@ const Women_Series = () => {
             }
         };
         fetchArtworks();
-    }, []);
+    }, [category]);
+
+    // Handle highlighting from search
+    useEffect(() => {
+        const highlight = searchParams.get('highlight');
+        if (highlight && !loading) {
+            setHighlightedId(highlight);
+            setTimeout(() => {
+                const element = itemRefs.current[highlight];
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+            setTimeout(() => {
+                setHighlightedId(null);
+            }, 3000);
+        }
+    }, [searchParams, loading]);
 
     const handleSearch = (query: string) => {
         const lowercasedQuery = query.toLowerCase();
@@ -67,17 +105,29 @@ const Women_Series = () => {
     return (
         <div className="container mx-auto px-4 py-12">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">Women Series</h1>
+                <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">{getCategoryTitle()}</h1>
                 <div className="mb-12">
                     <SearchBar onSearch={handleSearch} />
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredArtworks.map(artwork => (
-                    <Link
+                    <div
                         key={artwork.id}
-                        href={`/art/women-series/${artwork.id}`}
-                        className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                        ref={(el) => { itemRefs.current[artwork.id] = el; }}
+                        className={`transition-all duration-1000 ${
+                            highlightedId === artwork.id
+                                ? 'animate-glow ring-4 ring-blue-500 ring-opacity-75'
+                                : ''
+                        }`}
+                    >
+                        {/* <Link
+                            href={`/art/women-series/${artwork.id}`}
+                            className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 block"
+                        > */}
+                        <div
+                            onClick={() => setSelectedArtwork(artwork)}
+                            className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
                     >
                         <div className="relative h-48 w-full">
                             <Image
@@ -90,14 +140,16 @@ const Women_Series = () => {
                         <div className="p-6">
                             <div className="flex justify-between items-start mb-2">
                                 <h2 className="text-xl font-semibold text-white">{artwork.name}</h2>
-                                <span className="text-blue-500 font-bold">${(artwork.price || artwork.basePrice || 0).toFixed(2)}</span>
+                                {/* <span className="text-blue-500 font-bold">${(artwork.price || artwork.basePrice || 0).toFixed(2)}</span> */}
                             </div>
                             <p className="text-gray-300 mb-4">{artwork.description}</p>
-                            <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200 text-center">
-                                View Details
+                                {/* <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200 text-center">
+                                    View Details
+                                </div> */}
                             </div>
                         </div>
-                    </Link>
+                        {/* </Link> */}
+                    </div>
                 ))}
             </div>
             {filteredArtworks.length === 0 && (
@@ -105,8 +157,23 @@ const Women_Series = () => {
                     No artworks found matching your search.
                 </div>
             )}
+
+            <ArtworkModal 
+                artwork={selectedArtwork} 
+                onClose={() => setSelectedArtwork(null)} 
+            />
         </div>
     );
-};
+}
 
-export default Women_Series;
+export default function Women_Series() {
+    return (
+        <Suspense fallback={
+            <div className="container mx-auto px-4 py-12">
+                <div className="text-center text-white">Loading...</div>
+            </div>
+        }>
+            <WomenSeriesContent />
+        </Suspense>
+    );
+}

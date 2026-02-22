@@ -30,7 +30,6 @@ export default async function AdminOrdersPage() {
   const orders = ordersData as Order[] | null;
 
   if (error) {
-    console.error(error);
     return <div className="p-6">Failed to load orders.</div>;
   }
 

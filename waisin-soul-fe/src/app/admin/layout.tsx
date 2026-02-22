@@ -45,13 +45,6 @@ export default async function AdminLayout({
   const isAdmin = roleFromProfile === "admin" || roleFromMeta === "admin";
 
   if (!isAdmin) {
-    console.error("Admin check failed:", {
-      userId: user.id,
-      email: user.email,
-      roleFromProfile,
-      roleFromMeta,
-      profileError: profileError?.message,
-    });
     redirect("/");
   }
 

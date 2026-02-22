@@ -15,10 +15,12 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const collection = url.searchParams.get("collection");
+    const subcategory = url.searchParams.get("subcategory");
     const id = url.searchParams.get("id");
 
     const filters: Record<string, string> = {};
     if (collection) filters.category = collection;
+    if (subcategory) filters.subcategory = subcategory;
     if (id) filters.id = id;
 
     const { data, error } = await supabaseAdmin
