@@ -1,6 +1,6 @@
 // CHANGE BACK TO best-sellers WHEN READY TO SELL STUFF ON WEBSITE
 "use client"
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import SearchBar from '../../components/SearchBar';
 import ArtworkModal from '../../components/ArtworkModal';
@@ -18,7 +18,7 @@ type Artwork = {
 };
 
 // const BestSellers = () => {
-export default function Featured() {
+function FeaturedContent() {
     const [allArtworks, setAllArtworks] = useState<Artwork[]>([]);
     const [filteredArtworks, setFilteredArtworks] = useState<Artwork[]>([]);
     const [loading, setLoading] = useState(true);
@@ -156,4 +156,16 @@ export default function Featured() {
             />
         </div>
     );
-};
+}
+
+export default function Featured() {
+    return (
+        <Suspense fallback={
+            <div className="container mx-auto px-4 py-12">
+                <div className="text-center text-white">Loading...</div>
+            </div>
+        }>
+            <FeaturedContent />
+        </Suspense>
+    );
+}

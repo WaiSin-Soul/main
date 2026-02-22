@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, Suspense } from 'react';
 import SearchBar from '../../components/SearchBar';
 import ArtworkModal from '../../components/ArtworkModal';
 import Image from 'next/image';
@@ -16,7 +16,7 @@ type Artwork = {
     basePrice?: number;
 };
 
-const Women_Series = () => {
+function WomenSeriesContent() {
     const searchParams = useSearchParams();
     const category = searchParams.get('category');
     const [allArtworks, setAllArtworks] = useState<Artwork[]>([]);
@@ -164,6 +164,16 @@ const Women_Series = () => {
             />
         </div>
     );
-};
+}
 
-export default Women_Series;
+export default function Women_Series() {
+    return (
+        <Suspense fallback={
+            <div className="container mx-auto px-4 py-12">
+                <div className="text-center text-white">Loading...</div>
+            </div>
+        }>
+            <WomenSeriesContent />
+        </Suspense>
+    );
+}

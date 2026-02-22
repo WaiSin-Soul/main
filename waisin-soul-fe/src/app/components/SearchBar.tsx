@@ -44,12 +44,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
     const timer = setTimeout(async () => {
       if (query.length >= 2) {
         setIsLoading(true);
+        setShowResults(true); // Show results dropdown immediately
         try {
           const url = `/api/search?q=${encodeURIComponent(query)}`;
           const response = await fetch(url);
           const data = await response.json();
           setResults(data.results || []);
-          setShowResults(true);
         } catch (error) {
           setResults([]);
         } finally {
@@ -58,6 +58,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       } else {
         setResults([]);
         setShowResults(false);
+        setIsLoading(false);
       }
       onSearch?.(query);
     }, 300);
@@ -85,7 +86,16 @@ const SearchBar: React.FC<SearchBarProps> = ({
   }, [isModalOpen, onClose]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
+    const newQuery = e.target.value;
+    setQuery(newQuery);
+
+    // Show results dropdown if query is long enough
+    if (newQuery.length >= 2) {
+      setShowResults(true);
+    } else {
+      setShowResults(false);
+      setResults([]);
+    }
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -116,7 +126,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   // Modal version
   if (isModalOpen) {
     return (
-      <div 
+      <div
         className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-start justify-center pt-20"
         onClick={onClose}
       >
@@ -129,7 +139,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
             <div className="flex items-center">
               <input
                 type="text"
-                placeholder="Search art & products..."
+                // placeholder="Search art & products..."
+                placeholder="Search art"
                 value={query}
                 onChange={handleInputChange}
                 autoFocus
@@ -160,17 +171,16 @@ const SearchBar: React.FC<SearchBarProps> = ({
           {/* Search Results */}
           {query.length >= 2 && (
             <div className="max-h-96 overflow-y-auto">
-              {isLoading ? (
-                <div className="p-6 text-center text-gray-400">
-                  <div className="inline-block animate-spin">⏳</div> Searching...
-                </div>
-              ) : results.length > 0 ? (
+              {results.length > 0 ? (
                 <div className="divide-y divide-gray-700">
                   {results.map((result) => (
                     <button
                       key={result.id}
                       onClick={() =>
-                        handleResultClick(result.collection || "featured", result.id)
+                        handleResultClick(
+                          result.collection || "featured",
+                          result.id,
+                        )
                       }
                       className="w-full flex items-start gap-3 p-4 hover:bg-[#3a3a3a] transition-colors text-left"
                     >
@@ -207,6 +217,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
                     </button>
                   ))}
                 </div>
+              ) : isLoading ? (
+                <div className="p-6 text-center text-gray-400">
+                  <div className="inline-block animate-spin">⏳</div>{" "}
+                  Searching...
+                </div>
               ) : (
                 <div className="p-6 text-center text-gray-400">
                   No results found for "{query}"
@@ -217,7 +232,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
           {query.length < 2 && (
             <div className="p-6 text-center text-gray-400">
-              Start typing to search for art and products...
+              {/* Start typing to search for art and products... */}
+              Start typing to search for art
             </div>
           )}
         </div>
@@ -232,7 +248,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
         <div className="flex items-center">
           <input
             type="text"
-            placeholder="Search art & products..."
+            // placeholder="Search art & products..."
+            placeholder="Search art"
             value={query}
             onChange={handleInputChange}
             onFocus={() => query.length >= 2 && setShowResults(true)}
@@ -261,19 +278,18 @@ const SearchBar: React.FC<SearchBarProps> = ({
       </form>
 
       {/* Search Results Dropdown */}
-      {showResults && (results.length > 0 || isLoading) && (
+      {showResults && query.length >= 2 && (
         <div className="absolute top-full left-0 right-0 mt-1 bg-[#2a2a2a] border border-gray-700 rounded-md shadow-lg z-50 max-h-96 overflow-y-auto">
-          {isLoading ? (
-            <div className="p-4 text-center text-gray-400">
-              <div className="inline-block animate-spin">⏳</div> Searching...
-            </div>
-          ) : results.length > 0 ? (
+          {results.length > 0 ? (
             <div className="divide-y divide-gray-700">
               {results.map((result) => (
                 <button
                   key={result.id}
                   onClick={() =>
-                    handleResultClick(result.collection || "featured", result.id)
+                    handleResultClick(
+                      result.collection || "featured",
+                      result.id,
+                    )
                   }
                   className="w-full flex items-start gap-3 p-3 hover:bg-[#3a3a3a] transition-colors text-left"
                 >
@@ -309,6 +325,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
                   )}
                 </button>
               ))}
+            </div>
+          ) : isLoading ? (
+            <div className="p-4 text-center text-gray-400">
+              <div className="inline-block animate-spin">⏳</div> Searching...
             </div>
           ) : (
             <div className="p-4 text-center text-gray-400">

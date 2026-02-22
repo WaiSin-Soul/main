@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import SearchBar from '../../components/SearchBar';
 import ArtworkModal from '../../components/ArtworkModal';
@@ -16,7 +16,7 @@ type Artwork = {
     basePrice?: number;
 };
 
-const Landscapes = () => {
+function LandscapesContent() {
     const [allArtworks, setAllArtworks] = useState<Artwork[]>([]);
     const [filteredArtworks, setFilteredArtworks] = useState<Artwork[]>([]);
     const [loading, setLoading] = useState(true);
@@ -149,6 +149,16 @@ const Landscapes = () => {
             />
         </div>
     );
-};
+}
 
-export default Landscapes; 
+export default function Landscapes() {
+    return (
+        <Suspense fallback={
+            <div className="container mx-auto px-4 py-12">
+                <div className="text-center text-white">Loading...</div>
+            </div>
+        }>
+            <LandscapesContent />
+        </Suspense>
+    );
+} 
