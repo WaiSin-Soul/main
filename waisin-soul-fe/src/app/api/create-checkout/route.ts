@@ -3,9 +3,17 @@ import { NextResponse } from "next/server";
 import { supabaseAdmin } from "../../lib/supabase-admin";
 import { randomUUID } from "crypto";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
 export async function POST(req: Request) {
+  const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+
+  if (!stripeSecretKey) {
+    return NextResponse.json(
+      { error: "Stripe is not configured" },
+      { status: 503 },
+    );
+  }
+
+  const stripe = new Stripe(stripeSecretKey);
   const { items, userId, guestEmail } = await req.json();
 
   const guestToken = userId ? null : randomUUID();
