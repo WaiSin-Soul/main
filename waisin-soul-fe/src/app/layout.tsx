@@ -20,6 +20,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "WaiSin Soul",
   description: "WaiSin Soul",
+  icons: {
+    icon: "/images/waisin_soul_logo_small.png",
+    shortcut: "/images/waisin_soul_logo_small.png",
+    apple: "/images/waisin_soul_logo_small.png",
+  },
 };
 
 export default function RootLayout({
