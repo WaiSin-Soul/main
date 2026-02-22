@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -10,7 +10,8 @@ import { useAuth } from "../context/AuthContext";
 const Header = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [isSearchOpen, setSearchOpen] = useState(false);
+  const [isSearchModalOpen, setSearchModalOpen] = useState(false);
+  const [isWomenSeriesOpen, setWomenSeriesOpen] = useState(false);
   const router = useRouter();
 
   const { getTotalItems } = useCart();
@@ -39,15 +40,16 @@ const Header = () => {
     setMenuOpen(!isMenuOpen);
   };
 
-  const toggleSearch = () => {
-    setSearchOpen(!isSearchOpen);
-  };
+  const handleSearchClose = React.useCallback(() => {
+    setSearchModalOpen(false);
+  }, []);
 
   const handleNavigate = (href: string) => {
-    // Close dropdown when navigating
+    // Close all dropdowns and modals when navigating
     setDropdownOpen(false);
     setMenuOpen(false);
-    setSearchOpen(false);
+    setSearchModalOpen(false);
+    setWomenSeriesOpen(false);
     router.push(href);
   };
 
@@ -62,6 +64,7 @@ const Header = () => {
   const cartCount = getTotalItems();
 
   return (
+    <>
     <header className="flex justify-between items-center px-4 sm:px-6 lg:px-12 py-4 bg-header text-white relative">
       <div className="flex items-center gap-x-4 sm:gap-x-8">
         <h1 className="text-xl font-bold">
@@ -81,28 +84,16 @@ const Header = () => {
             />
           </Link>
         </h1>
-        <button onClick={toggleMenu} className="md:hidden focus:outline-none">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            />
-          </svg>
-        </button>
       </div>
       <nav
         className={`md:flex ${isMenuOpen ? "block" : "hidden"} absolute md:static bg-header w-full md:w-auto top-16 left-0 z-20`}
       >
         <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 lg:space-x-12 p-4 md:p-0">
-          <li className="relative group" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          <li
+            className="relative group"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             <button
               onClick={handleArtCollectionClick}
               className="hover:underline focus:outline-none"
@@ -117,7 +108,7 @@ const Header = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className={`size-6 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+                  className={`size-6 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
                 >
                   <path
                     strokeLinecap="round"
@@ -163,13 +154,82 @@ const Header = () => {
                     Flora & Fauna
                   </button>
                 </li>
-                <li>
+                <li
+                  className="relative"
+                  onMouseEnter={() => setWomenSeriesOpen(true)}
+                  onMouseLeave={() => setWomenSeriesOpen(false)}
+                >
                   <button
-                    onClick={() => handleNavigate("/art/women-series")}
-                    className="block px-4 py-2 hover:bg-gray-200 w-full text-left"
+                    onClick={() => setWomenSeriesOpen(!isWomenSeriesOpen)}
+                    className="block px-4 py-2 hover:bg-gray-200 w-full text-left flex items-center justify-between"
                   >
-                    Women Series
+                    <span>Women Series</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className={`size-4 transition-transform duration-200 ${isWomenSeriesOpen ? 'rotate-90' : '-rotate-90'}`}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                      />
+                    </svg>
                   </button>
+                  <ul
+                    className={`transition-all duration-200 absolute pt-2 bg-white text-black shadow-lg rounded-md z-20 whitespace-nowrap ${
+                      isWomenSeriesOpen
+                        ? 'opacity-100 visible pointer-events-auto'
+                        : 'opacity-0 invisible pointer-events-none'
+                    }`}
+                    style={{ top: "100%", right: 0 }}
+                  >
+                    <li>
+                      <button
+                        onClick={() =>
+                          handleNavigate(
+                            "/art/women-series?category=inspiration",
+                          )
+                        }
+                        className="block px-4 py-2 hover:bg-gray-200 w-full text-left"
+                      >
+                        Women of Inspiration
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() =>
+                          handleNavigate("/art/women-series?category=passion")
+                        }
+                        className="block px-4 py-2 hover:bg-gray-200 w-full text-left"
+                      >
+                        Women of Passion
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() =>
+                          handleNavigate("/art/women-series?category=seasons")
+                        }
+                        className="block px-4 py-2 hover:bg-gray-200 w-full text-left"
+                      >
+                        Women of Seasons
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() =>
+                          handleNavigate("/art/women-series?category=tao")
+                        }
+                        className="block px-4 py-2 hover:bg-gray-200 w-full text-left"
+                      >
+                        Women of Tao Series
+                      </button>
+                    </li>
+                  </ul>
                 </li>
                 <li className="lg:hidden">
                   <button
@@ -223,7 +283,10 @@ const Header = () => {
         </ul>
       </nav>
       <div className="flex space-x-4 sm:space-x-6">
-        <button className="hover:underline" onClick={toggleSearch}>
+        <button
+          className="hover:underline"
+          onClick={() => setSearchModalOpen(true)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -265,15 +328,28 @@ const Header = () => {
                         </span>
                     )}
                 </Link> */}
+        <button onClick={toggleMenu} className="md:hidden focus:outline-none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+        </button>
       </div>
-      {isSearchOpen && (
-        <div className="absolute top-32 left-0 right-0 p-4 z-20">
-          <div className="max-w-4xl mx-auto">
-            <SearchBar onSearch={(query) => console.log(query)} />
-          </div>
-        </div>
-      )}
     </header>
+    {isSearchModalOpen && (
+      <SearchBar isModalOpen={true} onClose={handleSearchClose} />
+    )}
+    </>
   );
 };
 

@@ -13,6 +13,7 @@ const Login = () => {
     confirmPassword: "",
     name: "",
   });
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
   const { login, signup } = useAuth();
@@ -37,8 +38,9 @@ const Login = () => {
           return;
         }
 
-        await login(formData.email, formData.password);
+        await login(formData.email, formData.password, rememberMe);
         setFormData({ email: "", password: "", confirmPassword: "", name: "" });
+        setRememberMe(false);
         router.push("/user/profile");
       } else {
         if (
@@ -198,6 +200,8 @@ const Login = () => {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-700 rounded bg-[#1a1a1a]"
                 />
                 <label

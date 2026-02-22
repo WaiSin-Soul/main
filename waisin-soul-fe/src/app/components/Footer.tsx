@@ -36,7 +36,6 @@ const Footer = () => {
       }
     } catch (error) {
       setMessage("An error occurred. Please try again.");
-      console.error("Subscribe error:", error);
     } finally {
       setIsSubmitting(false);
     }

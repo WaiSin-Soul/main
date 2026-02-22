@@ -78,9 +78,7 @@ const UserProfile = () => {
         .from("orders")
         .select("*")
         .order("created_at", { ascending: false });
-      console.log(data);
       if (error) {
-        console.error(error);
         return;
       }
 
@@ -121,10 +119,7 @@ const UserProfile = () => {
           )
           //   .or(`user_id.eq.${user.id},email.eq."${email}"`)
           .order("created_at", { ascending: false });
-
-        console.log(data);
         if (error) {
-          console.error("orders query error:", error);
           setOrders([]);
           return;
         }

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 type Artwork = {
     id: string;
@@ -15,10 +16,22 @@ type Artwork = {
 };
 
 const Women_Series = () => {
+    const searchParams = useSearchParams();
+    const category = searchParams.get('category');
     const [allArtworks, setAllArtworks] = useState<Artwork[]>([]);
     const [filteredArtworks, setFilteredArtworks] = useState<Artwork[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    const getCategoryTitle = () => {
+        const categoryMap: Record<string, string> = {
+            inspiration: "Women of Inspiration Series",
+            passion: "Women of Passion",
+            seasons: "Women of Seasons",
+            tao: "Women of Tao Series",
+        };
+        return category && categoryMap[category] ? categoryMap[category] : "Women Series";
+    };
 
     useEffect(() => {
         const fetchArtworks = async () => {
@@ -67,7 +80,7 @@ const Women_Series = () => {
     return (
         <div className="container mx-auto px-4 py-12">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">Women Series</h1>
+                <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">{getCategoryTitle()}</h1>
                 <div className="mb-12">
                     <SearchBar onSearch={handleSearch} />
                 </div>

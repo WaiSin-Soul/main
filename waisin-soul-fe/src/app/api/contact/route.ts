@@ -111,11 +111,9 @@ export async function POST(req: Request) {
     const resendApiKey = getRequiredEnv("RESEND_API_KEY");
     const defaultFrom = getRequiredEnv("RESEND_FROM");
 
-    const artEmail =
-      process.env.CONTACT_EMAIL_ART ?? "waisinsoulart@gmail.com";
+    const artEmail = process.env.CONTACT_EMAIL_ART ?? "waisinsoulart@gmail.com";
     const coachingEmail =
-      process.env.CONTACT_EMAIL_COACHING ??
-      "waisin.lovelifechanger@gmail.com";
+      process.env.CONTACT_EMAIL_COACHING ?? "waisin.lovelifechanger@gmail.com";
 
     const to = data.contactType === "art" ? artEmail : coachingEmail;
 
@@ -196,8 +194,8 @@ export async function POST(req: Request) {
     if (!resendResponse.ok) {
       const resendError = await resendResponse.text();
       console.error("Resend API error:", resendError);
-
-      let resendMessage = "Unable to send message right now. Please try again shortly.";
+      let resendMessage =
+        "Unable to send message right now. Please try again shortly.";
       try {
         const parsedError = JSON.parse(resendError) as {
           message?: string;

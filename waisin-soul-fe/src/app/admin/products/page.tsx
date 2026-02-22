@@ -20,7 +20,6 @@ export default async function AdminProductsPage() {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error(error);
     return <div className="p-6">Failed to load products.</div>;
   }
 

@@ -36,7 +36,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             try {
                 setItems(JSON.parse(savedCart));
             } catch (error) {
-                console.error('Failed to load cart:', error);
             }
         }
         setIsHydrated(true);
