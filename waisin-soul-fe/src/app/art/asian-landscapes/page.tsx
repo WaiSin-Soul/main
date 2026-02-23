@@ -120,7 +120,7 @@ function AsianLandscapesContent() {
                                 <div className="flex justify-between items-start mb-2">
                                     <h2 className="text-xl font-semibold text-white">{artwork.name}</h2>
                                 </div>
-                                <p className="text-gray-300 mb-4">{artwork.description}</p>
+                                {/* <p className="text-gray-300 mb-4">{artwork.description}</p> */}
                             </div>
                         </div>
                     </div>

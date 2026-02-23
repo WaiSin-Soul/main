@@ -127,7 +127,7 @@ function FloralCreaturesContent() {
                                 <h2 className="text-xl font-semibold text-white">{artwork.name}</h2>
                                 {/* <span className="text-blue-500 font-bold">${(artwork.price || artwork.basePrice || 0).toFixed(2)}</span> */}
                             </div>
-                            <p className="text-gray-300 mb-4">{artwork.description}</p>
+                            {/* <p className="text-gray-300 mb-4">{artwork.description}</p> */}
                                 {/* <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200 text-center">
                                     View Details
                                 </div> */}
