@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 type Artwork = {
@@ -19,6 +19,22 @@ interface ArtworkModalProps {
 
 const ArtworkModal: React.FC<ArtworkModalProps> = ({ artwork, onClose }) => {
     if (!artwork) return null;
+    const [isFullScreen, setIsFullScreen] = useState(false);
+    const [zoomLevel, setZoomLevel] = useState(1);
+
+    useEffect(() => {
+        if (!isFullScreen) return;
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setIsFullScreen(false);
+                setZoomLevel(1);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isFullScreen]);
 
     return (
         <div 
@@ -48,13 +64,22 @@ const ArtworkModal: React.FC<ArtworkModalProps> = ({ artwork, onClose }) => {
                     </button>
 
                     {/* Full Image */}
-                    <div className="relative w-full h-96 md:h-[500px]">
+                    <div
+                        className="relative w-full h-96 md:h-[500px] cursor-zoom-in"
+                        onClick={() => {
+                            setZoomLevel(1);
+                            setIsFullScreen(true);
+                        }}
+                    >
                         <Image
                             src={artwork.image_url || '/images/feature1.webp'}
                             alt={artwork.name}
                             fill
-                            className="object-contain"
+                            className="object-contain transition-transform duration-300"
                         />
+                    </div>
+                    <div className="px-6 md:px-8 pt-2 text-xs text-gray-400">
+                        Click the image to view full screen.
                     </div>
 
                     {/* Details */}
@@ -72,6 +97,71 @@ const ArtworkModal: React.FC<ArtworkModalProps> = ({ artwork, onClose }) => {
                     </div>
                 </div>
             </div>
+            {isFullScreen && (
+                <div
+                    className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
+                    onClick={(event) => {
+                        event.stopPropagation();
+                        setIsFullScreen(false);
+                        setZoomLevel(1);
+                    }}
+                >
+                    <div
+                        className="relative w-full h-full max-w-6xl max-h-[90vh]"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
+                            <button
+                                onClick={() => setZoomLevel((prev) => Math.max(1, prev - 0.25))}
+                                className="bg-black/70 hover:bg-black/90 text-white rounded-full px-3 py-2 text-sm transition-colors"
+                                aria-label="Zoom out"
+                            >
+                                -
+                            </button>
+                            <button
+                                onClick={() => setZoomLevel(1)}
+                                className="bg-black/70 hover:bg-black/90 text-white rounded-full px-3 py-2 text-sm transition-colors"
+                                aria-label="Reset zoom"
+                            >
+                                Reset
+                            </button>
+                            <button
+                                onClick={() => setZoomLevel((prev) => Math.min(3, prev + 0.25))}
+                                className="bg-black/70 hover:bg-black/90 text-white rounded-full px-3 py-2 text-sm transition-colors"
+                                aria-label="Zoom in"
+                            >
+                                +
+                            </button>
+                        </div>
+                        <button
+                            onClick={() => {
+                                setIsFullScreen(false);
+                                setZoomLevel(1);
+                            }}
+                            className="absolute top-4 right-4 z-10 bg-black/70 hover:bg-black/90 text-white rounded-full p-2 transition-colors"
+                            aria-label="Close full screen"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="2"
+                                stroke="currentColor"
+                                className="w-6 h-6"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <Image
+                            src={artwork.image_url || '/images/feature1.webp'}
+                            alt={artwork.name}
+                            fill
+                            className="object-contain transition-transform duration-200"
+                            style={{ transform: `scale(${zoomLevel})` }}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
