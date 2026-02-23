@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef, Suspense } from 'react';
 import SearchBar from '../../components/SearchBar';
 import ArtworkModal from '../../components/ArtworkModal';
-import Image from 'next/image';
+import ResponsiveArtImage from '../../components/ResponsiveArtImage';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
@@ -20,25 +20,25 @@ const womenSeriesSubcategories = [
     {
         id: 1,
         name: 'Women of Inspiration',
-        image: '/images/feature1.webp',
+        image: '/images/SeekingKnowledge_hopkfc.jpg',
         url: '/art/women-series?category=inspiration',
     },
     {
         id: 2,
         name: 'Women of Passion',
-        image: '/images/feature2.webp',
+        image: '/images/Meditation_afxwma.jpg',
         url: '/art/women-series?category=passion',
     },
     {
         id: 3,
         name: 'Women of Seasons',
-        image: '/images/feature3.webp',
+        image: '/images/Spring_zxi2gw.jpg',
         url: '/art/women-series?category=seasons',
     },
     {
         id: 4,
         name: 'Women of Tao Series',
-        image: '/images/feature3.webp',
+        image: '/images/Touched_by_the_music_of_arping_color_corrected_copy_taznrs.jpg',
         url: '/art/women-series?category=tao',
     },
 ];
@@ -143,21 +143,19 @@ function WomenSeriesContent() {
                 <div className="max-w-4xl mx-auto">
                     <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">Women Series</h1>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="columns-1 md:columns-2 lg:columns-4 gap-8">
                     {womenSeriesSubcategories.map((subcategory) => (
                         <Link
                             href={subcategory.url}
                             key={subcategory.id}
-                            className="group flex flex-col items-center text-accent"
+                            className="group mb-8 break-inside-avoid flex flex-col items-center text-accent"
                         >
-                            <div className="relative w-full aspect-square border border-accent/60 bg-neutral-200 overflow-hidden">
-                                <Image
-                                    src={subcategory.image}
-                                    alt={subcategory.name}
-                                    fill
-                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                                />
-                            </div>
+                            <ResponsiveArtImage
+                                src={subcategory.image}
+                                alt={subcategory.name}
+                                className="border border-accent/60 bg-neutral-200"
+                                imageClassName="object-contain transition-transform duration-300 group-hover:scale-105"
+                            />
                             <div className="mt-4 flex items-center w-full gap-4">
                                 <span className="h-px flex-1 bg-accent/60" />
                                 <span className="text-lg font-kalam text-accent tracking-wide text-center">
@@ -180,12 +178,12 @@ function WomenSeriesContent() {
                     <SearchBar onSearch={handleSearch} />
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="columns-1 md:columns-2 lg:columns-3 gap-6">
                 {filteredArtworks.map(artwork => (
                     <div
                         key={artwork.id}
                         ref={(el) => { itemRefs.current[artwork.id] = el; }}
-                        className={`transition-all duration-1000 ${
+                        className={`mb-6 break-inside-avoid transition-all duration-1000 ${
                             highlightedId === artwork.id
                                 ? 'animate-glow ring-4 ring-blue-500 ring-opacity-75'
                                 : ''
@@ -199,20 +197,18 @@ function WomenSeriesContent() {
                             onClick={() => setSelectedArtwork(artwork)}
                             className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
                     >
-                        <div className="relative h-48 w-full">
-                            <Image
-                                src={artwork.image_url || '/images/feature1.webp'}
-                                alt={artwork.name}
-                                fill
-                                className="object-cover hover:scale-105 transition-transform duration-300"
-                            />
-                        </div>
+                        <ResponsiveArtImage
+                            src={artwork.image_url || '/images/feature1.webp'}
+                            alt={artwork.name}
+                            className="bg-neutral-200"
+                            imageClassName="object-contain hover:scale-105 transition-transform duration-300"
+                        />
                         <div className="p-6">
                             <div className="flex justify-between items-start mb-2">
                                 <h2 className="text-xl font-semibold text-white">{artwork.name}</h2>
                                 {/* <span className="text-blue-500 font-bold">${(artwork.price || artwork.basePrice || 0).toFixed(2)}</span> */}
                             </div>
-                            <p className="text-gray-300 mb-4">{artwork.description}</p>
+                            {/* <p className="text-gray-300 mb-4">{artwork.description}</p> */}
                                 {/* <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200 text-center">
                                     View Details
                                 </div> */}

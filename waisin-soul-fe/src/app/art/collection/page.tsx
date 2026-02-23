@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import SearchBar from "../../components/SearchBar";
-import Image from "next/image";
+import ResponsiveArtImage from "../../components/ResponsiveArtImage";
 // import ProductModal from "../../components/ProductModal";
 import Link from "next/link";
 
@@ -28,7 +28,7 @@ const collectionData: Product[] = [
     id: 1,
     name: "Featured",
     description: "Description for collection 1",
-    image: "/images/feature1.webp",
+    image: "/images/B_3.Serenity_wumtei (1).jpg",
     url: "/art/featured",
     details:
       "Premium collection piece showcasing exceptional artistry and craftsmanship.",
@@ -37,7 +37,7 @@ const collectionData: Product[] = [
     id: 2,
     name: "Floral & Creatures",
     description: "Description for collection 2",
-    image: "/images/feature2.webp",
+    image: "/images/I_Think_You_re_Special_bf5u1m.jpg",
     url: "/art/floral-creatures",
     details:
       "Exclusive collection featuring unique and limited edition artwork.",
@@ -46,7 +46,7 @@ const collectionData: Product[] = [
     id: 3,
     name: "Asian Landscapes",
     description: "Description for collection 3",
-    image: "/images/feature3.webp",
+    image: "/images/Experiencing_Greatness_r0thpy.jpg",
     url: "/art/asian-landscapes",
     details:
       "Curated collection representing the finest works of contemporary art.",
@@ -55,7 +55,7 @@ const collectionData: Product[] = [
     id: 4,
     name: "Western Landscapes + Seascapes",
     description: "Description for collection 4",
-    image: "/images/feature3.webp",
+    image: "/images/Seahorses_parqnd.jpg",
     url: "/art/western-landscapes-seascapes",
     details:
       "Curated collection representing the finest works of contemporary art.",
@@ -64,7 +64,7 @@ const collectionData: Product[] = [
     id: 5,
     name: "Calligraphy & Contemporary",
     description: "Description for collection 5",
-    image: "/images/feature3.webp",
+    image: "/images/streching_iccbqa.jpg",
     url: "/art/calligraphy-contemporary",
     details:
       "Curated collection representing the finest works of contemporary art.",
@@ -73,7 +73,7 @@ const collectionData: Product[] = [
     id: 6,
     name: "Women Series",
     description: "Description for collection 6",
-    image: "/images/feature3.webp",
+    image: "/images/Meditation_afxwma.jpg",
     url: "/art/women-series",
     details:
       "Curated collection representing the finest works of contemporary art.",
@@ -111,7 +111,7 @@ const Collection = () => {
           <SearchBar onSearch={handleSearch} />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="columns-1 md:columns-2 lg:columns-3 gap-8">
         {filteredCollection.map((artwork) => (
           // <div key={artwork.id} className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
           //     <div className="relative h-48 w-full">
@@ -139,16 +139,14 @@ const Collection = () => {
           <Link
             href={artwork.url}
             key={artwork.id}
-            className="group flex flex-col items-center text-accent"
+            className="group mb-8 break-inside-avoid flex flex-col items-center text-accent"
           >
-            <div className="relative w-full aspect-square border border-accent/60 bg-neutral-200 overflow-hidden">
-              <Image
-                src={artwork.image}
-                alt={artwork.name}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
+            <ResponsiveArtImage
+              src={artwork.image}
+              alt={artwork.name}
+              className="border border-accent/60 bg-neutral-200"
+              imageClassName="object-contain transition-transform duration-300 group-hover:scale-105"
+            />
             <div className="mt-4 flex items-center w-full gap-4">
               <span className="h-px flex-1 bg-accent/60" />
               <span className="text-lg font-kalam text-accent tracking-wide">

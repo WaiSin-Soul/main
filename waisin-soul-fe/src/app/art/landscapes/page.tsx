@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import SearchBar from '../../components/SearchBar';
 import ArtworkModal from '../../components/ArtworkModal';
-import Image from 'next/image';
+import ResponsiveArtImage from '../../components/ResponsiveArtImage';
 // import Link from 'next/link';
 
 type Artwork = {
@@ -95,12 +95,12 @@ function LandscapesContent() {
                     <SearchBar onSearch={handleSearch} />
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="columns-1 md:columns-2 lg:columns-3 gap-6">
                 {filteredArtworks.map(artwork => (
                     <div
                         key={artwork.id}
                         ref={(el) => { itemRefs.current[artwork.id] = el; }}
-                        className={`transition-all duration-1000 ${
+                        className={`mb-6 break-inside-avoid transition-all duration-1000 ${
                             highlightedId === artwork.id
                                 ? 'animate-glow ring-4 ring-blue-500 ring-opacity-75'
                                 : ''
@@ -114,20 +114,18 @@ function LandscapesContent() {
                             onClick={() => setSelectedArtwork(artwork)}
                             className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
                         >
-                            <div className="relative h-48 w-full">
-                                <Image
-                                    src={artwork.image_url || '/images/feature1.webp'}
-                                    alt={artwork.name}
-                                    fill
-                                    className="object-cover hover:scale-105 transition-transform duration-300"
-                                />
-                            </div>
+                            <ResponsiveArtImage
+                                src={artwork.image_url || '/images/feature1.webp'}
+                                alt={artwork.name}
+                                className="bg-neutral-200"
+                                imageClassName="object-contain hover:scale-105 transition-transform duration-300"
+                            />
                             <div className="p-6">
                                 <div className="flex justify-between items-start mb-2">
                                     <h2 className="text-xl font-semibold text-white">{artwork.name}</h2>
                                     {/* <span className="text-blue-500 font-bold">${(artwork.price || artwork.basePrice || 0).toFixed(2)}</span> */}
                                 </div>
-                                <p className="text-gray-300 mb-4">{artwork.description}</p>
+                                {/* <p className="text-gray-300 mb-4">{artwork.description}</p> */}
                                 {/* <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200 text-center">
                                     View Details
                                 </div> */}
