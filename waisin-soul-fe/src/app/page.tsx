@@ -5,7 +5,7 @@ import FeaturedCollection from "./components/FeaturedCollection";
 
 export default function Home() {
   const largeCard = {
-    title: "Love Relationship Coaching",
+    title: "Love Life Coaching",
     description:
       "If you are currently in a relationship or seeking for one, and if you are not experiencing the deep soulmate love that you are desiring, it is not your fault. Do you want to be absolutely clear about what is blocking you? Let's go ahead and do a quick 45-minute call.",
     imageSrc: "/images/red-bird.webp",
@@ -21,7 +21,7 @@ export default function Home() {
       link: "/art/collection",
     },
     {
-      title: "Love Relationship Coaching",
+      title: "Love Life Coaching",
       description:
         "Follow my Unique Artist's Path Method to unlock your potential and become a dynamic magnet for an extraordinary life of happiness, passionate and steady love.",
       imageSrc: "/images/Love_at_first_sight.webp",
@@ -38,6 +38,7 @@ export default function Home() {
 
   const carouselItems = [
     { src: "/images/Ocean_Spirit.webp", alt: "Ocean spirit" },
+    { src: "https://swweabineuoutbhdferb.supabase.co/storage/v1/object/public/products/landscapes/asian/Experiencing%20Greatness.jpg", alt: "Ocean spirit" },
     {
       src: "/images/Celebration_of_Surrender.webp",
       alt: "Celebration of surrender",
