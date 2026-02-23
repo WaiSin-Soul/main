@@ -16,7 +16,7 @@ type Artwork = {
     basePrice?: number;
 };
 
-function FloraFaunaContent() {
+function FloralCreaturesContent() {
     const [allArtworks, setAllArtworks] = useState<Artwork[]>([]);
     const [filteredArtworks, setFilteredArtworks] = useState<Artwork[]>([]);
     const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ function FloraFaunaContent() {
     useEffect(() => {
         const fetchArtworks = async () => {
             try {
-                const response = await fetch('/api/admin/products?collection=flora-fauna');
+                const response = await fetch('/api/admin/products?collection=floral-creatures');
                 if (!response.ok) {
                     throw new Error('Failed to load artworks');
                 }
@@ -90,7 +90,7 @@ function FloraFaunaContent() {
     return (
         <div className="container mx-auto px-4 py-12">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">Flora & Fauna</h1>
+                <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">Floral & Creatures</h1>
                 <div className="mb-12">
                     <SearchBar onSearch={handleSearch} />
                 </div>
@@ -107,7 +107,7 @@ function FloraFaunaContent() {
                         }`}
                     >
                         {/* <Link
-                            href={`/art/flora-fauna/${artwork.id}`}
+                            href={`/art/floral-creatures/${artwork.id}`}
                             className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 block"
                     > */}
                         <div
@@ -151,14 +151,14 @@ function FloraFaunaContent() {
     );
 }
 
-export default function Flora_Fauna() {
+export default function FloralCreatures() {
     return (
         <Suspense fallback={
             <div className="container mx-auto px-4 py-12">
                 <div className="text-center text-white">Loading...</div>
             </div>
         }>
-            <FloraFaunaContent />
+            <FloralCreaturesContent />
         </Suspense>
     );
 } 
