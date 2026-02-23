@@ -21,9 +21,21 @@ export const metadata: Metadata = {
   title: "WaiSin Soul",
   description: "WaiSin Soul",
   icons: {
-    icon: "/images/waisin_soul_logo_small.png",
-    shortcut: "/images/waisin_soul_logo_small.png",
-    apple: "/images/waisin_soul_logo_small.png",
+    icon: [
+      {
+        url: "/images/favicon.png?v=2",
+        type: "image/png",
+        sizes: "256x256",
+      },
+    ],
+    shortcut: ["/images/favicon.png?v=2"],
+    apple: [
+      {
+        url: "/images/favicon.png?v=2",
+        type: "image/png",
+        sizes: "180x180",
+      },
+    ],
   },
 };
 

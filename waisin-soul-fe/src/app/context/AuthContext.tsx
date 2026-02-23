@@ -102,10 +102,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const signup = async (name: string, email: string, password: string) => {
-    // Determine redirect URL based on environment
-    const redirectUrl = typeof window !== 'undefined'
-      ? `${window.location.origin}/auth/callback`
-      : 'http://localhost:3000/auth/callback';
+    const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+    const origin =
+      configuredSiteUrl ||
+      (typeof window !== "undefined"
+        ? window.location.origin
+        : "http://localhost:3000");
+    const redirectUrl = `${origin}/auth/callback`;
 
     const { error } = await supabase.auth.signUp({
       email,

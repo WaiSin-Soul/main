@@ -107,6 +107,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
     const collections: Record<string, string> = {
       featured: "/art/featured",
       landscapes: "/art/landscapes",
+      "asian-landscapes": "/art/asian-landscapes",
+      "western-landscapes-seascapes": "/art/western-landscapes-seascapes",
       "flora-fauna": "/art/flora-fauna",
       "women-series": "/art/women-series",
       "calligraphy-contemporary": "/art/calligraphy-contemporary",

@@ -27,13 +27,13 @@ export default function Home() {
       imageSrc: "/images/Love_at_first_sight.webp",
       link: "/coaching",
     },
-    {
-      title: "Product Catalog",
-      description:
-        "Express your artistic style with our collection of products featuring unique artwork. Wear your creativity with pride.",
-      imageSrc: "/images/neck-shirt.webp",
-      link: "/products",
-    },
+    // {
+    //   title: "Product Catalog",
+    //   description:
+    //     "Express your artistic style with our collection of products featuring unique artwork. Wear your creativity with pride.",
+    //   imageSrc: "/images/neck-shirt.webp",
+    //   link: "/products",
+    // },
   ];
 
   const carouselItems = [
@@ -91,18 +91,18 @@ export default function Home() {
         <div className="w-full h-full">
           <Carousel items={carouselItems} />
         </div>
-        <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto">
+        {/* <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto">
           <Card
             title={largeCard.title}
             description={largeCard.description}
             imageSrc={largeCard.imageSrc}
             link={largeCard.link}
           />
-        </div>
+        </div> */}
         <div className="my-8 w-full">
           <div className="w-full px-4 sm:px-6 lg:px-8 mx-auto">
-            <h1 className="font-kalam text-3xl sm:text-4xl font-bold mb-4">Services</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* <h1 className="font-kalam text-3xl sm:text-4xl font-bold mb-4">Services</h1> */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
             {cards.map((card, index) => (
               <Card
                 key={index}

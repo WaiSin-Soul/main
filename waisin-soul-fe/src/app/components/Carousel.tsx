@@ -49,23 +49,23 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
                     height={1080}
                 />
                 {/* Progress bar */}
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-200">
+                {/* <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-200">
                     <div 
                         className="h-full bg-blue-500 transition-all duration-50"
                         style={{ width: `${progress}%` }}
                     />
-                </div>
+                </div> */}
             </div>
             <button 
                 onClick={prevSlide} 
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800/70 hover:bg-gray-800 text-white p-3 rounded-full transition-all z-10"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800/70 hover:bg-gray-800 text-white p-6 rounded-full transition-all z-10"
                 aria-label="Previous Slide"
             >
                 &#10094;
             </button>
             <button 
                 onClick={nextSlide} 
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800/70 hover:bg-gray-800 text-white p-3 rounded-full transition-all z-10"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800/70 hover:bg-gray-800 text-white p-6 rounded-full transition-all z-10"
                 aria-label="Next Slide"
             >
                 &#10095;
