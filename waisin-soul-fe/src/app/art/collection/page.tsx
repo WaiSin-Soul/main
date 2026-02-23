@@ -28,7 +28,7 @@ const collectionData: Product[] = [
     id: 1,
     name: "Featured",
     description: "Description for collection 1",
-    image: "/images/B_3.Serenity_wumtei (1).jpg",
+    image: "/images/Emerald (Square).jpg",
     url: "/art/featured",
     details:
       "Premium collection piece showcasing exceptional artistry and craftsmanship.",
@@ -37,7 +37,7 @@ const collectionData: Product[] = [
     id: 2,
     name: "Floral & Creatures",
     description: "Description for collection 2",
-    image: "/images/I_Think_You_re_Special_bf5u1m.jpg",
+    image: "/images/Bonded in Love (Square).jpg",
     url: "/art/floral-creatures",
     details:
       "Exclusive collection featuring unique and limited edition artwork.",
@@ -46,7 +46,7 @@ const collectionData: Product[] = [
     id: 3,
     name: "Asian Landscapes",
     description: "Description for collection 3",
-    image: "/images/Experiencing_Greatness_r0thpy.jpg",
+    image: "/images/No Ego Here (Square).jpg",
     url: "/art/asian-landscapes",
     details:
       "Curated collection representing the finest works of contemporary art.",
@@ -55,7 +55,7 @@ const collectionData: Product[] = [
     id: 4,
     name: "Western Landscapes + Seascapes",
     description: "Description for collection 4",
-    image: "/images/Seahorses_parqnd.jpg",
+    image: "/images/Serene Freedom (Square).jpg",
     url: "/art/western-landscapes-seascapes",
     details:
       "Curated collection representing the finest works of contemporary art.",
@@ -64,7 +64,7 @@ const collectionData: Product[] = [
     id: 5,
     name: "Calligraphy & Contemporary",
     description: "Description for collection 5",
-    image: "/images/streching_iccbqa.jpg",
+    image: "/images/Relaxation (Square).jpg",
     url: "/art/calligraphy-contemporary",
     details:
       "Curated collection representing the finest works of contemporary art.",
@@ -111,42 +111,21 @@ const Collection = () => {
           <SearchBar onSearch={handleSearch} />
         </div>
       </div>
-      <div className="columns-1 md:columns-2 lg:columns-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredCollection.map((artwork) => (
-          // <div key={artwork.id} className="bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-          //     <div className="relative h-48 w-full">
-          //         <Image
-          //             src={artwork.image}
-          //             alt={artwork.name}
-          //             fill
-          //             className="object-cover"
-          //         />
-          //     </div>
-          //     <div className="p-6">
-          //         <div className="flex justify-between items-start mb-2">
-          //             <h2 className="text-xl font-semibold text-white">{artwork.name}</h2>
-          //             <span className="text-blue-500 font-bold">{artwork.price}</span>
-          //         </div>
-          //         <p className="text-gray-300 mb-4">{artwork.description}</p>
-          //         <button
-          //             onClick={() => handleViewDetails(artwork)}
-          //             className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
-          //         >
-          //             View Details
-          //         </button>
-          //     </div>
-          // </div>
           <Link
             href={artwork.url}
             key={artwork.id}
-            className="group mb-8 break-inside-avoid flex flex-col items-center text-accent"
+            className="group flex flex-col items-center text-accent"
           >
-            <ResponsiveArtImage
-              src={artwork.image}
-              alt={artwork.name}
-              className="border border-accent/60 bg-neutral-200"
-              imageClassName="object-contain transition-transform duration-300 group-hover:scale-105"
-            />
+            <div className="relative w-full aspect-square border border-accent/60 bg-neutral-200 overflow-hidden">
+              <ResponsiveArtImage
+                src={artwork.image}
+                alt={artwork.name}
+                className=""
+                imageClassName="object-contain transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
             <div className="mt-4 flex items-center w-full gap-4">
               <span className="h-px flex-1 bg-accent/60" />
               <span className="text-lg font-kalam text-accent tracking-wide">

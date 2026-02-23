@@ -120,21 +120,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     });
     if (error) throw new Error(error.message);
 
-    // Create user profile in profiles table
+    // Create user profile via API route
     if (data.user) {
-      const { error: profileError } = await supabase
-        .from("profiles")
-        .upsert(
-          {
-            id: data.user.id,
+      try {
+        const response = await fetch("/api/auth/create-profile", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: data.user.id,
             name,
             email,
-          },
-          { onConflict: "id" }
-        );
-      if (profileError) {
-        console.error("Failed to create user profile:", profileError);
-        // Don't throw - signup already succeeded
+          }),
+        });
+        if (!response.ok) {
+          const error = await response.json();
+          console.error("Failed to create user profile:", error);
+        }
+      } catch (apiError) {
+        console.error("Error calling create-profile API:", apiError);
       }
     }
   };

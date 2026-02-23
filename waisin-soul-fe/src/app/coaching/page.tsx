@@ -91,7 +91,7 @@ const Coaching = () => {
                         >
                             Schedule Free Session
                         </button> */}
-                        <a href="https://calendly.com/waisin-lovelifechanger/discovery-meeting?month=2026-02" target="_blank" rel="noopener noreferrer" className="w-full bg-[#2a2a2a] text-white py-3 px-6 rounded-md hover:bg-[#3a3a3a] transition-colors duration-200 text-center block">
+                        <a href="https://calendly.com/waisin-lovelifechanger/discovery-meeting?month=2026-02" target="_blank" rel="noopener noreferrer" className="w-full bg-header text-white py-3 px-6 rounded-md hover:bg-[#3a3a3a] transition-colors duration-200 text-center block">
                             Schedule Free Session
                         </a>
                     </div>
