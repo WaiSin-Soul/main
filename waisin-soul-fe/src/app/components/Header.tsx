@@ -161,10 +161,10 @@ const Header = () => {
                   </li>
                   <li>
                     <button
-                      onClick={() => handleNavigate("/art/flora-fauna")}
+                      onClick={() => handleNavigate("/art/floral-creatures")}
                       className="block px-4 py-2 hover:bg-gray-200 w-full text-left"
                     >
-                      Flora & Fauna
+                      Floral + Creatures
                     </button>
                   </li>
                   <li>
