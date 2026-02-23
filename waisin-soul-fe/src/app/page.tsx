@@ -38,7 +38,6 @@ export default function Home() {
 
   const carouselItems = [
     { src: "/images/Ocean_Spirit.webp", alt: "Ocean spirit" },
-    { src: "/images/Great_Taos_Way.webp", alt: "Great Taos Way" },
     {
       src: "/images/Celebration_of_Surrender.webp",
       alt: "Celebration of surrender",

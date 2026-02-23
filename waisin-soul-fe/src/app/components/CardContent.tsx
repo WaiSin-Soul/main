@@ -19,19 +19,21 @@ const CardContent: React.FC<CardContentProps> = ({
         </h2>
         <p className="text-gray-700 mb-4 text-sm sm:text-base">{description}</p>
       </div>
-      <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 text-center"
-      >
-        Click Here
-      </a>
+      
       {link.includes("/coaching") && (
         <p className="text-xs text-gray-500 mt-2">
           FOR 45-MINS CLARITY SESSION
         </p>
       )}
+
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-header text-white py-2 px-4 rounded hover:bg-red-700 text-center"
+      >
+        Click Here
+      </a>
     </div>
   );
 };
