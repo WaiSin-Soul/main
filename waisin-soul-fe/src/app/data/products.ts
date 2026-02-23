@@ -17,11 +17,11 @@ export interface Product {
   materials: ProductOption[];
   sizes: ProductOption[];
   styles: ProductOption[];
-  // collection: 'best-sellers' | 'landscapes' | 'flora-fauna' | 'women-series' | 'calligraphy-contemporary' | 'products';
+  // collection: 'best-sellers' | 'landscapes' | 'floral-creatures' | 'women-series' | 'calligraphy-contemporary' | 'products';
   collection:
     | "featured"
     | "landscapes"
-    | "flora-fauna"
+    | "floral-creatures"
     | "women-series"
     | "calligraphy-contemporary"
     | "products";
@@ -570,15 +570,15 @@ export const artPiecesDatabase: Record<string, Product> = {
       },
     ],
   },
-  "flora-fauna-1": {
-    id: "flora-fauna-1",
+  "floral-creatures-1": {
+    id: "floral-creatures-1",
     name: "Botanical Beauty",
     description: "Beautiful botanical art with delicate specimens",
     basePrice: 179.99,
     image: "/images/feature1.webp",
     details:
       "Beautiful botanical art featuring delicate flora specimens with intricate details.",
-    collection: "flora-fauna",
+    collection: "floral-creatures",
     materials: [
       {
         id: "mat-1",
@@ -622,15 +622,15 @@ export const artPiecesDatabase: Record<string, Product> = {
       },
     ],
   },
-  "flora-fauna-2": {
-    id: "flora-fauna-2",
+  "floral-creatures-2": {
+    id: "floral-creatures-2",
     name: "Wildlife Majesty",
     description: "Wildlife artwork capturing the essence of nature",
     basePrice: 229.99,
     image: "/images/feature2.webp",
     details:
       "Wildlife artwork capturing the essence and beauty of natural fauna.",
-    collection: "flora-fauna",
+    collection: "floral-creatures",
     materials: [
       {
         id: "mat-1",
@@ -674,15 +674,15 @@ export const artPiecesDatabase: Record<string, Product> = {
       },
     ],
   },
-  "flora-fauna-3": {
-    id: "flora-fauna-3",
+  "floral-creatures-3": {
+    id: "floral-creatures-3",
     name: "Garden Harmony",
-    description: "Exquisite flora composition with vibrant colors",
+    description: "Exquisite floral composition with vibrant colors",
     basePrice: 279.99,
     image: "/images/feature3.webp",
     details:
-      "Exquisite flora composition with vibrant colors and botanical precision.",
-    collection: "flora-fauna",
+      "Exquisite floral composition with vibrant colors and botanical precision.",
+    collection: "floral-creatures",
     materials: [
       {
         id: "mat-1",

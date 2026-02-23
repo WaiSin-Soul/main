@@ -35,10 +35,10 @@ const collectionData: Product[] = [
   },
   {
     id: 2,
-    name: "Flora & Fauna",
+    name: "Floral & Creatures",
     description: "Description for collection 2",
     image: "/images/feature2.webp",
-    url: "/art/flora-fauna",
+    url: "/art/floral-creatures",
     details:
       "Exclusive collection featuring unique and limited edition artwork.",
   },

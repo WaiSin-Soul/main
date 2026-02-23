@@ -109,7 +109,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       landscapes: "/art/landscapes",
       "asian-landscapes": "/art/asian-landscapes",
       "western-landscapes-seascapes": "/art/western-landscapes-seascapes",
-      "flora-fauna": "/art/flora-fauna",
+      "floral-creatures": "/art/floral-creatures",
       "women-series": "/art/women-series",
       "calligraphy-contemporary": "/art/calligraphy-contemporary",
       products: "/products",
