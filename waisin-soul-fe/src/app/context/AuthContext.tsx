@@ -110,7 +110,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         : "http://localhost:3000");
     const redirectUrl = `${origin}/auth/callback`;
 
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -119,6 +119,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       },
     });
     if (error) throw new Error(error.message);
+
+    // Create user profile in profiles table
+    if (data.user) {
+      const { error: profileError } = await supabase
+        .from("profiles")
+        .upsert(
+          {
+            id: data.user.id,
+            name,
+            email,
+          },
+          { onConflict: "id" }
+        );
+      if (profileError) {
+        console.error("Failed to create user profile:", profileError);
+        // Don't throw - signup already succeeded
+      }
+    }
   };
 
   const logout = async () => {
@@ -130,6 +148,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const updateUserInfo = async (userInfo: Partial<User>) => {
     const { name, email, ...rest } = userInfo;
 
+    // Update auth metadata
     const { data, error } = await supabase.auth.updateUser({
       ...(email ? { email } : {}),
       data: {
@@ -139,7 +158,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     });
 
     if (error) throw new Error(error.message);
-    if (data.user) setUser(mapSupabaseUser(data.user));
+    if (data.user) {
+      setUser(mapSupabaseUser(data.user));
+
+      // Also update profiles table with user data
+      const profileUpdate: any = {
+        id: data.user.id,
+      };
+      if (name) profileUpdate.name = name;
+      if (email) profileUpdate.email = email;
+      if (rest.phone) profileUpdate.phone = rest.phone;
+      if (rest.address) profileUpdate.address = rest.address;
+      if (rest.city) profileUpdate.city = rest.city;
+      if (rest.state) profileUpdate.state = rest.state;
+      if (rest.zipCode) profileUpdate.zip_code = rest.zipCode;
+      if (rest.country) profileUpdate.country = rest.country;
+
+      const { error: profileError } = await supabase
+        .from("profiles")
+        .upsert(profileUpdate, { onConflict: "id" });
+
+      if (profileError) {
+        console.error("Failed to update user profile:", profileError);
+        // Don't throw - auth update already succeeded
+      }
+    }
   };
 
   return (

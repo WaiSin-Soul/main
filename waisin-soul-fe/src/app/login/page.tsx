@@ -212,16 +212,14 @@ const Login = () => {
                 </label>
               </div>
 
-              <div className="text-sm">
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
+              {/* <div className="text-sm">
+                <Link
+                  href="/auth/forgot-password"
                   className="font-medium text-blue-500 hover:text-blue-400"
                 >
                   Forgot your password?
-                </a>
-              </div>
+                </Link>
+              </div> */}
             </div>
           )}
 
