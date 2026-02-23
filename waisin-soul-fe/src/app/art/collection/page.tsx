@@ -44,26 +44,35 @@ const collectionData: Product[] = [
   },
   {
     id: 3,
-    name: "Landscapes",
+    name: "Asian Landscapes",
     description: "Description for collection 3",
     image: "/images/feature3.webp",
-    url: "/art/landscapes",
+    url: "/art/asian-landscapes",
     details:
       "Curated collection representing the finest works of contemporary art.",
   },
   {
     id: 4,
-    name: "Calligraphy & Contemporary",
+    name: "Western Landscapes + Seascapes",
     description: "Description for collection 4",
+    image: "/images/feature3.webp",
+    url: "/art/western-landscapes-seascapes",
+    details:
+      "Curated collection representing the finest works of contemporary art.",
+  },
+  {
+    id: 5,
+    name: "Calligraphy & Contemporary",
+    description: "Description for collection 5",
     image: "/images/feature3.webp",
     url: "/art/calligraphy-contemporary",
     details:
       "Curated collection representing the finest works of contemporary art.",
   },
   {
-    id: 5,
+    id: 6,
     name: "Women Series",
-    description: "Description for collection 5",
+    description: "Description for collection 6",
     image: "/images/feature3.webp",
     url: "/art/women-series",
     details:

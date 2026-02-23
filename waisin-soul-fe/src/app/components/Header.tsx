@@ -27,8 +27,13 @@ const Header = () => {
 
   const handleArtCollectionClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    // On mobile/click, toggle the dropdown
-    // On desktop/hover, this allows clicking to navigate after opening
+    // On mobile (hamburger menu open), always toggle the dropdown
+    if (isMenuOpen) {
+      setDropdownOpen((prev) => !prev);
+      return;
+    }
+
+    // On desktop/click, this allows clicking to navigate after opening
     if (isDropdownOpen) {
       handleNavigate("/art/collection");
     } else {
@@ -138,10 +143,10 @@ const Header = () => {
                   </li>
                   <li>
                     <button
-                      onClick={() => handleNavigate("/art/landscapes")}
+                      onClick={() => handleNavigate("/art/asian-landscapes")}
                       className="block px-4 py-2 hover:bg-gray-200 w-full text-left"
                     >
-                      Landscapes
+                      Asian Landscapes
                     </button>
                   </li>
                   <li>
@@ -162,13 +167,23 @@ const Header = () => {
                       Flora & Fauna
                     </button>
                   </li>
+                  <li>
+                    <button
+                      onClick={() =>
+                        handleNavigate("/art/western-landscapes-seascapes")
+                      }
+                      className="block px-4 py-2 hover:bg-gray-200 w-full text-left"
+                    >
+                      Western Landscapes + Seascapes
+                    </button>
+                  </li>
                   <li
                     className="relative"
                     onMouseEnter={() => setWomenSeriesOpen(true)}
                     onMouseLeave={() => setWomenSeriesOpen(false)}
                   >
                     <button
-                      onClick={() => setWomenSeriesOpen(!isWomenSeriesOpen)}
+                      onClick={() => handleNavigate("/art/women-series")}
                       className="block px-4 py-2 hover:bg-gray-200 w-full text-left flex items-center justify-between"
                     >
                       <span>Women Series</span>
@@ -188,12 +203,11 @@ const Header = () => {
                       </svg>
                     </button>
                     <ul
-                      className={`transition-all duration-200 absolute pt-2 bg-white text-black shadow-lg rounded-md z-20 whitespace-nowrap ${
+                      className={`transition-all duration-200 absolute top-0 left-full bg-white text-black shadow-lg rounded-md z-20 whitespace-nowrap ${
                         isWomenSeriesOpen
                           ? "opacity-100 visible pointer-events-auto"
                           : "opacity-0 invisible pointer-events-none"
                       }`}
-                      style={{ top: "100%", right: 0 }}
                     >
                       <li>
                         <button
@@ -251,16 +265,6 @@ const Header = () => {
               )}
             </li>
             <li>
-              <button
-                onClick={() => handleNavigate("/coaching")}
-                className="hover:underline"
-              >
-                <span className="text-xl md:text-base lg:text-2xl">
-                  Coaching
-                </span>
-              </button>
-            </li>
-            <li>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -274,11 +278,21 @@ const Header = () => {
             </li>
             <li>
               <button
+                onClick={() => handleNavigate("/coaching")}
+                className="hover:underline"
+              >
+                <span className="text-xl md:text-base lg:text-2xl">
+                  Coaching
+                </span>
+              </button>
+            </li>
+            <li>
+              <button
                 onClick={() => handleNavigate("/contact")}
                 className="hover:underline"
               >
                 <span className="text-xl md:text-base lg:text-2xl">
-                  Contact Me
+                  Contact
                 </span>
               </button>
             </li>

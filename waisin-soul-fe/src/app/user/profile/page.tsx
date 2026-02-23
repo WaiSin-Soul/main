@@ -244,7 +244,7 @@ const UserProfile = () => {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex flex-wrap gap-4 mb-8">
+        {/* <div className="flex flex-wrap gap-4 mb-8">
           <button
             onClick={() => setActiveTab("orders")}
             className={`px-6 py-3 rounded-lg ${
@@ -265,10 +265,10 @@ const UserProfile = () => {
           >
             Account Settings
           </button>
-        </div>
+        </div> */}
 
         {/* Content Area */}
-        <div className="bg-[#2a2a2a] rounded-lg p-6">
+        {/* <div className="bg-[#2a2a2a] rounded-lg p-6">
           {activeTab === "orders" ? (
             <div>
               <h3 className="text-xl font-semibold mb-6">Order History</h3>
@@ -561,7 +561,7 @@ const UserProfile = () => {
               )}
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

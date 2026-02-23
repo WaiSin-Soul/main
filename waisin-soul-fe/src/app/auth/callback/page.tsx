@@ -12,21 +12,58 @@ function AuthCallbackContent() {
   useEffect(() => {
     const handleCallback = async () => {
       try {
-        const code = searchParams.get("code");
-        
-        if (!code) {
-          setError("No authorization code found");
-          setLoading(false);
-          return;
-        }
-
         const supabase = createClient();
+        const next = searchParams.get("next") || "/user/profile";
+        const code = searchParams.get("code");
+        const tokenHash = searchParams.get("token_hash");
+        const typeParam = searchParams.get("type");
 
-        // Exchange code for session
-        const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+        if (code) {
+          const { error: exchangeError } =
+            await supabase.auth.exchangeCodeForSession(code);
 
-        if (exchangeError) {
-          setError(exchangeError.message);
+          if (exchangeError) {
+            if (exchangeError.message.includes("PKCE code verifier not found")) {
+              const {
+                data: { session: fallbackSession },
+              } = await supabase.auth.getSession();
+
+              if (fallbackSession) {
+                router.push(next.startsWith("/") ? next : "/user/profile");
+                return;
+              }
+
+              setError(
+                "This confirmation link was opened without the original auth session. Please request a new confirmation email and open it in the same browser.",
+              );
+              setLoading(false);
+              return;
+            }
+
+            setError(exchangeError.message);
+            setLoading(false);
+            return;
+          }
+        } else if (tokenHash && typeParam) {
+          const validTypes = ["signup", "invite", "magiclink", "recovery", "email_change"];
+          if (!validTypes.includes(typeParam)) {
+            setError("Invalid confirmation link type");
+            setLoading(false);
+            return;
+          }
+
+          const { error: verifyError } = await supabase.auth.verifyOtp({
+            token_hash: tokenHash,
+            type: typeParam as "signup" | "invite" | "magiclink" | "recovery" | "email_change",
+          });
+
+          if (verifyError) {
+            setError(verifyError.message);
+            setLoading(false);
+            return;
+          }
+        } else {
+          setError("No authorization code or verification token found");
           setLoading(false);
           return;
         }
@@ -43,8 +80,7 @@ function AuthCallbackContent() {
           return;
         }
 
-        // Redirect to dashboard
-        router.push("/user/profile");
+        router.push(next.startsWith("/") ? next : "/user/profile");
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
         setLoading(false);

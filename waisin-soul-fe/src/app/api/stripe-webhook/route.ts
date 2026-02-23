@@ -21,7 +21,7 @@ export async function POST(req: Request) {
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
+    event = Stripe.webhooks.constructEvent(body, sig, endpointSecret);
   } catch {
     return new Response("Webhook error", { status: 400 });
   }

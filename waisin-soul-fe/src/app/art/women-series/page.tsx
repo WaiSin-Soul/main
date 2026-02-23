@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, Suspense } from 'react';
 import SearchBar from '../../components/SearchBar';
 import ArtworkModal from '../../components/ArtworkModal';
 import Image from 'next/image';
-// import Link from 'next/link';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
 type Artwork = {
@@ -15,6 +15,33 @@ type Artwork = {
     collection: string;
     basePrice?: number;
 };
+
+const womenSeriesSubcategories = [
+    {
+        id: 1,
+        name: 'Women of Inspiration',
+        image: '/images/feature1.webp',
+        url: '/art/women-series?category=inspiration',
+    },
+    {
+        id: 2,
+        name: 'Women of Passion',
+        image: '/images/feature2.webp',
+        url: '/art/women-series?category=passion',
+    },
+    {
+        id: 3,
+        name: 'Women of Seasons',
+        image: '/images/feature3.webp',
+        url: '/art/women-series?category=seasons',
+    },
+    {
+        id: 4,
+        name: 'Women of Tao Series',
+        image: '/images/feature3.webp',
+        url: '/art/women-series?category=tao',
+    },
+];
 
 function WomenSeriesContent() {
     const searchParams = useSearchParams();
@@ -38,6 +65,14 @@ function WomenSeriesContent() {
     };
 
     useEffect(() => {
+        if (!category) {
+            setAllArtworks([]);
+            setFilteredArtworks([]);
+            setLoading(false);
+            setError(null);
+            return;
+        }
+
         const fetchArtworks = async () => {
             try {
                 let url = '/api/admin/products?collection=women-series';
@@ -98,6 +133,41 @@ function WomenSeriesContent() {
         return (
             <div className="container mx-auto px-4 py-12 text-center text-red-400">
                 {error}
+            </div>
+        );
+    }
+
+    if (!category) {
+        return (
+            <div className="container mx-auto px-4 py-12">
+                <div className="max-w-4xl mx-auto">
+                    <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">Women Series</h1>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {womenSeriesSubcategories.map((subcategory) => (
+                        <Link
+                            href={subcategory.url}
+                            key={subcategory.id}
+                            className="group flex flex-col items-center text-accent"
+                        >
+                            <div className="relative w-full aspect-square border border-accent/60 bg-neutral-200 overflow-hidden">
+                                <Image
+                                    src={subcategory.image}
+                                    alt={subcategory.name}
+                                    fill
+                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                />
+                            </div>
+                            <div className="mt-4 flex items-center w-full gap-4">
+                                <span className="h-px flex-1 bg-accent/60" />
+                                <span className="text-lg font-kalam text-accent tracking-wide text-center">
+                                    {subcategory.name}
+                                </span>
+                                <span className="h-px flex-1 bg-accent/60" />
+                            </div>
+                        </Link>
+                    ))}
+                </div>
             </div>
         );
     }
