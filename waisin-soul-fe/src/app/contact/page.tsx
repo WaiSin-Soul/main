@@ -253,12 +253,12 @@ const Contact = () => {
               <h3 className="text-lg font-medium text-white mb-2">
                 Social Media
               </h3>
-              <div className="space-y-1">
+              <div className="space-y-1 flex space-x-4 text-center">
                 <a
                   href="https://www.facebook.com/waisinsoulart"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 text-center justify-center"
                 >
                   <Image
                     src="/images/footer/facebook.png"
@@ -272,7 +272,7 @@ const Contact = () => {
                   href="https://www.facebook.com/waisinlovelifechanger"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 text-center justify-center"
                 >
                   <Image
                     src="/images/footer/facebook.png"
@@ -286,7 +286,7 @@ const Contact = () => {
                   href="https://www.instagram.com/waisinsoul"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 text-center justify-center"
                 >
                   <Image
                     src="/images/footer/instagram.png"
@@ -297,6 +297,14 @@ const Contact = () => {
                   Instagram
                 </a>
               </div>
+            </div>
+            <div className="relative w-full h-32 md:h-64 rounded-xl overflow-hidden">
+              <Image
+                src="/images/studio.jpg"
+                alt="Waisin's floating cloud studio"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
         </div>

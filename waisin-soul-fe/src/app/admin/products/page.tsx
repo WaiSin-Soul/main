@@ -7,6 +7,7 @@ type Product = {
   description: string | null;
   price: number;
   image_url: string | null;
+  alt_tag: string | null;
   stock: number;
   created_at: string;
 };

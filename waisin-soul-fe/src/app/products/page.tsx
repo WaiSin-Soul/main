@@ -10,6 +10,7 @@ type BackendProduct = {
     description: string | null;
     price: number;
     image_url: string | null;
+    alt_tag: string | null;
 };
 
 const Products = () => {
@@ -21,7 +22,7 @@ const Products = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('/api/admin/products?collection=products');
+                const response = await fetch('/api/admin/products?collection=products&is_active=true');
 
                 if (!response.ok) {
                     throw new Error('Failed to load products');
@@ -83,7 +84,7 @@ const Products = () => {
                         <div className="relative h-48 w-full">
                             <Image
                                 src={product.image_url || '/images/feature1.webp'}
-                                alt={product.name}
+                                alt={product.alt_tag || product.name}
                                 fill
                                 className="object-cover hover:scale-105 transition-transform duration-300"
                             />

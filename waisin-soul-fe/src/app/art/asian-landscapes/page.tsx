@@ -13,6 +13,7 @@ type Artwork = {
     image_url: string | null;
     collection: string;
     basePrice?: number;
+    alt_tag: string | null;
 };
 
 function AsianLandscapesContent() {
@@ -28,7 +29,7 @@ function AsianLandscapesContent() {
     useEffect(() => {
         const fetchArtworks = async () => {
             try {
-                const response = await fetch('/api/admin/products?collection=asian-landscapes');
+                const response = await fetch('/api/admin/products?collection=asian-landscapes&is_active=true');
                 if (!response.ok) {
                     throw new Error('Failed to load artworks');
                 }
@@ -110,7 +111,7 @@ function AsianLandscapesContent() {
                         >
                             <ResponsiveArtImage
                                 src={artwork.image_url || '/images/feature1.webp'}
-                                alt={artwork.name}
+                                alt={artwork.alt_tag || artwork.name}
                                 className="bg-neutral-200"
                                 imageClassName="object-contain hover:scale-105 transition-transform duration-300"
                             />
