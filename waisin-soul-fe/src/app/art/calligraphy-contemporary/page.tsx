@@ -14,6 +14,7 @@ type Artwork = {
     image_url: string | null;
     collection: string;
     basePrice?: number;
+    alt_tag: string | null;
 };
 
 function CalligraphyContemporaryContent() {
@@ -29,7 +30,7 @@ function CalligraphyContemporaryContent() {
     useEffect(() => {
         const fetchArtworks = async () => {
             try {
-                const response = await fetch('/api/admin/products?collection=calligraphy-contemporary');
+                const response = await fetch('/api/admin/products?collection=calligraphy-contemporary&is_active=true');
                 if (!response.ok) {
                     throw new Error('Failed to load artworks');
                 }
@@ -116,7 +117,7 @@ function CalligraphyContemporaryContent() {
                         >
                         <ResponsiveArtImage
                             src={artwork.image_url || '/images/feature1.webp'}
-                            alt={artwork.name}
+                            alt={artwork.alt_tag || artwork.name}
                             className="bg-neutral-200"
                             imageClassName="object-contain hover:scale-105 transition-transform duration-300"
                         />

@@ -82,7 +82,7 @@ const Footer = () => {
         {/* Stay Updated Column */}
         <div>
           <h3 className="font-semibold mb-4">Stay Updated</h3>
-          <div className="text-sm space-y-2 flex flex-col">
+          <div className="text-sm space-y-2 flex flex-col justify-center text-center">
             <a
               href="https://www.facebook.com/waisinsoulart"
               target="_blank"

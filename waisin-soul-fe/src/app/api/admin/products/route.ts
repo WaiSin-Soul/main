@@ -6,6 +6,7 @@ const schema = z.object({
   name: z.string(),
   price: z.number(),
   image_url: z.string(),
+  alt_tag: z.string().optional(),
   description: z.string().optional(),
   stock: z.number().int().nonnegative().optional(),
   collection: z.string().optional(),
@@ -17,17 +18,20 @@ export async function GET(request: Request) {
     const collection = url.searchParams.get("collection");
     const subcategory = url.searchParams.get("subcategory");
     const id = url.searchParams.get("id");
+    const isFeatured = url.searchParams.get("is_featured");
+    const isActive = url.searchParams.get("is_active");
 
-    const filters: Record<string, string> = {};
-    if (collection) filters.category = collection;
-    if (subcategory) filters.subcategory = subcategory;
-    if (id) filters.id = id;
-
-    const { data, error } = await supabaseAdmin
+    let query = supabaseAdmin
       .from("products")
-      .select("*")
-      .match(filters)
-      .order("created_at", { ascending: false });
+      .select("*");
+
+    if (collection) query = query.eq("category", collection);
+    if (subcategory) query = query.eq("subcategory", subcategory);
+    if (id) query = query.eq("id", id);
+    if (isFeatured === "true") query = query.eq("is_featured", true);
+    if (isActive === "true") query = query.eq("is_active", true);
+
+    const { data, error } = await query.order("created_at", { ascending: false });
 
     if (error) {
       console.error("Products fetch error:", error);
