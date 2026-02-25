@@ -18,9 +18,14 @@ interface ArtworkModalProps {
 }
 
 const ArtworkModal: React.FC<ArtworkModalProps> = ({ artwork, onClose }) => {
-    if (!artwork) return null;
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [zoomLevel, setZoomLevel] = useState(1);
+
+    const handleClose = () => {
+        setIsFullScreen(false);
+        setZoomLevel(1);
+        onClose();
+    };
 
     useEffect(() => {
         if (!isFullScreen) return;
@@ -36,10 +41,12 @@ const ArtworkModal: React.FC<ArtworkModalProps> = ({ artwork, onClose }) => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isFullScreen]);
 
+    if (!artwork) return null;
+
     return (
         <div 
             className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4"
-            onClick={onClose}
+            onClick={handleClose}
         >
             <div 
                 className="bg-[#1a1a1a] rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
@@ -48,7 +55,7 @@ const ArtworkModal: React.FC<ArtworkModalProps> = ({ artwork, onClose }) => {
                 <div className="relative">
                     {/* Close button */}
                     <button
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 hover:bg-opacity-75 text-white rounded-full p-2 transition-colors"
                     >
                         <svg
@@ -75,6 +82,7 @@ const ArtworkModal: React.FC<ArtworkModalProps> = ({ artwork, onClose }) => {
                             src={artwork.image_url || '/images/feature1.webp'}
                             alt={artwork.name}
                             fill
+                            sizes="(max-width: 768px) 100vw, 896px"
                             className="object-contain transition-transform duration-300"
                         />
                     </div>
@@ -156,6 +164,7 @@ const ArtworkModal: React.FC<ArtworkModalProps> = ({ artwork, onClose }) => {
                             src={artwork.image_url || '/images/feature1.webp'}
                             alt={artwork.name}
                             fill
+                            sizes="100vw"
                             className="object-contain transition-transform duration-200"
                             style={{ transform: `scale(${zoomLevel})` }}
                         />

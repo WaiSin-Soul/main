@@ -86,6 +86,7 @@ const Products = () => {
                                 src={product.image_url || '/images/feature1.webp'}
                                 alt={product.alt_tag || product.name}
                                 fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                 className="object-cover hover:scale-105 transition-transform duration-300"
                             />
                         </div>
