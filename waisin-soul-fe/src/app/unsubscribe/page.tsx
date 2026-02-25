@@ -45,7 +45,7 @@ const UnsubscribePage = () => {
         type: "error",
         text: "An error occurred. Please try again.",
       });
-      console.error("Unsubscribe error:", error);
+      // console.error("Unsubscribe error:", error);
     } finally {
       setIsUnsubscribing(false);
     }
