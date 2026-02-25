@@ -133,11 +133,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           }),
         });
         if (!response.ok) {
-          const error = await response.json();
-          console.error("Failed to create user profile:", error);
+          const rawBody = await response.text();
+          let parsedError: unknown = rawBody;
+
+          try {
+            parsedError = rawBody ? JSON.parse(rawBody) : null;
+          } catch {
+            parsedError = rawBody;
+          }
+
+          // console.error("Failed to create user profile:", {
+          //   status: response.status,
+          //   statusText: response.statusText,
+          //   error: parsedError,
+          // });
         }
       } catch (apiError) {
-        console.error("Error calling create-profile API:", apiError);
+        // console.error("Error calling create-profile API:", apiError);
       }
     }
   };
@@ -182,7 +194,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         .upsert(profileUpdate, { onConflict: "id" });
 
       if (profileError) {
-        console.error("Failed to update user profile:", profileError);
+        // console.error("Failed to update user profile:", profileError);
         // Don't throw - auth update already succeeded
       }
     }
