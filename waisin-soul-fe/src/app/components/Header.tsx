@@ -18,10 +18,12 @@ const Header = () => {
   const { isAuthenticated } = useAuth();
 
   const handleMouseEnter = () => {
+    if (isMenuOpen) return;
     setDropdownOpen(true);
   };
 
   const handleMouseLeave = () => {
+    if (isMenuOpen) return;
     setDropdownOpen(false);
   };
 
@@ -39,6 +41,27 @@ const Header = () => {
     } else {
       setDropdownOpen(true);
     }
+  };
+
+  const handleWomenSeriesMouseEnter = () => {
+    if (isMenuOpen) return;
+    setWomenSeriesOpen(true);
+  };
+
+  const handleWomenSeriesMouseLeave = () => {
+    if (isMenuOpen) return;
+    setWomenSeriesOpen(false);
+  };
+
+  const handleWomenSeriesClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (isWomenSeriesOpen) {
+      handleNavigate("/art/women-series");
+      return;
+    }
+
+    setWomenSeriesOpen(true);
   };
 
   const toggleMenu = () => {
@@ -70,7 +93,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="flex justify-between items-center px-4 sm:px-6 lg:px-12 py-4 bg-header text-white relative">
+      <header className="flex justify-between items-center px-4 sm:px-6 lg:px-8 xl:px-12 py-4 bg-header text-white relative">
         <div className="flex items-center gap-x-4 sm:gap-x-8">
           <h1 className="text-xl font-bold">
             <Link
@@ -81,11 +104,12 @@ const Header = () => {
               }}
             >
               <Image
-                className="w-40 sm:w-56 h-auto object-contain"
+                className="w-36 sm:w-44 lg:w-48 xl:w-56 h-auto object-contain"
                 src="/images/waisin_soul_logo.png"
                 alt="logo"
                 width={300}
                 height={100}
+                loading="eager"
               />
             </Link>
           </h1>
@@ -93,13 +117,13 @@ const Header = () => {
         <nav
           className={`md:flex ${isMenuOpen ? "block" : "hidden"} absolute md:static bg-header w-full md:w-auto top-16 left-0 z-20`}
         >
-          <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 lg:space-x-12 p-4 md:p-0">
+          <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-3 lg:space-x-6 xl:space-x-12 p-4 md:p-0">
             <li>
               <button
                 onClick={() => handleNavigate("/")}
                 className="hover:underline"
               >
-                <span className="text-xl md:text-base lg:text-2xl">Home</span>
+                <span className="text-xl md:text-base lg:text-lg xl:text-2xl">Home</span>
               </button>
             </li>
             <li
@@ -112,7 +136,7 @@ const Header = () => {
                 className="hover:underline focus:outline-none"
               >
                 <div className="flex flex-row items-center">
-                  <span className="text-xl md:text-base lg:text-2xl">
+                  <span className="text-xl md:text-base lg:text-lg xl:text-2xl">
                     Art Collection
                   </span>
                   <svg
@@ -179,11 +203,11 @@ const Header = () => {
                   </li>
                   <li
                     className="relative"
-                    onMouseEnter={() => setWomenSeriesOpen(true)}
-                    onMouseLeave={() => setWomenSeriesOpen(false)}
+                    onMouseEnter={handleWomenSeriesMouseEnter}
+                    onMouseLeave={handleWomenSeriesMouseLeave}
                   >
                     <button
-                      onClick={() => handleNavigate("/art/women-series")}
+                      onClick={handleWomenSeriesClick}
                       className="block px-4 py-2 hover:bg-gray-200 w-full text-left flex items-center justify-between"
                     >
                       <span>Women Series</span>
@@ -203,10 +227,10 @@ const Header = () => {
                       </svg>
                     </button>
                     <ul
-                      className={`transition-all duration-200 absolute top-0 left-full bg-white text-black shadow-lg rounded-md z-20 whitespace-nowrap ${
+                      className={`transition-all duration-200 overflow-hidden ml-4 border-l border-gray-200 ${
                         isWomenSeriesOpen
-                          ? "opacity-100 visible pointer-events-auto"
-                          : "opacity-0 invisible pointer-events-none"
+                          ? "max-h-64 opacity-100 mt-1"
+                          : "max-h-0 opacity-0 mt-0"
                       }`}
                     >
                       <li>
@@ -271,7 +295,7 @@ const Header = () => {
                 href="https://waisintongdarbonne.artstorefronts.com/"
                 className="hover:underline"
               >
-                <span className="text-xl md:text-base lg:text-2xl">
+                <span className="text-xl md:text-base lg:text-lg xl:text-2xl">
                   Art Prints
                 </span>
               </a>
@@ -281,7 +305,7 @@ const Header = () => {
                 onClick={() => handleNavigate("/coaching")}
                 className="hover:underline"
               >
-                <span className="text-xl md:text-base lg:text-2xl">
+                <span className="text-xl md:text-base lg:text-lg xl:text-2xl">
                   Coaching
                 </span>
               </button>
@@ -291,7 +315,7 @@ const Header = () => {
                 onClick={() => handleNavigate("/contact")}
                 className="hover:underline"
               >
-                <span className="text-xl md:text-base lg:text-2xl">
+                <span className="text-xl md:text-base lg:text-lg xl:text-2xl">
                   Contact
                 </span>
               </button>
@@ -301,7 +325,7 @@ const Header = () => {
                 onClick={() => handleNavigate("/about")}
                 className="hover:underline"
               >
-                <span className="text-xl md:text-base lg:text-2xl">
+                <span className="text-xl md:text-base lg:text-lg xl:text-2xl">
                   About Me
                 </span>
               </button>

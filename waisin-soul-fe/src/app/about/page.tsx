@@ -123,6 +123,7 @@ const About = () => {
                   src="/images/about/waisin and art.JPG"
                   alt="Waisin standing in front of her art in her previous studio"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>
@@ -131,6 +132,7 @@ const About = () => {
                   src="/images/about/waisin drawing.jpg"
                   alt="Waisin painting"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>
@@ -204,6 +206,7 @@ const About = () => {
                   src="/images/about/waisin-headshot.jpg"
                   alt="Profile Picture"
                   fill
+                  sizes="192px"
                   className="object-cover"
                 />
               </div>

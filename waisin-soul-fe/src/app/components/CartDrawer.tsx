@@ -47,7 +47,7 @@ const CartDrawer = () => {
             items.map((item) => (
               <div key={item.id} className="flex gap-3 border-b pb-4">
                 <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden bg-gray-100">
-                  <Image src={item.image} alt={item.name} fill className="object-cover" />
+                  <Image src={item.image} alt={item.name} fill sizes="64px" className="object-cover" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-start justify-between gap-2">

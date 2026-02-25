@@ -14,7 +14,7 @@ export async function GET(req: Request) {
     const { data, error } = await supabaseAdmin
       .from("products")
       //   .select("id, name, description, image_url, category, price")
-      .select("id, name, description, image_url, category")
+      .select("id, name, description, image_url, category, subcategory")
       .eq("is_active", true)
       .or(`name.ilike.%${query}%,description.ilike.%${query}%`)
       .limit(20);
@@ -30,6 +30,7 @@ export async function GET(req: Request) {
       description: item.description,
       image: item.image_url,
       collection: item.category,
+      subcategory: item.subcategory,
       basePrice: item.price,
     }));
 

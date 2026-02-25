@@ -303,6 +303,7 @@ const Contact = () => {
                 src="/images/studio.jpg"
                 alt="Waisin's floating cloud studio"
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>

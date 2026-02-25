@@ -9,6 +9,7 @@ interface SearchResult {
   description?: string;
   image?: string;
   collection?: string;
+  subcategory?: string;
   basePrice?: number;
 }
 
@@ -27,6 +28,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const isPageFilterMode = !isModalOpen && typeof onSearch === "function";
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -41,7 +43,17 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
   // Search as user types
   useEffect(() => {
+    const pageFilterMode = !isModalOpen && typeof onSearch === "function";
+
     const timer = setTimeout(async () => {
+      if (pageFilterMode) {
+        onSearch?.(query);
+        setResults([]);
+        setShowResults(false);
+        setIsLoading(false);
+        return;
+      }
+
       if (query.length >= 2) {
         setIsLoading(true);
         setShowResults(true); // Show results dropdown immediately
@@ -89,6 +101,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
     const newQuery = e.target.value;
     setQuery(newQuery);
 
+    if (isPageFilterMode) {
+      return;
+    }
+
     // Show results dropdown if query is long enough
     if (newQuery.length >= 2) {
       setShowResults(true);
@@ -102,7 +118,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
     e.preventDefault();
   };
 
-  const handleResultClick = (collection: string, id: string) => {
+  const handleResultClick = (
+    collection: string,
+    id: string,
+    subcategory?: string,
+  ) => {
     // Determine the correct URL path based on collection
     const collections: Record<string, string> = {
       featured: "/art/featured",
@@ -116,7 +136,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
     };
     const basePath = collections[collection] || "/art/featured";
     // Navigate to category page with highlight query param
-    const url = `${basePath}?highlight=${id}`;
+    const params = new URLSearchParams({ highlight: id });
+    if (collection === "women-series" && subcategory) {
+      params.set("category", subcategory);
+    }
+    const url = `${basePath}?${params.toString()}`;
 
     setQuery("");
     setShowResults(false);
@@ -182,6 +206,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                         handleResultClick(
                           result.collection || "featured",
                           result.id,
+                          result.subcategory,
                         )
                       }
                       className="w-full flex items-start gap-3 p-4 hover:bg-[#3a3a3a] transition-colors text-left"
@@ -192,6 +217,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                             src={result.image}
                             alt={result.name}
                             fill
+                            sizes="64px"
                             className="object-cover rounded"
                           />
                         </div>
@@ -254,7 +280,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
             placeholder="Search art"
             value={query}
             onChange={handleInputChange}
-            onFocus={() => query.length >= 2 && setShowResults(true)}
+            onFocus={() => {
+              if (!isPageFilterMode && query.length >= 2) {
+                setShowResults(true);
+              }
+            }}
             className="w-full p-3 bg-[#1a1a1a] border border-gray-700 rounded-l-md text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
           />
           <button
@@ -280,7 +310,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       </form>
 
       {/* Search Results Dropdown */}
-      {showResults && query.length >= 2 && (
+      {!isPageFilterMode && showResults && query.length >= 2 && (
         <div className="absolute top-full left-0 right-0 mt-1 bg-[#2a2a2a] border border-gray-700 rounded-md shadow-lg z-50 max-h-96 overflow-y-auto">
           {results.length > 0 ? (
             <div className="divide-y divide-gray-700">
@@ -291,6 +321,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                     handleResultClick(
                       result.collection || "featured",
                       result.id,
+                      result.subcategory,
                     )
                   }
                   className="w-full flex items-start gap-3 p-3 hover:bg-[#3a3a3a] transition-colors text-left"
@@ -301,6 +332,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                         src={result.image}
                         alt={result.name}
                         fill
+                        sizes="48px"
                         className="object-cover rounded"
                       />
                     </div>

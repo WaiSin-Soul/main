@@ -97,7 +97,7 @@ function FloralCreaturesContent() {
                 </div>
             </div>
             <div className="columns-1 md:columns-2 lg:columns-3 gap-6">
-                {filteredArtworks.map(artwork => (
+                {filteredArtworks.map((artwork, index) => (
                     <div
                         key={artwork.id}
                         ref={(el) => { itemRefs.current[artwork.id] = el; }}
@@ -120,6 +120,7 @@ function FloralCreaturesContent() {
                             alt={artwork.alt_tag || artwork.name}
                             className="bg-neutral-200"
                             imageClassName="object-contain hover:scale-105 transition-transform duration-300"
+                            loading={index < 3 ? 'eager' : 'lazy'}
                         />
                         <div className="p-6">
                             <div className="flex justify-between items-start mb-2">

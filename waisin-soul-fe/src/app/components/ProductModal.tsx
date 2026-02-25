@@ -69,6 +69,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
                                     src={product.image}
                                     alt={product.name}
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     className="object-cover rounded-lg"
                                 />
                             </div>
