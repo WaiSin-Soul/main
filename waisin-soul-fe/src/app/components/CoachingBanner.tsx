@@ -10,7 +10,7 @@ const CoachingBanner = () => {
           {/* Image Section */}
           <div className="relative w-full md:w-1/2 h-[300px] md:h-[400px]">
             <Image
-              src="/images/red-bird.webp"
+              src="/images/ZippityDooDah.jpg"
               alt="Red Cardinals in Snow"
               fill
               className="object-cover"
@@ -31,7 +31,7 @@ const CoachingBanner = () => {
             </p>
             <p className="mb-8 text-lg">
               Do you want to be absolutely clear about what is
-              blocking you? Let's go ahead and do a quick 45-minute call.
+              blocking you? Let&apos;s go ahead and do a quick 45-minute call.
             </p>
             <Link 
               href="/coaching/clarity-session"

@@ -38,13 +38,13 @@ const Services = () => {
     {
       title: "Art Collection",
       description: "Explore a collection that speaks the universal language of love, connecting souls through vibrant colors and passionate strokes.",
-      imageSrc: "/images/Conversation_between_Sun_Moon._jpg.webp",
+      imageSrc: "/images/Be Loveable with Awareness.jpg",
       link: "/collection"
     },
     {
       title: "Love Relationship Coaching",
       description: "Follow my Unique Artist's Path Method to unlock your potential and become a dynamic magnet for an extraordinary life of happiness, passionate and steady love.",
-      imageSrc: "/images/Love_at_first_sight.webp",
+      imageSrc: "/images/Love_at_First_Sight.jpg",
       link: "/coaching"
     },
     {
