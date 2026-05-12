@@ -12,31 +12,22 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ items }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [progress, setProgress] = useState(0);
 
     const nextSlide = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
-        setProgress(0);
     };
 
     const prevSlide = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + items.length) % items.length);
-        setProgress(0);
     };
 
     useEffect(() => {
-        const timer = setInterval(() => {
-            setProgress((prevProgress) => {
-                if (prevProgress >= 100) {
-                    nextSlide();
-                    return 0;
-                }
-                return prevProgress + 1;
-            });
-        }, 50); // Update progress every 50ms for smooth animation
+        const timer = setTimeout(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
+        }, 5000);
 
-        return () => clearInterval(timer);
-    }, [currentIndex, nextSlide]);
+        return () => clearTimeout(timer);
+    }, [currentIndex, items.length]);
 
     return (
         <div className="relative w-full h-[280px] sm:h-[420px] lg:h-[600px] bg-gray-100">
