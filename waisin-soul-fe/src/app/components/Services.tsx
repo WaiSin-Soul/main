@@ -18,6 +18,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, imageSrc,
           alt={title}
           fill
           className="object-cover"
+          style={{ width: 'auto', height: 'auto' }}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
