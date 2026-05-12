@@ -4,27 +4,27 @@ import Card from "./components/Card";
 import FeaturedCollection from "./components/FeaturedCollection";
 
 export default function Home() {
-  const largeCard = {
-    title: "Love Life Coaching",
-    description:
-      "If you are currently in a relationship or seeking for one, and if you are not experiencing the deep soulmate love that you are desiring, it is not your fault. Do you want to be absolutely clear about what is blocking you? Let's go ahead and do a quick 45-minute call.",
-    imageSrc: "/images/red-bird.webp",
-    link: "/coaching",
-  };
+  // const largeCard = {
+  //   title: "Love Life Coaching",
+  //   description:
+  //     "If you are currently in a relationship or seeking for one, and if you are not experiencing the deep soulmate love that you are desiring, it is not your fault. Do you want to be absolutely clear about what is blocking you? Let's go ahead and do a quick 45-minute call.",
+  //   imageSrc: "/images/red-bird.webp",
+  //   link: "/coaching",
+  // };
 
   const cards = [
     {
       title: "Art Collection",
       description:
         "Explore a collection that speaks the universal language of love, connecting souls through vibrant colors and passionate strokes.",
-      imageSrc: "/images/Conversation_between_Sun_Moon._jpg.webp",
+      imageSrc: "/images/Be Loveable with Awareness.jpg",
       link: "/art/collection",
     },
     {
       title: "Love Life Coaching",
       description:
         "Follow my Unique Artist's Path Method to unlock your potential and become a dynamic magnet for an extraordinary life of happiness, passionate and steady love.",
-      imageSrc: "/images/Love_at_first_sight.webp",
+      imageSrc: "/images/Love_at_First_Sight.jpg",
       link: "/coaching",
     },
     // {
@@ -37,53 +37,56 @@ export default function Home() {
   ];
 
   const carouselItems = [
-    { src: "/images/Ocean_Spirit.webp", alt: "Ocean spirit" },
-    { src: "https://swweabineuoutbhdferb.supabase.co/storage/v1/object/public/products/landscapes/asian/Experiencing%20Greatness.jpg", alt: "Ocean spirit" },
+    { src: "/images/Ocean Spirit.jpg", alt: "Ocean spirit" },
     {
-      src: "/images/Celebration_of_Surrender.webp",
+      src: "/images/Experiencing Greatness.jpg",
+      alt: "Experiencing greatness",
+    },
+    {
+      src: "/images/Celebration of Surrender.jpg",
       alt: "Celebration of surrender",
     },
-    { src: "/images/Joy_of_Aboundance.webp", alt: "Joy of aboundance" },
+    { src: "/images/JoyOfAboundance.jpg", alt: "Joy of aboundance" },
   ];
 
-  const featuredItems = [
-    {
-      id: 'seeking-knowledge-laptop',
-      title: "SEEKING KNOWLEDGE Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature1.webp",
-    },
-    {
-      id: 'serenity-laptop',
-      title: "SERENITY Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature2.webp",
-    },
-    {
-      id: 'ocean-spirit-laptop',
-      title: "OCEAN SPIRIT Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature3.webp",
-    },
-    {
-      id: 'seeking-knowledge-laptop',
-      title: "EXPERIENCING GREATNESS Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature4.webp",
-    },
-    {
-      id: 'seeking-knowledge-laptop',
-      title: "SEEKING KNOWLEDGE Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature1.webp",
-    },
-    {
-      id: 'serenity-laptop',
-      title: "SERENITY Laptop Sleeve",
-      price: "$45.00 CAD",
-      imageSrc: "/images/feature2.webp",
-    },
-  ];
+  // const featuredItems = [
+  //   {
+  //     id: 'seeking-knowledge-laptop',
+  //     title: "SEEKING KNOWLEDGE Laptop Sleeve",
+  //     price: "$45.00 CAD",
+  //     imageSrc: "/images/feature1.webp",
+  //   },
+  //   {
+  //     id: 'serenity-laptop',
+  //     title: "SERENITY Laptop Sleeve",
+  //     price: "$45.00 CAD",
+  //     imageSrc: "/images/feature2.webp",
+  //   },
+  //   {
+  //     id: 'ocean-spirit-laptop',
+  //     title: "OCEAN SPIRIT Laptop Sleeve",
+  //     price: "$45.00 CAD",
+  //     imageSrc: "/images/feature3.webp",
+  //   },
+  //   {
+  //     id: 'seeking-knowledge-laptop',
+  //     title: "EXPERIENCING GREATNESS Laptop Sleeve",
+  //     price: "$45.00 CAD",
+  //     imageSrc: "/images/feature4.webp",
+  //   },
+  //   {
+  //     id: 'seeking-knowledge-laptop',
+  //     title: "SEEKING KNOWLEDGE Laptop Sleeve",
+  //     price: "$45.00 CAD",
+  //     imageSrc: "/images/feature1.webp",
+  //   },
+  //   {
+  //     id: 'serenity-laptop',
+  //     title: "SERENITY Laptop Sleeve",
+  //     price: "$45.00 CAD",
+  //     imageSrc: "/images/feature2.webp",
+  //   },
+  // ];
 
   return (
     <div className="h-full mb-4 grid grid-rows items-center justify-items-center font-[family-name:var(--font-geist-sans)]">
@@ -103,15 +106,15 @@ export default function Home() {
           <div className="w-full px-4 sm:px-6 lg:px-8 mx-auto">
             {/* <h1 className="font-kalam text-3xl sm:text-4xl font-bold mb-4">Services</h1> */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-            {cards.map((card, index) => (
-              <Card
-                key={index}
-                title={card.title}
-                description={card.description}
-                imageSrc={card.imageSrc}
-                link={card.link}
-              />
-            ))}
+              {cards.map((card, index) => (
+                <Card
+                  key={index}
+                  title={card.title}
+                  description={card.description}
+                  imageSrc={card.imageSrc}
+                  link={card.link}
+                />
+              ))}
             </div>
           </div>
         </div>
