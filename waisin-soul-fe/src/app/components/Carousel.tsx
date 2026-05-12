@@ -45,8 +45,8 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
                     className="h-full w-full object-cover"
                     src={items[currentIndex].src}
                     alt={items[currentIndex].alt}
-                    width={1920}
-                    height={1080}
+                    fill
+                    loading="eager"
                 />
                 {/* Progress bar */}
                 {/* <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-200">
